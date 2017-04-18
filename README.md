@@ -7,7 +7,7 @@
 * Popović Ahmed
 * Puce Amina
 * Ramić Benjamin
-* Saba Ajla
+* Sakić Ajla
 
 ## Tehnologije
 * Spring Boot 

@@ -1,0 +1,18 @@
+<h1>Korisnički računi</h1>
+
+<button data-ng-click="$ctrl.loadAccounts()">Click me to call the REST API service and see accounts.</button>
+
+<br><br>
+
+<table class="striped">
+	<tr>
+		<th>Full Name</th>
+		<th>Email</th>
+		<th>Password</th>
+	</tr>
+	<tr ng-repeat="account in $ctrl.accounts">
+		<td>{{ account.fullName }}</td>
+		<td>{{ account.email }}</td>
+		<td>{{ account.password }}</td>
+	</tr>
+</table>

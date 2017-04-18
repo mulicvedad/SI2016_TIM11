@@ -1,0 +1,23 @@
+<main>
+  <div>
+    <h1>Dobro došli!</h1>
+    <button ng-click="$ctrl.dodajClana()">Dodaj clana</button>
+
+    <table class="striped">
+	    <tr>
+			<th>Imena</th>
+			<th>Opcije</th>
+		</tr>
+		<tr ng-repeat="clan in $ctrl.clanovi">
+			<td>{{ clan }}</td>
+			<td>
+          		<button data-ng-click="$ctrl.izbrisiClana($index)">Izbrisi</button>
+			</td>
+		</tr>
+	</table>
+
+    <p>
+    	{{$ctrl.informacija}}
+    </p>
+  </div>
+</main>

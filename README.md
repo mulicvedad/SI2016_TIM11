@@ -4,8 +4,8 @@
 
 * Parić Muhamed
 * Pejčinović Dario
-* Puce Amina
 * Popović Ahmed
+* Puce Amina
 * Ramić Benjamin
 * Saba Ajla
 

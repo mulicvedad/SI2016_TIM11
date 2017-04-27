@@ -1,6 +1,6 @@
-# Inventura (ak. god. 2016/17)
+# Inventory (academic year 2016/17)
 
-## Članovi tima SI-11 
+## Team Members SI-11 
 
 * Parić Muhamed
 * Pejčinović Dario
@@ -9,11 +9,10 @@
 * Ramić Benjamin
 * Sakić Ajla
 
-## Tehnologije
+## Technologies
 * Spring Boot 
 * Hibernate
+* MySQL
 * Angular 1.6 (ES6 w/ Babel)
 * Webpack 
 * SASS
-
-

@@ -1,35 +1,33 @@
 package com.timxyz.controllers;
 
+import com.timxyz.controllers.forms.Account.AccountCreateForm;
 import com.timxyz.models.Account;
 import com.timxyz.services.AccountService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.timxyz.services.exceptions.ServiceException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
 
-
-@RequestMapping("/accounts")
 @RestController
-public class AccountController {
-    private AccountService accountService;
+public class AccountController extends BaseController<Account, AccountService> {
 
-    @Autowired
-    public void setAccountService(AccountService accountService) {
-        this.accountService = accountService;
+    @ResponseBody
+    public ResponseEntity create(@RequestBody @Valid AccountCreateForm newAccount) {
+        try {
+            // Maps our DTO (data transfer object) to the proper Account class after the
+            // validations in our DTO (AccountCreateForm) have passed
+            Account acc = modelMapper.map(newAccount, Account.class);
+            acc.setId(null); // modelMapper somehow seems to map the roleId field to Id...which shouldn't happen
+            acc = service.save(acc);
+            return ResponseEntity.ok(acc);
+        } catch(ServiceException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @ResponseBody
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public Iterable<Account> all() {
-        return accountService.all();
-    }
-
-    @ResponseBody
-    @RequestMapping(method = RequestMethod.POST)
-    public Account create(@RequestBody Account newAccount) {
-        accountService.save(newAccount);
-        return newAccount;
+    public ResponseEntity filterByEmail(@PathVariable("email") String email) {
+        return ResponseEntity.ok(service.getByPartOfEmail(email));
     }
 }

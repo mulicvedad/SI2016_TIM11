@@ -1,11 +1,12 @@
 package com.timxyz.services;
 
 import com.timxyz.models.BaseModel;
+import com.timxyz.services.exceptions.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 public class BaseService<M extends BaseModel, R extends PagingAndSortingRepository<M, Long> > {
-    private R repository;
+    protected R repository;
 
     @Autowired
     public void setRepository(R repository) {
@@ -16,11 +17,15 @@ public class BaseService<M extends BaseModel, R extends PagingAndSortingReposito
         return repository.findAll();
     }
 
-    public M get(Long id) {
-        return repository.findOne(id);
+    public M get(Long id) throws ServiceException {
+        M model = repository.findOne(id);
+        if(model == null)
+            throw new ServiceException("Could not find a model with the given ID!");
+
+        return model;
     }
 
-    public M save(M model) {
+    public M save(M model) throws ServiceException {
         return repository.save(model);
     }
 

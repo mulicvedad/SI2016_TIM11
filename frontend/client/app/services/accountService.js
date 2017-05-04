@@ -1,11 +1,13 @@
-export default class AccountService {
-	static $inject = ['$http'];
+import BaseService from './baseService';
 
-	constructor($http) {
-		this.$http = $http;
-	}
+export default class AccountService extends BaseService {
+	static $inject = ['$http', 'ENV'];
 
 	all() {
-		return this.$http.get('http://localhost:8080/accounts/all');
+		return super.get('accounts/all');
+	}
+
+	create(account) {
+		return super.post('accounts', account);
 	}
 }

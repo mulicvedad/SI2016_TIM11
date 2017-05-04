@@ -1,8 +1,12 @@
 package com.timxyz.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 
 @Entity
@@ -17,6 +21,7 @@ public class Account extends BaseModel {
 
     @Basic
     @Column(name = "fullName")
+    @Size(min = 4, max = 255) @NotNull
     public String getFullName() {
         return fullName;
     }
@@ -27,6 +32,8 @@ public class Account extends BaseModel {
 
     @Basic
     @Column(name = "email", unique=true)
+    @Email
+    @Size(max = 255) @NotNull
     public String getEmail() {
         return email;
     }
@@ -37,6 +44,7 @@ public class Account extends BaseModel {
 
     @Basic
     @Column(name = "username", unique=true)
+    @Size(min = 4, max = 16) @NotNull
     public String getUsername() {
         return username;
     }
@@ -47,6 +55,7 @@ public class Account extends BaseModel {
 
     @Basic
     @Column(name = "password")
+    @Size(min = 8, max = 255) @NotNull
     public String getPassword() {
         return password;
     }

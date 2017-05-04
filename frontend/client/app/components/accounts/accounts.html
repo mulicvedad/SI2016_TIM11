@@ -1,18 +1,64 @@
 <h1>Korisnički računi</h1>
 
-<button data-ng-click="$ctrl.loadAccounts()">Click me to call the REST API service and see accounts.</button>
+<div class="row">
+	<div class="col s6">
+		<h2>Lista korisnika</h2>
+		<table class="striped">
+			<tr>
+				<th>Ime i prezime</th>
+				<th>Email</th>
+				<th>Rola</th>
+			</tr>
+			<tr ng-repeat="account in $ctrl.accounts">
+				<td>{{ account.fullName }}</td>
+				<td>{{ account.email }}</td>
+				<td>{{ account.role.id }}</td>
+			</tr>
+		</table>
+	</div>
+	<div class="col s6">
+		
+		<h2>Registracija korisnika</h2>
+	
+		<form class="col s12">
+	      <div class="row">
+	        <div class="input-field col s12">
+	          <input type="text" class="validate" placeholder="Ime i prezime" ng-model="$ctrl.account.fullName">
+	        </div>
+	      </div>	
+	      <div class="row">
+	        <div class="input-field col s12">
+	          <input type="text" class="validate" placeholder="Username" ng-model="$ctrl.account.username">
+	        </div>
+	      </div>	      
+	      <div class="row">
+	        <div class="input-field col s12">
+	          <input type="email" class="validate" placeholder="Email" ng-model="$ctrl.account.email">
+	        </div>
+	      </div>
+	      <div class="row">
+	        <div class="input-field col s12">
+	          <input type="password" class="validate" placeholder="Password" ng-model="$ctrl.account.password">
+	        </div>
+	      </div>
+	    <!--  <div class="row">
+		      <div class="input-field col s12">
+			    <select>
+			      <option value="" disabled selected>Izaberite rolu</option>
+			      <option value="1">Admin</option>
+			      <option value="1">Admin isto</option>
+			      <option value="1">Admin x3</option>
+			    </select>
+			    <label>Rola</label>
+			  </div>
+		  </div> -->
 
-<br><br>
+		  <button class="btn waves-effect waves-light"  data-ng-click="$ctrl.registerAccount()" name="action">Registruj</button>
+        
+	      
+	    </form>
 
-<table class="striped">
-	<tr>
-		<th>Full Name</th>
-		<th>Email</th>
-		<th>Password</th>
-	</tr>
-	<tr ng-repeat="account in $ctrl.accounts">
-		<td>{{ account.fullName }}</td>
-		<td>{{ account.email }}</td>
-		<td>{{ account.password }}</td>
-	</tr>
-</table>
+		<br><br>
+
+	</div>
+</div>

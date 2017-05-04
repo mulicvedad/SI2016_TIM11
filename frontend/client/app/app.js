@@ -13,6 +13,11 @@ angular.module('app', [
     Components,
     services.name
   ])
+  .constant('ENV', {
+    APIURL: 'http://localhost:8080/',
+    BASEURL: '/',
+    ENABLEDEBUG: true
+  })
   .config(($locationProvider) => {
     "ngInject";
     // @see: https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions

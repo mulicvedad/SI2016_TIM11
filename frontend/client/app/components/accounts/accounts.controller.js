@@ -12,7 +12,7 @@ class AccountsController {
 		this.accountService.create(this.account).then( (response) => {
 			console.log("Added an account!");
 			this.accounts.push(response.data);
-			this.clearNewAccount();
+			this.setEmptyAccount();
 		}, (error) => {
 			console.log("Error while creating an account.");
 		});

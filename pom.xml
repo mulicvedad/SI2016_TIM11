@@ -11,12 +11,12 @@
 	<name>inventura</name>
 	<description>SI Projekat</description>
 
-	<parent>
+	<parentId>
 		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
+		<artifactId>spring-boot-starter-parentId</artifactId>
 		<version>1.5.2.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
+		<relativePath/> <!-- lookup parentId from repository -->
+	</parentId>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

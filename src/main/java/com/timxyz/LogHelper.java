@@ -1,30 +1,26 @@
 package com.timxyz;
 
-import com.timxyz.models.AccessLog;
 import com.timxyz.models.Account;
-import com.timxyz.repositories.AccessLogRepository;
-import com.timxyz.services.AccountService;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import com.timxyz.models.BaseModel;
+import com.timxyz.services.LogHelperService;
 
 /**
  * Created by muhamed on 5/4/17.
  */
 public class LogHelper {
-    @Autowired
-    private static AccessLogRepository accessLogRepository;
+    public static void logCreate(Account account, BaseModel model) {
+        LogHelperService.logCreate(account, model);
+    }
 
-    public static void log(Account account, String type, String description, String tableName) {
-        AccessLog accessLog = new AccessLog();
+    public static void logSelect(Account account, BaseModel model) {
+        LogHelperService.logSelect(account, model);
+    }
 
-        accessLog.setDate(Timestamp.valueOf(LocalDateTime.now()));
-        accessLog.setType(type);
-        accessLog.setDescription(description);
-        accessLog.setTableName(tableName);
-        accessLog.setAccount(account);
+    public static void logUpdate(Account account, BaseModel model) {
+        LogHelperService.logUpdate(account, model);
+    }
 
-        accessLogRepository.save(accessLog);
+    public static void logDelete(Account account, BaseModel model) {
+        LogHelperService.logDelete(account, model);
     }
 }

@@ -1,0 +1,52 @@
+<h3 class="center">Lokacije</h3>
+<div class="row">
+    <div class="col s6">
+        <h4>Lista lokacija</h4>
+        <table class="striped">
+            <tr>
+                <th>Naziv</th>
+                <th>Nadkategorija</th>
+                <th>Tip</th>
+            </tr>
+            <tr ng-repeat="location in $ctrl.locations">
+                <td>{{ location.name }}</td>
+                <td>{{ location.parent.id }}</td>
+                <td>{{ location.type.id }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col s6" style="border-left:1px solid black;">
+        <h4>Kreiranje nove lokacije</h4>
+        <form class="col s12">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="text" class="validate" placeholder="Naziv" ng-model="$ctrl.location.name"> </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <select class="browser-default">
+                        <option value="" disabled selected>Izaberite parent lokaciju</option>
+                        <option value="1">Lokacija 1</option>
+                        <option value="1">Lokacija 2</option>
+                        <option value="1">Lokacija 3</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <select class="browser-default">
+                        <option value="" disabled selected>Izaberite tip lokacije</option>
+                        <option value="2">Tip 1</option>
+                        <option value="3">Tip 2</option>
+                        <option value="4">Tip 3</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <button class="btn waves-effect waves-light right" data-ng-click="$ctrl.registerLocation()" name="action">Kreiraj</button>
+        </form>
+        <br>
+        <br> </div>
+</div>

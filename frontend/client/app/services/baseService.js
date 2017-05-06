@@ -11,8 +11,6 @@ export default class BaseService {
 	}
 
 	post(url, data) {
-		console.log("posting!!!");
-		console.log(data);
 		return this.$http.post(this.ENV.APIURL + url, JSON.stringify(data));
 	}
 }

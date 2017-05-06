@@ -18,6 +18,7 @@ public class BaseService<M extends BaseModel, R extends PagingAndSortingReposito
     }
 
     public M get(Long id) throws ServiceException {
+        if(id == null) return null;
         M model = repository.findOne(id);
         if(model == null)
             throw new ServiceException("Could not find a model with the given ID!");

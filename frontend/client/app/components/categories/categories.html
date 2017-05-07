@@ -1,0 +1,40 @@
+<h3 class="center">Kategorije</h3>
+<div class="row">
+    <div class="col s6">
+        <h4>Lista kategorija</h4>
+        <table class="striped">
+            <tr>
+                <th>Naziv</th>
+                <th>Nadkategorija</th>
+            </tr>
+            <tr ng-repeat="category in $ctrl.categories">
+                <td>{{ category.name }}</td>
+                <td>{{ category.parent }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col s6" style="border-left:1px solid black;">
+        <h4>Kreiranje nove kategorije</h4>
+        <form class="col s12">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="text" class="validate" placeholder="Naziv" ng-model="$ctrl.category.name"> </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <select class="browser-default" ng-model="$ctrl.category.parentId">
+                        <option value="null" selected>Bez parent kategorije</option>
+                        <option ng-repeat="category in $ctrl.categories" value="{{ category.id }}" >
+                            {{ category.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <button class="btn waves-effect waves-light right" data-ng-click="$ctrl.registerCategory()" name="action">Kreiraj</button>
+        </form>
+        <br>
+        <br> </div>
+</div>

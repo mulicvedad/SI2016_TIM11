@@ -4,6 +4,7 @@ import com.timxyz.models.Account;
 import com.timxyz.repositories.AccountRepository;
 import com.timxyz.services.exceptions.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class AccountService extends BaseService<Account, AccountRepository> {
             // only has the role's ID which was sent in JSON, not it's actual
             // reference to the row and other info in DB
             model.setRole(roleService.get(model.getRole().getId()));
+            model.setPassword(BCrypt.hashpw(model.getPassword(), BCrypt.gensalt()));
             return super.save(model);
         } catch (ServiceException e) {
             throw new ServiceException("Unknown role ID!");

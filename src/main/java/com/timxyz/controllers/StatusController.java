@@ -18,10 +18,11 @@ import javax.validation.Valid;
  */
 @RestController
 public class StatusController extends BaseController<Status, StatusService> {
+
     @ResponseBody
-    public ResponseEntity create(@RequestBody @Valid StatusCreateForm newCategory) {
+    public ResponseEntity create(@RequestBody @Valid StatusCreateForm newStatus) {
         try {
-            return ResponseEntity.ok(service.save(new Status(newCategory.getName())));
+            return ResponseEntity.ok(service.save(new Status(newStatus.getName())));
         } catch (ServiceException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

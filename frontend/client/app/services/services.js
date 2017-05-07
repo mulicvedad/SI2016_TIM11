@@ -4,6 +4,7 @@ import accountService from './accountService';
 import locationTypeService from './locationTypeService';
 import baseService from './baseService';
 import categoryService from './categoryService';
+import locationService from './locationService';
 
 export default angular
   .module('app.services', [])
@@ -11,5 +12,6 @@ export default angular
   	baseService,
     accountService,
     locationTypeService,
-    categoryService
+    categoryService,
+    locationService
 });

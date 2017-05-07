@@ -5,13 +5,13 @@
         <table class="striped">
             <tr>
                 <th>Naziv</th>
-                <th>Nadkategorija</th>
+                <th>Nadlokacija</th>
                 <th>Tip</th>
             </tr>
             <tr ng-repeat="location in $ctrl.locations">
                 <td>{{ location.name }}</td>
-                <td>{{ location.parent.id }}</td>
-                <td>{{ location.type.id }}</td>
+                <td>{{ location.parent }}</td>
+                <td>{{ location.type }}</td>
             </tr>
         </table>
     </div>
@@ -24,21 +24,21 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <select class="browser-default">
-                        <option value="" disabled selected>Izaberite parent lokaciju</option>
-                        <option value="1">Lokacija 1</option>
-                        <option value="1">Lokacija 2</option>
-                        <option value="1">Lokacija 3</option>
+                   <select class="browser-default" ng-model="$ctrl.location.parentId">
+                        <option value="null" selected>Bez parent lokacije</option>
+                        <option ng-repeat="location in $ctrl.locations" value="{{ location.id }}" >
+                            {{ location.name }}
+                        </option>
                     </select>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <select class="browser-default">
-                        <option value="" disabled selected>Izaberite tip lokacije</option>
-                        <option value="2">Tip 1</option>
-                        <option value="3">Tip 2</option>
-                        <option value="4">Tip 3</option>
+                    <select class="browser-default" ng-model="$ctrl.location.typeId">                       
+			            <option value="" disabled selected>Izaberite tip</option>
+                        <option ng-repeat="type in $ctrl.locationTypes" value="{{ type.id }}" >                           
+                            {{ type.name }}
+                        </option>
                     </select>
                 </div>
             </div>

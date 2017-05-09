@@ -15,10 +15,15 @@
     </div>
     <div class="col s6" style="border-left:1px solid black;">
         <h4>Kreiranje nove kategorije</h4>
-        <form class="col s12">
+        <form class="col s12" name="form">
             <div class="row">
                 <div class="input-field col s12">
-                    <input type="text" class="validate" placeholder="Naziv" ng-model="$ctrl.category.name"> </div>
+
+                    <input type="text" class="validate" placeholder="Naziv" ng-model="$ctrl.category.name" ng-pattern="/^[a-zA-Z0-9-,\&\s]{4,500}$/" name="categoryName" required> </div>
+
+                <span style="color:red" ng-show="form.categoryName.$error.required"> *Name is required.</span>
+                <span style="color:red" ng-show="form.categoryName.$error.pattern"> *Invalid input format.</span>
+
             </div>
             <div class="row">
                 <div class="input-field col s12">

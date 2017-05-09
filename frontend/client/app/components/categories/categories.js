@@ -20,3 +20,4 @@ let categoriesModule = angular.module('categories', [
 .name;
 
 export default categoriesModule;
+//com

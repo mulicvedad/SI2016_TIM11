@@ -9,6 +9,14 @@ public class Status extends BaseModel {
     private Collection<AuditItem> auditItems;
     private Collection<PastAuditItem> pastAuditItems;
 
+    public Status(){
+
+    }
+
+    public Status(String name) {
+        this.name = name;
+    }
+
     @Basic
     @Column(name = "name")
     public String getName() {

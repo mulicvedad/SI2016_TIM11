@@ -4,6 +4,7 @@ import accountService from './accountService';
 import locationTypeService from './locationTypeService';
 import baseService from './baseService';
 import categoryService from './categoryService';
+import statusService from './statusService';
 import locationService from './locationService';
 
 export default angular
@@ -11,7 +12,8 @@ export default angular
   .service({
   	baseService,
     accountService,
-    locationTypeService,
     categoryService,
+    statusService,
+    locationTypeService,
     locationService
 });

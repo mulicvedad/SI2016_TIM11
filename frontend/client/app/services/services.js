@@ -6,6 +6,7 @@ import baseService from './baseService';
 import categoryService from './categoryService';
 import statusService from './statusService';
 import locationService from './locationService';
+import itemService from './itemService';
 
 export default angular
   .module('app.services', [])
@@ -15,5 +16,6 @@ export default angular
     categoryService,
     statusService,
     locationTypeService,
-    locationService
+    locationService,
+    itemService
 });

@@ -6,6 +6,7 @@ import Locations from './locations/locations';
 import LocationTypes from './locationTypes/locationTypes';
 import Categories from './categories/categories';
 import Status from './status/status';
+import Items from './items/items';
 
 let componentModule = angular.module('app.components', [
   Home,
@@ -14,7 +15,8 @@ let componentModule = angular.module('app.components', [
   Locations,
   Categories,
   Status,
-  LocationTypes
+  LocationTypes,
+  Items
 ])
 
 .name;

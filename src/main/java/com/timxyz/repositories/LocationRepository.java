@@ -9,6 +9,4 @@ import org.springframework.stereotype.Repository;
  */
 public interface LocationRepository extends PagingAndSortingRepository <Location, Long> {
     Location findFirstByName(String name);
-    Location findFirstByNameOrType(String name, String type);
-    Location findByNameContaining(String partOfName);
 }

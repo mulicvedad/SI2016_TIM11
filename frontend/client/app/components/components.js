@@ -3,6 +3,7 @@ import Home from './home/home';
 import About from './about/about';
 import Accounts from './accounts/accounts';
 import Locations from './locations/locations';
+import LocationTypes from './locationTypes/locationTypes';
 import Categories from './categories/categories';
 import Status from './status/status';
 
@@ -12,7 +13,8 @@ let componentModule = angular.module('app.components', [
   Accounts,
   Locations,
   Categories,
-  Status
+  Status,
+  LocationTypes
 ])
 
 .name;

@@ -3,7 +3,6 @@ package com.timxyz.services;
 import com.timxyz.models.Location;
 import com.timxyz.repositories.LocationRepository;
 import com.timxyz.services.exceptions.ServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,15 +10,24 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class LocationService extends BaseService<Location, LocationRepository> {
+    public Location save(Location model) throws ServiceException {
+        if(model.getId() == null && getByName(model.getName()) != null)
+            throw new ServiceException("A location with this name already exists!");
+        else if(model.getId() != null) {
+            // TO-DO: Finish proper partial update logic (shouldn't send the whole object during update)
+        }
+        else if(model.getType() == null) {
+            throw new ServiceException("Unknown type ID!");
+        }
 
-    Location findFirstByName(String name) {
-        return null;
+        try {
+            return super.save(model);
+        } catch (ServiceException e) {
+            throw new ServiceException("Couldn't save location!");
+        }
     }
-    Location findFirstByNameOrType(String name, String type){
-        return repository.findFirstByNameOrType(name, type);
-    }
-    Location findByNameContaining(String partOfName){
-        return repository.findByNameContaining(partOfName);
+    Location getByName(String name) {
+        return repository.findFirstByName(name);
     }
 }
 

@@ -20,3 +20,4 @@ let locationTypesModule = angular.module('locationTypes', [
 .name;
 
 export default locationTypesModule;
+ //

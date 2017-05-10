@@ -7,6 +7,8 @@ import com.timxyz.services.BaseService;
 import com.timxyz.services.exceptions.ServiceException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -52,5 +54,11 @@ public abstract class BaseController<M extends BaseModel, S extends BaseService<
     public ResponseEntity delete(@PathVariable("id") Long id) {
         service.delete(id);
         return ResponseEntity.ok(true);
+    }
+
+    @ResponseBody
+    public ResponseEntity getPage(@PathVariable("pageNumber") int pageNumber) {
+        Pageable page =new PageRequest(pageNumber-1, 5);
+        return ResponseEntity.ok(service.listAllByPage(page));
     }
 }

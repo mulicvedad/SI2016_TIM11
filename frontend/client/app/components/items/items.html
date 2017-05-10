@@ -1,10 +1,8 @@
 <h3 class="center">Inventurne stavke</h3>
 <div class="row">
-    <div class="col s2"><h5>Filteri</h5></div>
-    <div class="col s4">
-        <input type="text" class="validate" placeholder="Pojam" ng-model="$ctrl.item.partofSku"> </div>
-    <div class="col s3">Datum 1</div>
-    <div class="col s3">Datum 2</div>
+    <div class="col s2"><h5>Pretraga:</h5></div>
+    <div class="col s10">
+        <input type="text" class="validate" placeholder="Pojam" ng-model="searchText" ng-change="$ctrl.filter(this.searchText)" ng-model-options="{ debounce:200 }"> </div>
 </div>
 <div class="row">
     <div class="col s12">
@@ -22,26 +20,14 @@
             </tr>
             <tr ng-repeat="item in $ctrl.items">
                 <td>{{ item.name }}</td>
-                <td>{{ item.date_of_purchase }}</td>
-                <td>{{ item.person_responsible }}</td>
-                <td>{{ item.purchased_by }}</td>
-                <td>{{ item.sku_number }}</td>
-                <td>{{ item.unit_of_measurement }}</td>
+                <td>{{ item.dateOfPurchase }}</td>
+                <td>{{ item.personResponsible }}</td>
+                <td>{{ item.purchasedBy }}</td>
+                <td>{{ item.skuNumber }}</td>
+                <td>{{ item.unitOfMeasurement }}</td>
                 <td>{{ item.value }}</td>
-                <td>{{ item.category_id }}</td>
-                <td>{{ item.location_id }}</td>
-            </tr>
-            <!--            dump podaci-->
-            <tr>
-                <td>Stolica</td>
-                <td>21.2.2012</td>
-                <td>Domar</td>
-                <td>Administrator</td>
-                <td>120312r5</td>
-                <td>Komad</td>
-                <td>10KM</td>
-                <td>Pokućstvo</td>
-                <td>Učionica</td>
+                <td>{{ item.category }}</td>
+                <td>{{ item.location }}</td>
             </tr>
         </table>
     </div>

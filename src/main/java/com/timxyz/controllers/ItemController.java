@@ -74,6 +74,11 @@ public class ItemController extends BaseController<Item, ItemService> {
         return service.getAllByLocationTypeName(name);
     }
 
+    @RequestMapping(value = "/items/search-by/filter", method = RequestMethod.GET)
+    public List<Item> getAllByFilter(@RequestParam("name") String name) throws ServiceException {
+        return service.getAllByFilter(name);
+    }
+
     /*@RequestMapping(value = "/items/search-by/date", method = RequestMethod.GET)
     public List<Item> getAllByDate(@RequestParam("date") Timestamp date) throws ServiceException {
         return service.getAllByDate(date);

@@ -3,7 +3,7 @@ class LocationTypesController {
 
 	constructor(locationTypeService) {
 		this.locationTypeService = locationTypeService;
-		this.loadLocationTypes();
+		this.loadLocationTypes(1);
 		this.setEmptyLocationType();
 
 	}
@@ -22,14 +22,35 @@ class LocationTypesController {
 		this.locationType = {name: "", description: ""};
 	}
 
-	loadLocationTypes() {
-		this.locationTypeService.all().then( (response) => {
-			this.locationTypes = response.data;
-		} );
+
+
+   /*loadLocationTypes() {
+        this.locationTypeService.all().then( (response) => {
+            this.locationTypes = response.data;
+        console.log(response.data);
+    } );
+    }*/
+
+    loadLocationTypes(page) {
+        this.locationTypeService.getPage(page).then( (response) => {
+            this.locationTypes = response.data.content;
+            this.number = response.data.number+1;
+            this.totalPages = new Array(response.data.totalPages);
+            for(var i = 0; i< response.data.totalPages; i++)
+			{
+				this.totalPages[i]=i+1;
+			}
+        console.log(response.data);
+    } );
+    }
+
+    goto(newPage)
+	{
+        this.loadLocationTypes(newPage);
 	}
 
-  deleteLocationType(index) {
-    //...
+    deleteLocationType(index) {
+    //.....gfff
   }
 }
 

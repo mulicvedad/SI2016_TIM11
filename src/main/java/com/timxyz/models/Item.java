@@ -1,5 +1,9 @@
 package com.timxyz.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -18,6 +22,24 @@ public class Item extends BaseModel {
     private Category category;
     private Location location;
     private Collection<PastAuditItem> pastAuditItems;
+
+    public Item(){
+
+    }
+
+    public Item (String skuNumber, String name, String unitOfMeasurement, String purchasedBy, String personResponsible, Timestamp dateOfPurchase, BigDecimal value, Collection<AuditItem> auditItems,Category category, Location location, Collection<PastAuditItem> pastAuditItems) {
+        this.skuNumber = skuNumber;
+        this.name = name;
+        this.unitOfMeasurement = unitOfMeasurement;
+        this.purchasedBy = purchasedBy;
+        this.personResponsible = personResponsible;
+        this.dateOfPurchase = dateOfPurchase;
+        this.value = value;
+        this.auditItems = auditItems;
+        this.category = category;
+        this.location = location;
+        this.pastAuditItems = pastAuditItems;
+    }
 
     @Basic
     @Column(name = "skuNumber")
@@ -98,6 +120,8 @@ public class Item extends BaseModel {
         this.auditItems = auditItems;
     }
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     @ManyToOne
     @JoinColumn(name = "categoryId", referencedColumnName = "id", nullable = false)
     public Category getCategory() {
@@ -108,6 +132,8 @@ public class Item extends BaseModel {
         this.category = category;
     }
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     @ManyToOne
     @JoinColumn(name = "locationId", referencedColumnName = "id", nullable = false)
     public Location getLocation() {

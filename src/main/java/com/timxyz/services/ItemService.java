@@ -1,16 +1,12 @@
 package com.timxyz.services;
 
-import com.timxyz.models.Category;
 import com.timxyz.models.Item;
-import com.timxyz.models.Location;
 import com.timxyz.repositories.ItemRepository;
 import com.timxyz.services.exceptions.ServiceException;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -59,5 +55,14 @@ public class ItemService extends BaseService<Item, ItemRepository> {
 
     public List<Item> getAllByLocationTypeName( String name ) {return repository.getAllByLocationTypeName(name); }
 
-    //public List<Item> getAllByDate( Timestamp date ) { return  repository.getAllByDate(date); }
+    public List<Item> getAllByDate( Date date ) { return  repository.getAllByDate(date); }
+
+    public List<Item> getAllBetweenDates( Date date1, Date date2 ) throws ServiceException {
+        int compare = date2.compareTo(date1);
+        if(compare == 1) return  repository.getAllBetweenDates(date1, date2);
+        else if(compare == 0) throw new ServiceException("Dates can not be same!");
+        else throw new ServiceException("First date must be before second!");
+    }
+
+    public List<Item> getAllByItemName( String name ) { return repository.getAllByItemName(name); }
 }

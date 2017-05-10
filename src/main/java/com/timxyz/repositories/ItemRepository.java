@@ -1,15 +1,12 @@
 package com.timxyz.repositories;
 
-import com.timxyz.models.Category;
 import com.timxyz.models.Item;
-import com.timxyz.models.Location;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
-import java.lang.reflect.Array;
 import java.sql.Timestamp;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,6 +24,12 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Long> {
     @Query("select i from Item i where i.location.type.name like  %:name%")
     List<Item> getAllByLocationTypeName(@Param("name") String name );
 
-    //@Query("select i from Item where i.dateOfPurchase = :date")
-    //List<Item> getAllByDate(@Param("date") Timestamp date );
+    @Query("select i from Item i where i.dateOfPurchase = :date")
+    List<Item> getAllByDate(@Param("date") Date date );
+
+    @Query("select i from Item i where i.dateOfPurchase between :d1 and :d2")
+    List<Item> getAllBetweenDates( @Param ("d1") Date date1, @Param("d2") Date date2 );
+
+    @Query("select i from Item i where i.name like %:name%")
+    List<Item> getAllByItemName( @Param("name") String name );
 }

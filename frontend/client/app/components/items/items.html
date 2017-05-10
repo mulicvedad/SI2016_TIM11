@@ -1,0 +1,48 @@
+<h3 class="center">Inventurne stavke</h3>
+<div class="row">
+    <div class="col s2"><h5>Filteri</h5></div>
+    <div class="col s4">
+        <input type="text" class="validate" placeholder="Pojam" ng-model="$ctrl.item.partofSku"> </div>
+    <div class="col s3">Datum 1</div>
+    <div class="col s3">Datum 2</div>
+</div>
+<div class="row">
+    <div class="col s12">
+        <table class="striped">
+            <tr>
+                <th>Naziv</th>
+                <th>Datum unosa</th>
+                <th>Odgovorna osoba</th>
+                <th>Uneseno od</th>
+                <th>Inventurni broj</th>
+                <th>Mjerna jedinica</th>
+                <th>Vrijednost</th>
+                <th>Kategorija</th>
+                <th>Lokacija</th>
+            </tr>
+            <tr ng-repeat="item in $ctrl.items">
+                <td>{{ item.name }}</td>
+                <td>{{ item.date_of_purchase }}</td>
+                <td>{{ item.person_responsible }}</td>
+                <td>{{ item.purchased_by }}</td>
+                <td>{{ item.sku_number }}</td>
+                <td>{{ item.unit_of_measurement }}</td>
+                <td>{{ item.value }}</td>
+                <td>{{ item.category_id }}</td>
+                <td>{{ item.location_id }}</td>
+            </tr>
+            <!--            dump podaci-->
+            <tr>
+                <td>Stolica</td>
+                <td>21.2.2012</td>
+                <td>Domar</td>
+                <td>Administrator</td>
+                <td>120312r5</td>
+                <td>Komad</td>
+                <td>10KM</td>
+                <td>Pokućstvo</td>
+                <td>Učionica</td>
+            </tr>
+        </table>
+    </div>
+</div>

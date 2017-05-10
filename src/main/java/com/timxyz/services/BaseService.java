@@ -3,6 +3,8 @@ package com.timxyz.services;
 import com.timxyz.models.BaseModel;
 import com.timxyz.services.exceptions.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 public class BaseService<M extends BaseModel, R extends PagingAndSortingRepository<M, Long> > {
@@ -35,4 +37,8 @@ public class BaseService<M extends BaseModel, R extends PagingAndSortingReposito
     public Boolean exists(Long id) { return repository.exists(id); }
 
     public Long count() { return repository.count(); }
+
+    public Page<M> listAllByPage(Pageable p) {
+        return repository.findAll(p);
+    }
 }

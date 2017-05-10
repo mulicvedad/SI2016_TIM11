@@ -45,6 +45,8 @@ public class Location extends BaseModel {
         this.audits = audits;
     }
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     @OneToMany(mappedBy = "location")
     public Collection<Item> getItems() {
         return items;

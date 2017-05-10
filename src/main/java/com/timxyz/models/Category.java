@@ -56,7 +56,9 @@ public class Category extends BaseModel {
         this.children = children;
     }
 
-    @OneToMany(mappedBy = "category")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     public Collection<Item> getItems() {
         return items;
     }

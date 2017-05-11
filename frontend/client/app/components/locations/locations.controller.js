@@ -4,16 +4,17 @@ class LocationsController {
 	constructor(locationService, locationTypeService) {
 		this.locationService = locationService;
 		this.locationTypeService = locationTypeService;
-		this.loadLocations();
+		this.loadLocations(1);
         this.loadLocationTypes();
 		this.setEmptyLocation();
-		
+
 	}
 
 	registerLocation() {
 		this.locationService.create(this.location).then( (response) => {
 			console.log("Added a Location!");
 			this.locations.push(response.data);
+			this.loadLocations(1);
 			this.setEmptyLocation();
 		}, (error) => {
 			console.log("Error while creating a Location.");
@@ -24,17 +25,35 @@ class LocationsController {
 		this.location = {name: "", parentId: "null", typeId: ""};
 	}
 
-	loadLocations() {
+	/*loadLocations() {
 		this.locationService.all().then( (response) => {
 			this.locations = response.data;
 		} );
-	}
+	}*/
 
     loadLocationTypes() {
 		this.locationTypeService.all().then( (response) => {
 			this.locationTypes = response.data;
 		} );
 	}
+
+	loadLocations(page) {
+			this.locationService.getPage(page).then( (response) => {
+					this.locations = response.data.content;
+					this.number = response.data.number+1;
+					this.totalPages = new Array(response.data.totalPages);
+					for(var i = 0; i< response.data.totalPages; i++)
+		{
+			this.totalPages[i]=i+1;
+		}
+			console.log(response.data);
+	} );
+	}
+
+	goto(newPage)
+{
+			this.loadLocations(newPage);
+}
 
 }
 

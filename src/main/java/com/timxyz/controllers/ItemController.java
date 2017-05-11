@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
-import java.sql.Array;
 import java.sql.Timestamp;
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -73,14 +74,43 @@ public class ItemController extends BaseController<Item, ItemService> {
     public List<Item> getAllByLocationTypeName(@RequestParam("name") String name) throws ServiceException {
         return service.getAllByLocationTypeName(name);
     }
-
+  
     @RequestMapping(value = "/items/search-by/filter", method = RequestMethod.GET)
     public List<Item> getAllByFilter(@RequestParam("name") String name) throws ServiceException {
         return service.getAllByFilter(name);
     }
 
-    /*@RequestMapping(value = "/items/search-by/date", method = RequestMethod.GET)
-    public List<Item> getAllByDate(@RequestParam("date") Timestamp date) throws ServiceException {
+    @RequestMapping(value = "/items/search-by/date", method = RequestMethod.GET)
+    public List<Item> getAllByDate(@RequestParam("date") String paramDate) throws ServiceException, ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = format.parse(paramDate);
         return service.getAllByDate(date);
-    }*/
+    }
+
+    @ResponseStatus( HttpStatus.OK )
+    @RequestMapping(value = "/items/search-by/between-dates", method = RequestMethod.GET)
+    public List<Item> getAllBetweenDates(@RequestParam("date1") String paramDate1, @RequestParam("date2") String paramDate2) throws ParseException {
+            try {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                Date date1 = format.parse(paramDate1);
+                Date date2 = format.parse(paramDate2);
+                return service.getAllBetweenDates(date1, date2);
+            }
+            catch (ServiceException e){
+                return null;
+            }
+    }
+
+    @RequestMapping(value = "/items/search-by/name", method = RequestMethod.GET)
+    public List<Item> getAllByItemName(@RequestParam("name") String name){
+        return service.getAllByItemName(name);
+    }
+
+    /*
+    @RequestMapping(value = "/items/search-by/name/{name}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllByItemName(@PathVariable("name") String name){
+        List<Item> items = service.getAllByItemName(name);
+        return  new ResponseEntity<List<Item>>(items, HttpStatus.OK);
+    }
+    */
 }

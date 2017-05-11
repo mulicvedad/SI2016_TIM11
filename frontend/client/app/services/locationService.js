@@ -8,4 +8,9 @@ export default class LocationService extends BaseService {
 	create(account) {
 		return super.post('locations', account);
 	}
+
+	getPage(page)
+	{
+		return super.get('locations/page/'+page);
+	}
 }

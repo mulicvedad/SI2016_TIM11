@@ -8,4 +8,9 @@ export default class AccountService extends BaseService {
 	create(account) {
 		return super.post('accounts', account);
 	}
+
+	getPage(page)
+	{
+		return super.get('accounts/page/'+page);
+	}
 }

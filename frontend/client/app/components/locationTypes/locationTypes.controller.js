@@ -50,7 +50,7 @@ class LocationTypesController {
 	}
 
     deleteLocationType(index) {
-    //.....gfff
+    //.....
   }
 }
 

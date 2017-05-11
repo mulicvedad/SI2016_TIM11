@@ -24,6 +24,9 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Long> {
     @Query("select i from Item i where i.location.type.name like  %:name%")
     List<Item> getAllByLocationTypeName(@Param("name") String name );
 
+    @Query("select i from Item i where i.name like %:name% or   i.category.name like  %:name% or i.location.name like  %:name% or i.location.type.name like  %:name% or i.purchasedBy like %:name%")
+    List<Item> getAllByFilter( @Param("name") String name );
+  
     @Query("select i from Item i where i.dateOfPurchase = :date")
     List<Item> getAllByDate(@Param("date") Date date );
 

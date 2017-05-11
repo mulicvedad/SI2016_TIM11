@@ -55,6 +55,10 @@ public class ItemService extends BaseService<Item, ItemRepository> {
 
     public List<Item> getAllByLocationTypeName( String name ) {return repository.getAllByLocationTypeName(name); }
 
+    public List<Item> getAllByFilter(String name) {
+        return repository.getAllByFilter(name);
+    }
+
     public List<Item> getAllByDate( Date date ) { return  repository.getAllByDate(date); }
 
     public List<Item> getAllBetweenDates( Date date1, Date date2 ) throws ServiceException {

@@ -13,7 +13,7 @@ class CategoriesController {
 			console.log("Added a category!");
 			this.categories.push(response.data);
         	this.loadCategories(1);
-			this.setEmptyLocation();
+			this.setEmptyCategory();
 
 		}, (error) => {
 			console.log("Error while creating a category.");

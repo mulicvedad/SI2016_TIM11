@@ -13,7 +13,7 @@ class StatusController {
 			console.log("Added a status!");
 			this.status.push(response.data);
         	this.loadStatus(1);
-			this.setEmptyLocation();
+			this.setEmptyStatus();
 		}, (error) => {
 			console.log("Error while creating a status.");
 		});

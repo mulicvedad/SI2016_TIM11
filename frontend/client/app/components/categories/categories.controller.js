@@ -25,7 +25,6 @@ class CategoriesController {
 	loadCategories() {
 		this.categoryService.all().then( (response) => {
 			this.categories = response.data;
-			// radi
 		} );
 	}
 

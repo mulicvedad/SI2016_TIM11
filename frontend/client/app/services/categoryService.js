@@ -8,4 +8,9 @@ export default class CategoryService extends BaseService {
 	create(account) {
 		return super.post('categories', account);
 	}
+
+    getPage(page)
+    {
+        return super.get('categories/page/'+page);
+    }
 }

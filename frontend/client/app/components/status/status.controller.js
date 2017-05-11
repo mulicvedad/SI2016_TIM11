@@ -3,7 +3,7 @@ class StatusController {
 
 	constructor(statusService) {
 		this.statusService = statusService;
-		this.loadStatus();
+		this.loadStatus(1);
 		this.setEmptyStatus();
 	}
 
@@ -12,7 +12,8 @@ class StatusController {
 		this.statusService.create(this._status).then((response) => {
 			console.log("Added a status!");
 			this.status.push(response.data);
-			this.setEmptyLocation();
+        	this.loadStatus(1);
+			this.setEmptyStatus();
 		}, (error) => {
 			console.log("Error while creating a status.");
 		});
@@ -22,12 +23,28 @@ class StatusController {
 		this.status = {name: ""};
 	}
 
-	loadStatus() {
+	/*loadStatus() {
 		this.statusService.all().then( (response) => {
 			this.status = response.data;
 			// radi
 		} );
-	}
+	}*/
+
+    loadStatus(page) {
+        this.statusService.getPage(page).then( (response) => {
+            this.status = response.data.content;
+        this.number = response.data.number+1;
+        this.totalPages = new Array(response.data.totalPages);
+        for(var i = 0; i< response.data.totalPages; i++) {
+            this.totalPages[i] = i + 1;
+        }
+    } );
+    }
+
+    goto(newPage)
+    {
+        this.loadStatus(newPage);
+    }
 
 }
 

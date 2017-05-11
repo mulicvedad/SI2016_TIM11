@@ -12,6 +12,7 @@ class LocationTypesController {
 		this.locationTypeService.create(this.locationType).then( (response) => {
 			console.log("Added a Location Type!");
 			this.locationTypes.push(response.data);
+        	this.loadLocationTypes(1);
 			this.setEmptyLocationType();
 		}, (error) => {
 			console.log("Error while creating a Location Type.");

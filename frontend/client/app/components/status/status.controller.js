@@ -12,6 +12,7 @@ class StatusController {
 		this.statusService.create(this._status).then((response) => {
 			console.log("Added a status!");
 			this.status.push(response.data);
+        	this.loadStatus(1);
 			this.setEmptyLocation();
 		}, (error) => {
 			console.log("Error while creating a status.");

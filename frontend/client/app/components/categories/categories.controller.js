@@ -12,7 +12,9 @@ class CategoriesController {
 		this.categoryService.create(this.category).then( (response) => {
 			console.log("Added a category!");
 			this.categories.push(response.data);
+        	this.loadCategories(1);
 			this.setEmptyLocation();
+
 		}, (error) => {
 			console.log("Error while creating a category.");
 		});

@@ -7,10 +7,10 @@ export default class BaseService {
 	}
 
 	get(url) {
-		return this.$http.get(this.ENV.APIURL + url);
+		return this.$http.get(this.ENV.API_URL + url);
 	}
 
 	post(url, data) {
-		return this.$http.post(this.ENV.APIURL + url, JSON.stringify(data));
+		return this.$http.post(this.ENV.API_URL + url, JSON.stringify(data));
 	}
 }

@@ -1,26 +1,35 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
-    <title>Inventura</title>
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <!--Import Google Icon Font-->
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
-    <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-    <base href="/">
-  </head>
-  <body ng-app="app" ng-strict-di ng-cloak>
-    <app>
-      Loading...
-    </app>
-    <!--Import jQuery before materialize.js-->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+     <title>Inventura</title>
+
+      <meta name="mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+      <base href="/">
+
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+</head>
+<body ng-app="app" ng-strict-di ng-cloak>
+    <div class="container">
+        <app>
+            <div class="center-align">
+                <div class="preloader-wrapper big active">
+                    <div class="spinner-layer">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </app>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-  </body>
+</body>
 </html>

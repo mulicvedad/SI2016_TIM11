@@ -1,0 +1,27 @@
+<nav>
+    <div class="nav-wrapper">
+        <a ui-sref="home" class="brand-logo">Inventura</a>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+            <li><a ui-sref="home">Početna</a></li>
+            <li><a ui-sref="accounts">Korisnici</a></li>
+            <li><a ui-sref="locations">Lokacije</a></li>
+            <li><a ui-sref="locationTypes">Tipovi lokacija</a></li>
+            <li><a ui-sref="categories">Kategorije</a></li>
+            <li><a ui-sref="status">Status</a></li>
+            <li><a ui-sref="items">Inventurne stavke</a></li>
+        </ul>
+        <ul class="side-nav" id="nav-mobile">
+            <li><a ui-sref="home">Početna</a></li>
+            <li><a ui-sref="accounts">Korisnici</a></li>
+            <li><a ui-sref="locations">Lokacije</a></li>
+            <li><a ui-sref="locationTypes">Tipovi lokacija</a></li>
+            <li><a ui-sref="categories">Kategorije</a></li>
+            <li><a ui-sref="status">Status</a></li>
+            <li><a ui-sref="items">Inventurne stavke</a></li>
+        </ul>
+    </div>
+</nav>
+<script>
+    $('.button-collapse').sideNav();
+</script>

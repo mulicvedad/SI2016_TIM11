@@ -47,7 +47,6 @@ class AccountsController {
 		this.loadAccounts(newPage);
 	}
 
-	
 
 }
 

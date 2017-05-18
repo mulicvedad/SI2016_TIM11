@@ -10,7 +10,7 @@ let categoriesModule = angular.module('categories', [
   "ngInject";
   $stateProvider
     .state('categories', {
-      url: '/categories',
+      url: '/kategorije',
       component: 'categories'
     });
 })

@@ -7,16 +7,20 @@ import statusService from './statusService';
 import locationService from './locationService';
 import itemService from './itemService';
 import itemCRDService from './itemCRDService';
+import sessionService from './sessionService';
+import jwtService from './jwtService';
 
 export default angular
   .module('app.services', [])
   .service({
-  	baseService,
+    baseService,
     accountService,
     categoryService,
     statusService,
     locationTypeService,
     locationService,
     itemService,
-    itemCRDService
+    itemCRDService,
+    sessionService,
+    jwtService
 }).name;

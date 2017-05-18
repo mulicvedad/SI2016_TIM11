@@ -7,16 +7,18 @@ import Categories from './categories/categories';
 import Status from './status/status';
 import Items from './items/items';
 import ItemsCRD from './itemsCRD/itemsCRD';
+import Login from './login/login';
 
 let Components = angular.module('app.components', [
-  Home,
-  Accounts,
-  Locations,
-  Categories,
-  Status,
-  LocationTypes,
-  Items,
-  ItemsCRD    
+    Home,
+    Accounts,
+    Locations,
+    Categories,
+    Status,
+    LocationTypes,
+    Items,
+    ItemsCRD,
+    Login  
 ])
 .name;
 

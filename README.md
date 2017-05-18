@@ -1,6 +1,6 @@
 # Inventory (academic year 2016/17)
 
-## Team Members SI-11 
+## Team Members SI-11  -  SI-9
 
 * Parić Muhamed
 * Pejčinović Dario

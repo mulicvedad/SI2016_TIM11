@@ -10,7 +10,7 @@ let locationsModule = angular.module('locations', [
   "ngInject";
   $stateProvider
     .state('locations', {
-      url: '/locations',
+      url: '/lokacije',
       component: 'locations'
     });
 })

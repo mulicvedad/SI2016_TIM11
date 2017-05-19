@@ -1,53 +1,77 @@
 <h3 class="center">Kategorije</h3>
-
 <div class="card-panel teal lighten-5">
-<div class="row">
-<h5>Kreiranje nove kategorije</h5>
-<br>
-<form class="col s12" name="form">
-            <div class="row">
-                <div class="input-field col s12">
-                    <label for="categoryName">Naziv</label>
-                    <input type="text" class="validate" placeholder="Naziv" ng-model="$ctrl.category.name" ng-pattern="/^[a-zA-Z0-9-,\&\s]{4,500}$/" name="categoryName" required> </div>
-
-                <span style="color:red" ng-show="form.categoryName.$error.required">  *Name is required.</span>
-                <span style="color:red" ng-show="form.categoryName.$error.pattern"> *Invalid input format.</span>
-
+   <div class="row">
+      <h5>Kreiranje nove kategorije</h5>
+      <br>
+      <form class="col s12" name="form">
+         <div class="row">
+            <div class="input-field col s12">
+               <label for="categoryName">Naziv</label>
+               <input type="text" class="validate" placeholder="Naziv" ng-model="$ctrl.category.name" ng-pattern="/^[a-zA-Z0-9-,\&\s]{4,500}$/" name="categoryName" required> 
             </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    <select class="browser-default" ng-model="$ctrl.category.parentId">
-                        <option value="null" selected>Bez parent kategorije</option>
-                        <option ng-repeat="category in $ctrl.categories" value="{{ category.id }}" >
-                            {{ category.name }}
-                        </option>
-                    </select>
-                </div>
+            <span style="color:red" ng-show="form.categoryName.$error.required">  *Name is required.</span>
+            <span style="color:red" ng-show="form.categoryName.$error.pattern"> *Invalid input format.</span>
+         </div>
+         <div class="row">
+            <div class="input-field col s12">
+               <select class="browser-default" ng-model="$ctrl.category.parentId">
+                  <option value="null" selected>Bez parent kategorije</option>
+                  <option ng-repeat="category in $ctrl.categories" value="{{ category.id }}" >
+                     {{ category.name }}
+                  </option>
+               </select>
             </div>
-            <br>
-            <button class="btn waves-effect waves-light right" data-ng-click="$ctrl.registerCategory()" name="action">Kreiraj</button>
-        </form>
-        </div>
+         </div>
+         <br>
+         <button class="btn waves-effect waves-light right" data-ng-click="$ctrl.registerCategory()" name="action">Kreiraj</button>
+      </form>
+   </div>
 </div>
 <br>
 <br>
 <h5>Lista kategorija</h5>
-    <div class="row">
-    <div class="col s2"><h5>Pretraga:</h5></div>
-    <div class="col s10">
-        <input type="text" class="validate" placeholder="Pojam" ng-model="searchText" ng-change="$ctrl.filter(this.searchText)" ng-model-options="{ debounce:200 }"> </div>
-    </div>
-        <table class="striped">
-            <tr>
-                <th>Naziv</th>
-                <th>Nadkategorija</th>
-            </tr>
-            <tr ng-repeat="category in $ctrl.categories">
-                <td>{{ category.name }}</td>
-                <td>{{ category.parent }}</td>
-            </tr>
-     </table>
-</div>
 <div class="row">
-    <!-- Samo bezveze da imam neki div da ne bude tabela skroz na kraju  -->
+   <div class="col s2">
+      <h5>Pretraga:</h5>
+   </div>
+   <div class="col s10">
+      <input type="text" class="validate" placeholder="Pojam" ng-model="searchText" ng-change="$ctrl.filter(this.searchText)" ng-model-options="{ debounce:200 }"> 
+   </div>
+</div>
+
+<table class="striped">
+   <tr>
+      <th>Naziv</th>
+      <th>Nadkategorija</th>
+      <th>Akcija</th>
+   </tr>
+   <tr ng-repeat="category in $ctrl.categories">
+      <td>{{ category.name }}</td>
+      <td>{{ category.parent }}</td>
+      <td>  
+         <button type="button" ng-click="ctrl.edit(category.id)" class="btn waves-effect waves-light green">Promijeni</button>  
+         <button type="button" ng-click="ctrl.remove(category.id)" class="btn waves-effect waves-light red">Izbriš</button>
+      </td>
+   </tr>
+</table>
+
+<div class="center">
+   Page: <strong>{{$ctrl.number}}</strong>
+   <button class="pageBtn" ng-click="$ctrl.goto(1)" ng-disabled="$ctrl.number == 1"> << </button>
+   <button class="pageBtn" ng-click="$ctrl.goto($ctrl.number-1)" ng-disabled="$ctrl.number <= 1"> < </button>
+   <snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number !=1" ng-repeat="page in $ctrl.totalPages">
+      <button class="pageBtn" ng-if="$ctrl.number!=$ctrl.totalPages.length && page >= $ctrl.number -1 && page <= $ctrl.number +1" ng-disabled="$ctrl.number == page">{{page}}</button>
+   </snap>
+   <snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number !=1" ng-repeat="page in $ctrl.totalPages">
+      <button class="pageBtn" ng-if="$ctrl.number==$ctrl.totalPages.length && page >= $ctrl.number -2 && page <= $ctrl.number +1" ng-disabled="$ctrl.number == page">{{page}}</button>
+   </snap>
+   <snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number ==1" ng-repeat="page in $ctrl.totalPages">
+      <button class="pageBtn" class="pageBtn" ng-if="page >= $ctrl.number -1 && page <= $ctrl.number +2" ng-disabled="$ctrl.number == page">{{page}}</button>
+   </snap>
+   <button class="pageBtn" ng-click="$ctrl.goto($ctrl.number+1)" ng-disabled="$ctrl.number > $ctrl.totalPages.length-1"> > </button>
+   <button class="pageBtn" ng-click="$ctrl.goto($ctrl.totalPages.length)" ng-disabled="$ctrl.totalPages.length==0 || $ctrl.number == $ctrl.totalPages.length"> >> </button>
+</div>
+
+<div class="row">
+   <!-- Samo bezveze da imam neki div da ne bude tabela skroz na kraju  -->
 </div>

@@ -96,5 +96,6 @@ public class TokenAuthenticationService {
 
 	        return userReq != null ? new UsernamePasswordAuthenticationToken(userReq, null, grantedAuthorities) : null;
         }
+        return null;
     }
 }

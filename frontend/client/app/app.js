@@ -4,7 +4,6 @@ import Components from './components/components';
 import AppComponent from './app.component';
 import services from './services/services';
 import env from './env';
-//import CustomDirectives from './directives/customDirectives';
 import ShowAuthenticated from './directives/showAuthenticated/showAuthenticated.directive';
 import ShowForRole from './directives/showForRole/showForRole.directive';
 import authInterceptor  from './interceptors/auth.interceptor';

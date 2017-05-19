@@ -6,12 +6,11 @@ export default class JwtService {
     }
 
     saveToken(jwt){
-        console.log('Session service ');
-        this.$window.localStorage.setItem('user.jwt', jwt);
+        this.$window.localStorage.setItem('user.jwt', JSON.stringify(jwt));
     }
 
     getToken(){
-        return this.$window.localStorage.getItem('user.jwt');
+        return JSON.parse(this.$window.localStorage.getItem('user')).jwt;
     }
 
     destroyToken(){

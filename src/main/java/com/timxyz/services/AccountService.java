@@ -48,4 +48,10 @@ public class AccountService extends BaseService<Account, AccountRepository> {
     public List<Account> getByPartOfEmail(String partOfEmail) {
         return repository.findByEmailContaining(partOfEmail);
     }
+
+    public Account getByUsername(String username) {
+        return repository.findByUsername(username);
+    }
+
+    
 }

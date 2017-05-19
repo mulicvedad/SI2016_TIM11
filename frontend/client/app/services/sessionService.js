@@ -3,12 +3,12 @@ export default class SessionService {
 
     constructor($window, $state){
         this.$window = $window;
-        this.currentUser = $window.localStorage.getItem('user');
+        this.currentUser = JSON.parse($window.localStorage.getItem('user'));
         this.$state = $state;
     }
 
     startSession(authServerResponse){
-        this.$window.localStorage.setItem('user', authServerResponse);
+        this.$window.localStorage.setItem('user', JSON.stringify(authServerResponse));
         this.currentUser = authServerResponse;
     }
 

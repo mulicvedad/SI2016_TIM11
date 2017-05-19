@@ -10,7 +10,7 @@ class LoginController {
 
     login(){
         this.accountService.login(this.user).then((response) => {
-            this.loginSuccess(response.content);
+            this.loginSuccess(response.data);
         },
         (error) => {
             this.loginFailure(error);
@@ -20,13 +20,15 @@ class LoginController {
 
     loginSuccess(responseContent){
         this.loginError = '';
+        console.log("odgovor tebra: " + JSON.stringify(responseContent));
         this.sessionService.startSession(responseContent);
         this.$state.go('home');
     }
 
     loginFailure(errors){
-        //tmp
-        this.loginError=JSON.stringify(errors);
+        // treba dodati jednostavni prikaz errora
+        this.loginError = JSON.stringify(errors);
+        console.log(JSON.stringify(error));
     }
 }
 

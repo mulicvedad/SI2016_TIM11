@@ -1,77 +1,81 @@
 <h3>Korisnički računi</h3>
-
+<br>
 <div class="row">
-	<div class="col s6">
-		<h4>Lista korisnika</h4>
-		<table class="striped">
-			<tr>
-				<th>Ime i prezime</th>
-				<th>Email</th>
-				<th>Rola</th>
-			</tr>
-			<tr ng-repeat="account in $ctrl.accounts">
-				<td>{{ account.fullName }}</td>
-				<td>{{ account.email }}</td>
-				<td>{{ account.role.id }}</td>
-			</tr>
-		</table>
-		<div class="center">
-				Page: <strong>{{$ctrl.number}}</strong>
-				|
-				<button class="pageBtn" ng-click="$ctrl.goto(1)" ng-disabled="$ctrl.number == 1"> << </button>
-				<button class="pageBtn" ng-click="$ctrl.goto($ctrl.number-1)" ng-disabled="$ctrl.number <= 1"> < </button>
-				<snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number !=1" ng-repeat="page in $ctrl.totalPages"><button class="pageBtn" ng-if="$ctrl.number!=$ctrl.totalPages.length && page >= $ctrl.number -1 && page <= $ctrl.number +1" ng-disabled="$ctrl.number == page">{{page}}</button></snap>
-				<snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number !=1" ng-repeat="page in $ctrl.totalPages"><button class="pageBtn" ng-if="$ctrl.number==$ctrl.totalPages.length && page >= $ctrl.number -2 && page <= $ctrl.number +1" ng-disabled="$ctrl.number == page">{{page}}</button></snap>
-				<snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number ==1" ng-repeat="page in $ctrl.totalPages"><button class="pageBtn" class="pageBtn" ng-if="page >= $ctrl.number -1 && page <= $ctrl.number +2" ng-disabled="$ctrl.number == page">{{page}}</button></snap>
 
-				<button class="pageBtn" ng-click="$ctrl.goto($ctrl.number+1)" ng-disabled="$ctrl.number > $ctrl.totalPages.length-1"> > </button>
-				<button class="pageBtn" ng-click="$ctrl.goto($ctrl.totalPages.length)" ng-disabled="$ctrl.totalPages.length==0 || $ctrl.number == $ctrl.totalPages.length"> >> </button>
-		</div>
-
-	</div>
-	<div class="col s6" style="border-left:1px solid black;">
-
-		<h4>Registracija korisnika</h4>
-
-		<form class="col s12">
-	      <div class="row">
-	        <div class="input-field col s12">
-	          <input type="text" class="validate" placeholder="Ime i prezime" ng-model="$ctrl.account.fullName">
-	        </div>
-	      </div>
-	      <div class="row">
-	        <div class="input-field col s12">
-	          <input type="text" class="validate" placeholder="Username" ng-model="$ctrl.account.username">
-	        </div>
-	      </div>
-	      <div class="row">
-	        <div class="input-field col s12">
-	          <input type="email" class="validate" placeholder="Email" ng-model="$ctrl.account.email">
-	        </div>
-	      </div>
-	      <div class="row">
-	        <div class="input-field col s12">
-	          <input type="password" class="validate" placeholder="Password" ng-model="$ctrl.account.password">
-	        </div>
-	      </div>
-	    <!--  <div class="row">
-		      <div class="input-field col s12">
-			    <select>
-			      <option value="" disabled selected>Izaberite rolu</option>
-			      <option value="1">Admin</option>
-			      <option value="1">Admin isto</option>
-			      <option value="1">Admin x3</option>
-			    </select>
-			    <label>Rola</label>
-			  </div>
-		  </div> -->
-
-		  <button class="btn waves-effect waves-light right"  data-ng-click="$ctrl.registerAccount()" name="action">Registruj</button>
-
-
-	    </form>
-
+	<form  class="col s12" id="forma">
+		<h5>Registracija korisnika</h5>
+      	<div class="input-field col s12">
+      	 	<label>Ime i prezime</label>
+	        	<input type="text" class="validate" placeholder="Ime i prezime" ng-model="$ctrl.account.fullName">
+			</div>
+	   	<div class="input-field col s12">
+	    	<label>Username</label>
+	       	<input type="text" class="validate" placeholder="Username" ng-model="$ctrl.account.username">
+	    </div>
+	 	<div class="input-field col s12">
+	 		<label>Email</label>
+	        <input type="email" class="validate" placeholder="Email" ng-model="$ctrl.account.email">
+	    </div>
+	    <div class="input-field col s12">
+	    	<label>Password</label>
+	       	<input type="password" class="validate" placeholder="Password" ng-model="$ctrl.account.password">
+	    </div>
+		<label>Rola</label>
+	    <div class="row">
+            <div class="input-field col s12">
+                <select class="browser-default">
+			        <option value="" disabled selected>Izaberite rolu</option>
+                    <option value="1">Admin</option>
+			    	<option value="2">Drugi</option>
+			    	<option value="3">Treci</option>
+                </select>
+            </div>
+        </div>
+		<br>
+		<button class="btn waves-effect waves-light right"  data-ng-click="$ctrl.registerAccount()" name="action">Registruj
+		</button>
 		<br><br>
-
+	</form>
+<br><br>
+</div>
+<div class="row">
+	<h5>Lista korisnika</h5>
+	<table class="striped">
+		<tr>
+			<th>#</th>
+			<th>Ime i prezime</th>
+			<th>Korisničko ime</th>
+			<th>Email</th>
+			<th>Rola</th>
+			<th>Akcija</th>
+		</tr>
+		<tr ng-repeat="account in $ctrl.accounts">
+			<td>1</td>
+			<td>{{ account.fullName }}</td>
+			<td>{{ account.username }}</td>
+			<td>{{ account.email }}</td>
+			<td>{{ account.role.id }}</td>
+			<td>  
+				<button type="button" ng-click="ctrl.edit(u.id)" class="btn btn-success custom-width">Promijeni</button>  
+				<button type="button" ng-click="ctrl.remove(u.id)" class="btn btn-danger custom-width">Izbriš</button>
+			</td>
+		</tr>
+	</table>
+	<div class="center">Page: <strong>{{$ctrl.number}}</strong>
+		
+		<button class="pageBtn" ng-click="$ctrl.goto(1)" ng-disabled="$ctrl.number == 1"> << </button>
+		<button class="pageBtn" ng-click="$ctrl.goto($ctrl.number-1)" ng-disabled="$ctrl.number <= 1"> < </button>
+		<snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number !=1" ng-repeat="page in $ctrl.totalPages">
+			<button class="pageBtn" ng-if="$ctrl.number!=$ctrl.totalPages.length && page >= $ctrl.number -1 && page <= $ctrl.number +1" ng-disabled="$ctrl.number == page">{{page}}</button>
+		</snap>	
+		<snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number !=1" ng-repeat="page in $ctrl.totalPages">
+		<button class="pageBtn" ng-if="$ctrl.number==$ctrl.totalPages.length && page >= $ctrl.number -2 && page <= $ctrl.number +1" ng-disabled="$ctrl.number == page">{{page}}</button>
+		</snap>
+		<snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number ==1" ng-repeat="page in $ctrl.totalPages">
+			<button class="pageBtn" class="pageBtn" ng-if="page >= $ctrl.number -1 && page <= $ctrl.number +2" ng-disabled="$ctrl.number == page">{{page}}</button>
+		</snap>
+		<button class="pageBtn" ng-click="$ctrl.goto($ctrl.number+1)" ng-disabled="$ctrl.number > $ctrl.totalPages.length-1"> > </button>
+		<button class="pageBtn" ng-click="$ctrl.goto($ctrl.totalPages.length)" ng-disabled="$ctrl.totalPages.length==0 || $ctrl.number == $ctrl.totalPages.length"> >> </button>
 	</div>
 </div>
+

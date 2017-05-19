@@ -30,22 +30,21 @@ class AccountsController {
 	}*/
 
 	loadAccounts(page) {
-			this.accountService.getPage(page).then( (response) => {
-					this.accounts = response.data.content;
-					this.number = response.data.number+1;
-					this.totalPages = new Array(response.data.totalPages);
-					for(var i = 0; i< response.data.totalPages; i++)
-		{
-			this.totalPages[i]=i+1;
-		}
-			console.log(response.data);
-	} );
+		this.accountService.getPage(page).then( (response) => {
+			this.accounts = response.data.content;
+			this.number = response.data.number+1;
+			this.totalPages = new Array(response.data.totalPages);
+			for(var i = 0; i< response.data.totalPages; i++)		{
+				this.totalPages[i]=i+1;
+			}
+		console.log(response.data);
+		} );
 	}
 
 	goto(newPage)
-{
-			this.loadAccounts(newPage);
-}
+	{
+		this.loadAccounts(newPage);
+	}
 
 }
 

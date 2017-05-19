@@ -15,7 +15,7 @@ public class AccountController extends BaseController<Account, AccountService> {
     @ResponseBody
     public ResponseEntity create(@RequestBody @Valid AccountCreateForm newAccount) {
         try {
-            // Maps our DTO (data transfer object) to the proper Account class after the
+            ///@Valid AccountCreateForm Maps our DTO (data transfer object) to the proper Account class after the
             // validations in our DTO (AccountCreateForm) have passed
             Account acc = modelMapper.map(newAccount, Account.class);
             acc.setId(null); // modelMapper somehow seems to map the roleId field to Id...which shouldn't happen

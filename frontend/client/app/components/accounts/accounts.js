@@ -10,7 +10,7 @@ let accountsModule = angular.module('accounts', [
   "ngInject";
   $stateProvider
     .state('accounts', {
-      url: '/accounts',
+      url: '/racuni',
       component: 'accounts'
     });
 })

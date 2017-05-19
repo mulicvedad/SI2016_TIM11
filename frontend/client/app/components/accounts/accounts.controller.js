@@ -46,6 +46,7 @@ class AccountsController {
 		this.loadAccounts(newPage);
 	}
 
+
 }
 
 export default AccountsController;

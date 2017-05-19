@@ -10,7 +10,7 @@ let locationTypesModule = angular.module('locationTypes', [
   "ngInject";
   $stateProvider
     .state('locationTypes', {
-      url: '/locationTypes',
+      url: '/tipovi-lokacija',
       component: 'locationTypes'
     });
 })

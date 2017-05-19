@@ -10,5 +10,6 @@ import java.util.List;
 public interface AccountRepository extends PagingAndSortingRepository<Account, Long> {
     Account findFirstByEmail(String email);
     Account findFirstByEmailOrUsername(String email, String username);
+    Account findByUsername(String username);
     List<Account> findByEmailContaining(String partOfEmail);
 }

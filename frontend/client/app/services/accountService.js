@@ -13,4 +13,13 @@ export default class AccountService extends BaseService {
 	{
 		return super.get('accounts/page/'+page);
 	}
+
+	login(user){
+		return super.post('login', user);
+	}
+	
+	logout(){
+		//remove user data from local storage
+		//or use jwt library from auth0
+	}
 }

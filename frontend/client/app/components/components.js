@@ -7,6 +7,7 @@ import Categories from './categories/categories';
 import Status from './status/status';
 import Items from './items/items';
 import ItemsCRD from './itemsCRD/itemsCRD';
+import Login from './login/login';
 import Navbar from './navbar/navbar';
 
 let Components = angular.module('app.components', [
@@ -18,7 +19,8 @@ let Components = angular.module('app.components', [
   LocationTypes,
   Items,
   ItemsCRD,
-  Navbar
+  Navbar,
+  Login
 ])
 .name;
 

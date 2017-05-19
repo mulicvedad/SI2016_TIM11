@@ -44,8 +44,9 @@ class AccountsController {
 
 	goto(newPage)
 	{
-				this.loadAccounts(newPage);
+		this.loadAccounts(newPage);
 	}
+
 
 }
 

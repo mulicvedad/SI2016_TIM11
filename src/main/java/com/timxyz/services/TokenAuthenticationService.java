@@ -40,6 +40,7 @@ public class TokenAuthenticationService {
     static final String FIELD_NAME_TOKEN = "jwt";
     static final String FIELD_NAME_ROLE = "role";
     static final String FIELD_NAME_USERNAME = "username";
+    static final String HEADER_STRING = "Authorization";
 
     //ovdje cemo morati dodati uloge u odgovor da bi na klijentskoj strani znali privilegije
     public static void addAuthentication(HttpServletRequest req,
@@ -60,9 +61,9 @@ public class TokenAuthenticationService {
         res.addHeader(HEADER_CORS, ALLOWED_ORIGIN);
 
         JsonObjectBuilder objectBuilder = Json.createObjectBuilder()
-        .add(FIELD_NAME_USERNAME, username)
-        .add(FIELD_NAME_TOKEN, JWT)
-        .add(FIELD_NAME_ROLE, account.getRole().getName());
+        	.add(FIELD_NAME_USERNAME, username)
+            .add(FIELD_NAME_TOKEN, JWT)
+            .add(FIELD_NAME_ROLE, account.getRole().getName());
 
         JsonObject responseObj = objectBuilder.build();
         logger.info(responseObj.toString());
@@ -77,26 +78,23 @@ public class TokenAuthenticationService {
 
         String token = request.getHeader(HEADER_STRING);
         if (token != null) {
-        
             String userReq = Jwts.parser()
                 .setSigningKey(SECRET)
                 .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
                 .getBody()
                 .getSubject();
 
-        Account account = accountRepository.findByUsername(userReq);
+            Account account = accountRepository.findByUsername(userReq);
 
-        Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+            Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
-        if (account != null) {
-            grantedAuthorities.add(new SimpleGrantedAuthority(account.getRole().getName()));
-        }     
+	        if (account != null) {
+	            grantedAuthorities.add(new SimpleGrantedAuthority(account.getRole().getName()));
+	        }     
 
-        logger.info(grantedAuthorities.toArray()[0].toString());
+	        logger.info(grantedAuthorities.toArray()[0].toString());
 
-        return userReq != null ?
-            new UsernamePasswordAuthenticationToken(userReq, null, grantedAuthorities) : 
-            null;
+	        return userReq != null ? new UsernamePasswordAuthenticationToken(userReq, null, grantedAuthorities) : null;
         }
     }
 }

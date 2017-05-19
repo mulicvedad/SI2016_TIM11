@@ -1,21 +1,18 @@
 class LoginController {
     static $inject = ['accountService', '$state', 'sessionService'];
-    static br = 0;
-    static br2 = 0;
-    constructor(accountService, $state, sessionService){
+
+    constructor(accountService, $state, sessionService) {
         this.accountService = accountService;
         this.$state = $state;
         this.sessionService = sessionService;
     }
 
-    login(){
+    login() {
         this.accountService.login(this.user).then((response) => {
             this.loginSuccess(response.data);
-        },
-        (error) => {
+        }, (error) => {
             this.loginFailure(error);
-        }
-        );
+        });
     }
 
     loginSuccess(responseContent){
@@ -25,7 +22,7 @@ class LoginController {
         this.$state.go('home');
     }
 
-    loginFailure(errors){
+    loginFailure(errors) {
         // treba dodati jednostavni prikaz errora
         this.loginError = JSON.stringify(errors);
         console.log(JSON.stringify(error));

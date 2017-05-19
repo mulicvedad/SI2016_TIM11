@@ -20,7 +20,7 @@
 		   
 		 	<div class="input-field col s12">
 		 		<label for="email">Email</label>
-		        <input type="email" class="validate" ng-model="$ctrl.account.email"	ng-pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,\&\s]{5,40}$/" name="email" required>
+		        <input type="email" class="validate" ng-model="$ctrl.account.email"	ng-pattern="/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" name="email" required>
 		    	<span style="color:red" ng-show="forma.email.$error.required">  *Obavezan podatak.</span>
             	<span style="color:red" ng-show="forma.email.$error.pattern"> *Nevalidan format.</span>
 		    </div>

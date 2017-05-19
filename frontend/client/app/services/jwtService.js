@@ -6,14 +6,27 @@ export default class JwtService {
     }
 
     saveToken(jwt){
-        this.$window.localStorage.setItem('user.jwt', JSON.stringify(jwt));
+        let user = JSON.parse(this.$window.localStorage.getItem('user'));
+        //do ovoga ne bi ni trebalo doci
+        if (!user) {
+            user = {};
+        }
+        user.jwt = jwt;
+        this.$window.localStorage.setItem('user', JSON.stringify(user));
     }
 
     getToken(){
-        return JSON.parse(this.$window.localStorage.getItem('user')).jwt;
+        let user = JSON.parse(this.$window.localStorage.getItem('user'));
+        return user != null ? user.jwt : null;
     }
 
     destroyToken(){
-        this.$window.localStorage.setItem('user.jwt', null);
+        let user = JSON.parse(this.$window.localStorage.getItem('user'));
+        //do ovoga ne bi ni trebalo doci
+        if (!user) {
+            user = {};
+        }
+        user.jwt = null;
+        this.$window.localStorage.setItem('user', JSON.stringify(user));
     }
 }

@@ -1,64 +1,71 @@
 <h3 class="center">Lokacije</h3>
+<div class="card-panel teal lighten-5">
+   <div class="row">
+      <h5>Kreiranje nove lokacije</h5>
+      <br>
+      <form class="col s12">
+         <div class="row">
+            <div class="input-field col s12">
+               <input type="text" class="validate" placeholder="Naziv" ng-model="$ctrl.location.name"> 
+            </div>
+         </div>
+         <div class="row">
+            <div class="input-field col s12">
+               <select class="browser-default" ng-model="$ctrl.location.parentId">
+                  <option value="null" selected>Bez parent lokacije</option>
+                  <option ng-repeat="location in $ctrl.locations" value="{{ location.id }}" >
+                     {{ location.name }}
+                  </option>
+               </select>
+            </div>
+         </div>
+         <div class="row">
+            <div class="input-field col s12">
+               <select class="browser-default" ng-model="$ctrl.location.typeId">
+                  <option value="" disabled selected>Izaberite tip</option>
+                  <option ng-repeat="type in $ctrl.locationTypes" value="{{ type.id }}" >
+                     {{ type.name }}
+                  </option>
+               </select>
+            </div>
+         </div>
+         <br>
+         <button class="btn waves-effect waves-light right" data-ng-click="$ctrl.registerLocation()" name="action">Kreiraj</button>
+      </form>
+   </div>
+</div>
 <div class="row">
-    <div class="col s6">
-        <h4>Lista lokacija</h4>
-        <table class="striped">
-            <tr>
-                <th>Naziv</th>
-                <th>Nadlokacija</th>
-                <th>Tip</th>
-            </tr>
-            <tr ng-repeat="location in $ctrl.locations">
-                <td>{{ location.name }}</td>
-                <td>{{ location.parent }}</td>
-                <td>{{ location.type }}</td>
-            </tr>
-        </table>
-        <div class="center">
-            Page: <strong>{{$ctrl.number}}</strong>
-            |
-            <button class="pageBtn" ng-click="$ctrl.goto(1)" ng-disabled="$ctrl.number == 1"> << </button>
-            <button class="pageBtn" ng-click="$ctrl.goto($ctrl.number-1)" ng-disabled="$ctrl.number <= 1"> < </button>
-            <snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number !=1" ng-repeat="page in $ctrl.totalPages"><button class="pageBtn" ng-if="$ctrl.number!=$ctrl.totalPages.length && page >= $ctrl.number -1 && page <= $ctrl.number +1" ng-disabled="$ctrl.number == page">{{page}}</button></snap>
-            <snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number !=1" ng-repeat="page in $ctrl.totalPages"><button class="pageBtn" ng-if="$ctrl.number==$ctrl.totalPages.length && page >= $ctrl.number -2 && page <= $ctrl.number +1" ng-disabled="$ctrl.number == page">{{page}}</button></snap>
-            <snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number ==1" ng-repeat="page in $ctrl.totalPages"><button class="pageBtn" class="pageBtn" ng-if="page >= $ctrl.number -1 && page <= $ctrl.number +2" ng-disabled="$ctrl.number == page">{{page}}</button></snap>
-
-            <button class="pageBtn" ng-click="$ctrl.goto($ctrl.number+1)" ng-disabled="$ctrl.number > $ctrl.totalPages.length-1"> > </button>
-            <button class="pageBtn" ng-click="$ctrl.goto($ctrl.totalPages.length)" ng-disabled="$ctrl.totalPages.length==0 || $ctrl.number == $ctrl.totalPages.length"> >> </button>
-        </div>
-    </div>
-    <div class="col s6" style="border-left:1px solid black;">
-        <h4>Kreiranje nove lokacije</h4>
-        <form class="col s12">
-            <div class="row">
-                <div class="input-field col s12">
-                    <input type="text" class="validate" placeholder="Naziv" ng-model="$ctrl.location.name"> </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                   <select class="browser-default" ng-model="$ctrl.location.parentId">
-                        <option value="null" selected>Bez parent lokacije</option>
-                        <option ng-repeat="location in $ctrl.locations" value="{{ location.id }}" >
-                            {{ location.name }}
-                        </option>
-                    </select>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    <select class="browser-default" ng-model="$ctrl.location.typeId">
-			            <option value="" disabled selected>Izaberite tip</option>
-                        <option ng-repeat="type in $ctrl.locationTypes" value="{{ type.id }}" >
-                            {{ type.name }}
-                        </option>
-                    </select>
-                </div>
-            </div>
-            <br>
-            <br>
-            <br>
-            <button class="btn waves-effect waves-light right" data-ng-click="$ctrl.registerLocation()" name="action">Kreiraj</button>
-        </form>
-        <br>
-        <br> </div>
+<div class="col s12">
+<br>
+<br>
+   <h5>Lista lokacija</h5>
+   <table class="striped">
+      <tr>
+         <th>Naziv</th>
+         <th>Nadlokacija</th>
+         <th>Tip</th>
+         <th>Akcija</th>
+      </tr>
+      <tr ng-repeat="location in $ctrl.locations">
+         <td>{{ location.name }}</td>
+         <td>{{ location.parent }}</td>
+         <td>{{ location.type }}</td>
+         <td>  
+            <button type="button" ng-click="ctrl.edit(category.id)" class="btn waves-effect waves-light green">Promijeni</button>  
+            <button type="button" ng-click="ctrl.remove(category.id)" class="btn waves-effect waves-light red">Izbriš</button>
+         </td>
+      </tr>
+   </table>
+   <div class="center">
+      Page: <strong>{{$ctrl.number}}</strong>
+      |
+      <button class="pageBtn" ng-click="$ctrl.goto(1)" ng-disabled="$ctrl.number == 1"> << </button>
+      <button class="pageBtn" ng-click="$ctrl.goto($ctrl.number-1)" ng-disabled="$ctrl.number <= 1"> < </button>
+      <snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number !=1" ng-repeat="page in $ctrl.totalPages"><button class="pageBtn" ng-if="$ctrl.number!=$ctrl.totalPages.length && page >= $ctrl.number -1 && page <= $ctrl.number +1" ng-disabled="$ctrl.number == page">{{page}}</button></snap>
+      <snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number !=1" ng-repeat="page in $ctrl.totalPages"><button class="pageBtn" ng-if="$ctrl.number==$ctrl.totalPages.length && page >= $ctrl.number -2 && page <= $ctrl.number +1" ng-disabled="$ctrl.number == page">{{page}}</button></snap>
+      <snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number ==1" ng-repeat="page in $ctrl.totalPages"><button class="pageBtn" class="pageBtn" ng-if="page >= $ctrl.number -1 && page <= $ctrl.number +2" ng-disabled="$ctrl.number == page">{{page}}</button></snap>
+      <button class="pageBtn" ng-click="$ctrl.goto($ctrl.number+1)" ng-disabled="$ctrl.number > $ctrl.totalPages.length-1"> > </button>
+      <button class="pageBtn" ng-click="$ctrl.goto($ctrl.totalPages.length)" ng-disabled="$ctrl.totalPages.length==0 || $ctrl.number == $ctrl.totalPages.length"> >> </button>
+   </div>
+</div>
 </div>

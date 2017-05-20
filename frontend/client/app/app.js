@@ -26,7 +26,6 @@ angular.module('app', [
 .directive('showForRole', ShowForRole)
 .run((sessionService, $state, $transitions) => {
     "ngInject";
-    sessionService.destroySession();
     $transitions.onStart({ }, (trans) => {
         if (!sessionService.isUserLoggedIn()) {
             $state.go('login');

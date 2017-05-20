@@ -2,7 +2,7 @@
 
 <div class="card-panel teal lighten-5">
 	<h5>Novi korisnički račun</h5>
-	<form ng-submit="$ctrl.registerAccount()" name="form" novalidate>
+	<form ng-submit="form.$valid && $ctrl.registerAccount()" name="form" novalidate>
 		<div class="row">
 			<div class="input-field col s12">
 				<input type="text" id="full-name" name="fullName" placeholder="Ime i prezime" ng-model="$ctrl.account.fullName" required>

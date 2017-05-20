@@ -1,34 +1,123 @@
-<h3 class="center">Pregled inventurnih stavki</h3>
-<div class="row">
-    <div class="col s2"><h5>Pretraga:</h5></div>
-    <div class="col s10">
-        <input type="text" class="validate" placeholder="Pojam" ng-model="searchText" ng-change="$ctrl.filter(this.searchText)" ng-model-options="{ debounce:200 }"> </div>
+<h3 class="center">Inventurne stavke</h3>
+
+<div class="card-panel teal lighten-5">
+    <div class="row">
+        <form  class="col s12" name="forma">
+            <h5>Unos inventurne stavke</h5>
+            
+            <div class="input-field col s12">
+                <label for="inventurni broj">Inventurni broj</label>
+                <input type="text" class="validate" ng-model="$ctrl.itemCRD.skuNumber" name="inventurni broj" required>
+                <span style="color:red" ng-show="forma.name.$error.required">  *Obavezan podatak.</span>
+                <span style="color:red" ng-show="forma.name.$error.pattern"> *Nevalidan format.</span>
+            </div>
+            
+            <div class="input-field col s12">
+                <label for="name">Naziv</label>
+                <input type="text" class="validate" ng-model="$ctrl.itemCRD.name"   ng-pattern="/^[a-zA-Z0-9-,\&\s]{2,40}$/" name="name" required>
+                <span style="color:red" ng-show="forma.name.$error.required">  *Obavezan podatak.</span>
+                <span style="color:red" ng-show="forma.name.$error.pattern"> *Nevalidan format.</span>
+            </div>
+           
+            <div class="input-field col s12">
+                <label for="jedinica">Mjerna jedinica</label>
+                <input type="text" class="validate" ng-model="$ctrl.itemCRD.unitOfMeasurement" name="jedinica" required>
+                <span style="color:red" ng-show="forma.jedinica.$error.required">  *Obavezan podatak.</span>
+                <span style="color:red" ng-show="forma.jedinica.$error.pattern"> *Nevalidan format.</span>
+            </div>
+
+    
+            <div class="input-field col s12">
+                <label for="unos">Uneseno od</label>
+                <input type="text" class="validate" ng-model="$ctrl.itemCRD.purchasedBy"  
+                name="unos" required>
+                <span style="color:red" ng-show="forma.unos.$error.required">  *Obavezan podatak.</span>
+                <span style="color:red" ng-show="forma.unos.$error.pattern"> *Nevalidan format.</span>
+            </div>
+
+             <div class="input-field col s12">
+                <label for="personResponsible">Odgovorna osoba</label>
+                <input type="text" class="validate" ng-model="$ctrl.itemCRD.personResponsible"  
+                name="personResponsible" required>
+                <span style="color:red" ng-show="forma.personResponsible.$error.required">  *Obavezan podatak.</span>
+                <span style="color:red" ng-show="forma.personResponsible.$error.pattern"> *Nevalidan format.</span>
+            </div>
+
+            <div class="input-field col s12">
+                <label for="value">Vrijednost</label>
+                <input type="text" class="validate" ng-model="$ctrl.itemCRD.value"  
+                name="value" required>
+                <span style="color:red" ng-show="forma.value.$error.required">  *Obavezan podatak.</span>
+                <span style="color:red" ng-show="forma.value.$error.pattern"> *Nevalidan format.</span>
+            </div>
+
+            <div class="input-field col s12">
+                <label for="dateOfPurchase">Datum unosa</label>
+                <input type="text" class="validate" placeholder="Ovo polje bih izbacila" ng-model=$ctrl.itemCRD.dateOfPurchas" name="dateOfPurchase" required>
+                <span style="color:red" ng-show="forma.dateOfPurchase.$error.required">  *Obavezan podatak.</span>
+                <span style="color:red" ng-show="forma.dateOfPurchase.$error.pattern"> *Nevalidan format.</span>
+            </div>
+
+             <div class="row">
+                <div class="input-field col s12">
+                    <select class="browser-default" ng-model="$ctrl.itemCRD.categoryID">
+                        <option value="" disabled selected>Izaberite kategoriju</option>
+                        <option ng-repeat="category in $ctrl.categories" value="{{ category.id }}"> {{ category.name }} </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <select class="browser-default" ng-model="$ctrl.itemCRD.locationID">
+                        <option value="" disabled selected>Izaberite lokaciju</option>
+                        <option ng-repeat="location in $ctrl.locations" value="{{ location.id }}"> {{ location.name }} </option>
+                    </select>
+                </div>
+            </div>
+
+            <br>
+            <button class="btn waves-effect waves-light right"  data-ng-click="$ctrl.registerAccount()" name="action"> Dodaj inventurnu stavku
+            </button>
+            <br><br>
+        </form>
+    <br><br>
+    </div>
 </div>
+<br><br>
 <div class="row">
-    <div class="col s12">
-        <table class="striped">
-            <tr>
-                <th>Naziv</th>
-                <th>Datum unosa</th>
-                <th>Odgovorna osoba</th>
-                <th>Uneseno od</th>
-                <th>Inventurni broj</th>
-                <th>Mjerna jedinica</th>
-                <th>Vrijednost</th>
-                <th>Kategorija</th>
-                <th>Lokacija</th>
-            </tr>
-            <tr ng-repeat="item in $ctrl.items">
-                <td>{{ item.name }}</td>
-                <td>{{ item.dateOfPurchase }}</td>
-                <td>{{ item.personResponsible }}</td>
-                <td>{{ item.purchasedBy }}</td>
-                <td>{{ item.skuNumber }}</td>
-                <td>{{ item.unitOfMeasurement }}</td>
-                <td>{{ item.value }}</td>
-                <td>{{ item.category }}</td>
-                <td>{{ item.location }}</td>
-            </tr>
-        </table>
+    <h5>Lista inventurnih stavki</h5>
+    <div class="row">
+        <div class="col s2"><h5>Pretraga:</h5></div>
+        <div class="col s10">
+            <input type="text" class="validate" placeholder="Pojam" ng-model="searchText" ng-change="$ctrl.filter(this.searchText)" ng-model-options="{ debounce:200 }"> </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <table class="striped">
+                <tr>
+                    <th>Naziv</th>
+                    <th>Datum unosa</th>
+                    <th>Odgovorna osoba</th>
+                    <th>Uneseno od</th>
+                    <th>Inventurni broj</th>
+                    <th>Mjerna jedinica</th>
+                    <th>Vrijednost</th>
+                    <th>Kategorija</th>
+                    <th>Lokacija</th>
+                </tr>
+                <tr ng-repeat="item in $ctrl.items">
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.dateOfPurchase }}</td>
+                    <td>{{ item.personResponsible }}</td>
+                    <td>{{ item.purchasedBy }}</td>
+                    <td>{{ item.skuNumber }}</td>
+                    <td>{{ item.unitOfMeasurement }}</td>
+                    <td>{{ item.value }}</td>
+                    <td>{{ item.category }}</td>
+                    <td>{{ item.location }}</td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>

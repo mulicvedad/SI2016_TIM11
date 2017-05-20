@@ -34,6 +34,8 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
     private static AccountRepository accountRepository;
     private static Logger logger = Logger.getLogger(JWTLoginFilter.class.getName());
+    static final String HEADER_CORS = "Access-Control-Allow-Origin";
+    static final String ALLOWED_ORIGIN = "http://localhost:4200";
 
     public JWTLoginFilter(String url, AuthenticationManager authManager) {
         super(new AntPathRequestMatcher(url));
@@ -43,6 +45,8 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res)
         throws AuthenticationException, IOException, ServletException {
+        
+        res.addHeader(HEADER_CORS, ALLOWED_ORIGIN);
 
         ServletContext servletContext = req.getServletContext();
         WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);

@@ -52,11 +52,11 @@
             </div>
 
              <label  class="input-field col s12" for="dateOfPurchase">Datum unosa</label>
-             <div class="input-field col s12">
-                <input type="date" class="datepicker" ng-model=$ctrl.itemCRD.dateOfPurchas" name="dateOfPurchase" required>
+ +             <div class="input-field col s12">
+ +                <input type="date" class="datepicker" ng-model="$ctrl.itemCRD.dateOfPurchas" name="dateOfPurchase" required>
                 <span style="color:red" ng-show="forma.dateOfPurchase.$error.required">  *Obavezan podatak.</span>
                 <span style="color:red" ng-show="forma.dateOfPurchase.$error.pattern"> *Nevalidan format.</span>
-             </div>
+            </div>
 
              <div class="row">
                 <div class="input-field col s12">
@@ -105,6 +105,7 @@
                     <th>Vrijednost</th>
                     <th>Kategorija</th>
                     <th>Lokacija</th>
+                    <th></th>
                 </tr>
                 <tr ng-repeat="item in $ctrl.items">
                     <td>{{ item.name }}</td>
@@ -116,6 +117,10 @@
                     <td>{{ item.value }}</td>
                     <td>{{ item.category }}</td>
                     <td>{{ item.location }}</td>
+                    <td >
+			<a ng-hide="$ctrl.shouldHide(item.dateOfPurchase)"
+                           href="#" ng-click="$ctrl.delete(item.id)"><i class="material-icons">delete</i></a>
+                    </td>
                 </tr>
             </table>
         </div>

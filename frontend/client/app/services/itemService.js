@@ -14,4 +14,8 @@ export default class ItemService extends BaseService {
     {
         return super.get('/items/search-by/filter?name='+searchedText);
     }
+    
+    delete(id) {
+		return super.delete('items/' + id);
+    }
 }

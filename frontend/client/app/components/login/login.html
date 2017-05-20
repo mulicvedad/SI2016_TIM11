@@ -7,11 +7,11 @@
             <div class="card-content">
                 <form ng-submit="$ctrl.login()">
                     <div class="input-field">
-                        <input type="text" id="username" placeholder="Korisničko ime" ng-model="$ctrl.user.username">
+                        <input type="text" id="username" placeholder="Korisničko ime" ng-model="$ctrl.user.username" required>
                         <label for="username">Korisničko ime</label>
                     </div>
                     <div class="input-field">
-                        <input type="text" id="password" placeholder="Lozinka" ng-model="$ctrl.user.password">
+                        <input type="text" id="password" placeholder="Lozinka" ng-model="$ctrl.user.password" required>
                         <label for="password">Lozinka</label>
                     </div>
                     <button class="btn" type="submit">Prijavi se</button>
@@ -19,5 +19,8 @@
                 </form>
             </div>
         </div>
+    </div>
+    <div class="col s6 offset-s3 center-align">
+        <p class="z-depth-2 red-text text-darken-3" ng-show="$ctrl.error"> <b> Greška: </b> {{$ctrl.error}} </p>
     </div>
 </div>

@@ -9,18 +9,28 @@ import ShowForRole from './directives/showForRole/showForRole.directive';
 import authInterceptor  from './interceptors/auth.interceptor';
 
 angular.module('app', [
-  uiRouter,
-  Components,
-  services
+    uiRouter,
+    Components,
+    services
 ])
 .constant('ENV', env)
 .config(($locationProvider, $httpProvider) => {
-  "ngInject";
-  // @see: https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions
-  // #how-to-configure-your-server-to-work-with-html5mode
-  $locationProvider.html5Mode(true).hashPrefix('!');
-  $httpProvider.interceptors.push(authInterceptor);
+    "ngInject";
+    // @see: https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions
+    // #how-to-configure-your-server-to-work-with-html5mode
+    $locationProvider.html5Mode(true).hashPrefix('!');
+    $httpProvider.interceptors.push(authInterceptor);
 })
 .component('app', AppComponent)
 .directive('showAuthenticated', ShowAuthenticated)
-.directive('showForRole', ShowForRole);
+.directive('showForRole', ShowForRole)
+.run((sessionService, $state, $transitions) => {
+    "ngInject";
+    sessionService.destroySession();
+    $transitions.onStart({ }, (trans) => {
+        if (!sessionService.isUserLoggedIn()) {
+            $state.go('login');
+        }
+    });
+
+});

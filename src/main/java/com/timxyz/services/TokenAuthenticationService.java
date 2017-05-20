@@ -35,8 +35,6 @@ public class TokenAuthenticationService {
     //kasnije ce se staviti prava tajna
     static final String SECRET = "ThisIsASecret";
     static final String TOKEN_PREFIX = "Bearer";
-    static final String HEADER_CORS = "Access-Control-Allow-Origin";
-    static final String ALLOWED_ORIGIN = "http://localhost:4200";
     static final String FIELD_NAME_TOKEN = "jwt";
     static final String FIELD_NAME_ROLE = "role";
     static final String FIELD_NAME_USERNAME = "username";
@@ -57,9 +55,7 @@ public class TokenAuthenticationService {
             .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
             .signWith(SignatureAlgorithm.HS512, SECRET)
             .compact();
-
-        res.addHeader(HEADER_CORS, ALLOWED_ORIGIN);
-
+            
         JsonObjectBuilder objectBuilder = Json.createObjectBuilder()
         	.add(FIELD_NAME_USERNAME, username)
             .add(FIELD_NAME_TOKEN, JWT)

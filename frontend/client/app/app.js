@@ -15,7 +15,7 @@ angular.module('app', [
 ])
 .constant('ENV', env)
 .config(($locationProvider, $httpProvider) => {
-    "ngInject";
+    'ngInject';
     // @see: https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions
     // #how-to-configure-your-server-to-work-with-html5mode
     $locationProvider.html5Mode(true).hashPrefix('!');
@@ -25,10 +25,21 @@ angular.module('app', [
 .directive('showAuthenticated', ShowAuthenticated)
 .directive('showForRole', ShowForRole)
 .run((sessionService, $state, $transitions) => {
-    "ngInject";
-    $transitions.onStart({ }, (trans) => {
+    'ngInject';
+    $transitions.onStart({ to: '*' }, (trans) => {
         if (!sessionService.isUserLoggedIn()) {
-            $state.go('login');
+            return $state.target('login');
+        }
+        else {
+            return true;
+        }
+    });
+    $transitions.onStart({ to: 'login' }, (trans) => {
+        if (sessionService.isUserLoggedIn()) {
+            return $state.target('home');
+        }
+        else {
+            return true;
         }
     });
 

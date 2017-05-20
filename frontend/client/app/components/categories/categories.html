@@ -1,35 +1,30 @@
-<h3 class="center">Kategorije</h3>
+<h4>Kategorije</h4>
+
 <div class="card-panel teal lighten-5">
-   <div class="row">
-      <h5>Kreiranje nove kategorije</h5>
-      <br>
-      <form class="col s12" name="form">
-         <div class="row">
+    <h5>Nova kategorija</h5>
+    <form ng-submit="$ctrl.registerCategory()" name="$ctrl.form" novalidate>
+        <div class="row">
             <div class="input-field col s12">
-               <label for="categoryName">Naziv</label>
-               <input type="text" class="validate" placeholder="Naziv" ng-model="$ctrl.category.name" ng-pattern="/^[a-zA-Z0-9-,\&\s]{4,500}$/" name="categoryName" required> 
+                <input type="text" id="name" name="name" placeholder="Naziv" ng-model="$ctrl.category.name" ng-pattern="/^[a-z0-9\-\,\&\s]{4,500}$/i" required>
+                <label for="name">Naziv</label>
+                <div class="user-errors" ng-show="$ctrl.form.$submitted">
+                    <span class="error" ng-show="$ctrl.form.name.$error.required">Naziv kategorije je obavezan.</span>
+                    <span class="error" ng-show="$ctrl.form.name.$error.pattern">Naziv kategorije mora sadržati između 4 i 500 znakova. Dozvoljena je upotreba slova, brojeva, povlake i razmaka.</span>
+                </div>
             </div>
-            <span style="color:red" ng-show="form.categoryName.$error.required">  *Name is required.</span>
-            <span style="color:red" ng-show="form.categoryName.$error.pattern"> *Invalid input format.</span>
-         </div>
-         <div class="row">
-            <div class="input-field col s12">
-               <select class="browser-default" ng-model="$ctrl.category.parentId">
-                  <option value="null" selected>Bez parent kategorije</option>
-                  <option ng-repeat="category in $ctrl.categories" value="{{ category.id }}" >
-                     {{ category.name }}
-                  </option>
-               </select>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <label>Nadkategorija</label>
+                <select class="browser-default" ng-model="$ctrl.category.parentId">
+                    <option value="{{ null }}" selected>Nema nadkategoriju</option>
+                    <option ng-repeat="category in $ctrl.allCategories" value="{{ category.id }}">{{ category.name }}</option>
+                </select>
             </div>
-         </div>
-         <br>
-         <button class="btn waves-effect waves-light right" data-ng-click="$ctrl.registerCategory()" name="action">Kreiraj</button>
-      </form>
-   </div>
+        </div>
+        <button class="btn" type="submit">Kreiraj kategoriju</button>
+    </form>
 </div>
-<br>
-<br>
-<h5>Lista kategorija</h5>
 <div class="row">
    <div class="col s2">
       <h5>Pretraga:</h5>

@@ -1,102 +1,89 @@
-<h3>Korisnički računi</h3>
-<br>
-<div class="card-panel teal lighten-5">
-	<div class="row">
-		<form  class="col s12" name="forma">
-			<h5>Registracija korisnika</h5>
-	      	<div class="input-field col s12">
-	      	 	<label for="name">Ime i prezime</label>
-		        <input type="text" class="validate" placeholder="Ime i prezime" ng-model="$ctrl.account.fullName" ng-pattern="/^[a-zA,\&\s]{5,40}$/" name="name" required>
-				<span style="color:red" ng-show="forma.name.$error.required">  *Obavezan podatak.</span>
-            	<span style="color:red" ng-show="forma.name.$error.pattern"> *Nevalidan format.</span>
-			</div>
-			
-		   	<div class="input-field col s12">
-		   		<label for="username">Username</label>
-		       	<input type="text" class="validate" ng-model="$ctrl.account.username" 	ng-pattern="/^[a-zA-Z0-9-,\&\s]{5,40}$/" name="username" required>
-		    	<span style="color:red" ng-show="forma.username.$error.required">  *Obavezan podatak.</span>
-            	<span style="color:red" ng-show="forma.username.$error.pattern"> *Nevalidan format.</span>
-		    </div>
-		   
-		 	<div class="input-field col s12">
-		 		<label for="email">Email</label>
-		        <input type="email" class="validate" ng-model="$ctrl.account.email"	ng-pattern="/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" name="email" required>
-		    	<span style="color:red" ng-show="forma.email.$error.required">  *Obavezan podatak.</span>
-            	<span style="color:red" ng-show="forma.email.$error.pattern"> *Nevalidan format.</span>
-		    </div>
+<h4>Korisnički računi</h4>
 
-	
-		    <div class="input-field col s12">
-		    	<label for="password">Password</label>
-		       	<input type="password" class="validate" ng-model="$ctrl.account.password"	
-		       	ng-pattern="/^[a-zA-Z0-9-,\&\s]{5,40}$/" name="password" required>
-		    	<span style="color:red" ng-show="forma.password.$error.required">  *Obavezan podatak.</span>
-            	<span style="color:red" ng-show="forma.password.$error.pattern"> *Nevalidan format.</span>
-		    </div>
-			<div class="row">
-	     		<div class="input-field col s12">
-	                <select class="browser-default">
-				        <option value="" disabled selected>Izaberite rolu</option>
-	                    <option value="1">Admin</option>
-				    	<option value="2">Tim koji obavlja inventuru</option>
-				    	<option value="3">Finansijska služba</option>
-	                </select>
-	            </div>
-	        </div>
-			<br>
-			<button class="btn waves-effect waves-light right"  data-ng-click="$ctrl.registerAccount()" name="action">Registruj korisnika
-			</button>
-			<br><br>
-		</form>
-	<br><br>
-	</div>
+<div class="card-panel teal lighten-5">
+	<h5>Novi korisnički račun</h5>
+	<form ng-submit="$ctrl.registerAccount()" name="form" novalidate>
+		<div class="row">
+			<div class="input-field col s12">
+				<input type="text" id="full-name" name="fullName" placeholder="Ime i prezime" ng-model="$ctrl.account.fullName" required>
+				<label for="full-name">Ime i prezime</label>
+				<span class="error" ng-show="form.$submitted && form.fullName.$error.required">Ime i prezime je obavezno.</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s12">
+				<input type="text" id="username" name="username" placeholder="Korisničko ime" ng-model="$ctrl.account.username" ng-pattern="/^[a-z][a-z0-9]{2,15}$/i" required>
+				<label for="username">Korisničko ime</label>
+				<span class="error" ng-show="form.$submitted && form.username.$error.required">Korisničko ime je obavezno.</span>
+				<span class="error" ng-show="form.$submitted && form.username.$error.pattern">Korisničko ime mora biti između 3 i 16 znakova, od kojih je prvo slovo, a ostali su slova ili brojevi.</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s12">
+				<input type="email" id="email" name="email" placeholder="E-mail adresa" ng-model="$ctrl.account.email" required>
+				<label for="email">E-mail adresa</label>
+				<span class="error" ng-show="form.$submitted && form.email.$error.required">E-mail adresa je obavezna.</span>
+				<span class="error" ng-show="form.$submitted && form.email.$error.email">Nije unesena ispravna e-mail adresa.</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s12">
+				<input type="text" id="password" name="password" placeholder="Lozinka" ng-model="$ctrl.account.password" minlength="8" required>
+				<label for="password">Lozinka</label>
+				<span class="error" ng-show="form.$submitted && form.password.$error.required">Lozinka je obavezna.</span>
+				<span class="error" ng-show="form.$submitted && form.password.$error.minlength">Lozinka ne smije biti kraća od 8 znakova.</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s12">
+				<label>Tip korisnika</label>
+				<select class="browser-default" required>
+					<option value="0" disabled selected">Tip korisnika</option>
+					<option value="1">ROLE_ADMIN</option>
+					<option value="2">ROLE_FINANCE</option>
+					<option value="3">ROLE_AUDITTEAM</option>
+				</select>
+			</div>
+		</div>
+		<button class="btn" type="submit">Kreiraj račun</button>
+	</form>
 </div>
 <div class="row">
-		<h5>Lista korisnika</h5>
-			<div class="row">
-			   <div class="col s2">
-			      <h5>Pretraga:</h5>
-			   </div>
-			   <div class="col s10">
-			      <input type="text" class="validate" placeholder="Pojam" ng-model="searchText" ng-change="$ctrl.filter(this.searchText)" ng-model-options="{ debounce:200 }"> 
-			   </div>
-	        </div>
-		<table class="striped">
-			<tr>
-				<th>#</th>
-				<th>Ime i prezime</th>
-				<th>Korisničko ime</th>
-				<th>Email</th>
-				<th>Rola</th>
-				<th>Akcija</th>
-			</tr>
-			<tr ng-repeat="account in $ctrl.accounts">
-				<td>1</td>
-				<td>{{ account.fullName }}</td>
-				<td>{{ account.username }}</td>
-				<td>{{ account.email }}</td>
-				<td>{{ account.role.id }}</td>
-				<td>  
-					<button type="button" ng-click="ctrl.edit(account.id)" class="btn btn-success custom-width">Promijeni</button>  
-					<button type="button" ng-click="ctrl.remove(account.id)" class="btn btn-danger custom-width">Izbriš</button>
-				</td>
-			</tr>
-		</table>
-		<div class="center">Page: <strong>{{$ctrl.number}}</strong>
-			
-			<button class="pageBtn" ng-click="$ctrl.goto(1)" ng-disabled="$ctrl.number == 1"> << </button>
-			<button class="pageBtn" ng-click="$ctrl.goto($ctrl.number-1)" ng-disabled="$ctrl.number <= 1"> < </button>
-			<snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number !=1" ng-repeat="page in $ctrl.totalPages">
-				<button class="pageBtn" ng-if="$ctrl.number!=$ctrl.totalPages.length && page >= $ctrl.number -1 && page <= $ctrl.number +1" ng-disabled="$ctrl.number == page">{{page}}</button>
-			</snap>	
-			<snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number !=1" ng-repeat="page in $ctrl.totalPages">
-			<button class="pageBtn" ng-if="$ctrl.number==$ctrl.totalPages.length && page >= $ctrl.number -2 && page <= $ctrl.number +1" ng-disabled="$ctrl.number == page">{{page}}</button>
-			</snap>
-			<snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number ==1" ng-repeat="page in $ctrl.totalPages">
-				<button class="pageBtn" class="pageBtn" ng-if="page >= $ctrl.number -1 && page <= $ctrl.number +2" ng-disabled="$ctrl.number == page">{{page}}</button>
-			</snap>
-			<button class="pageBtn" ng-click="$ctrl.goto($ctrl.number+1)" ng-disabled="$ctrl.number > $ctrl.totalPages.length-1"> > </button>
-			<button class="pageBtn" ng-click="$ctrl.goto($ctrl.totalPages.length)" ng-disabled="$ctrl.totalPages.length==0 || $ctrl.number == $ctrl.totalPages.length"> >> </button>
-		</div>
+	<div class="input-field col s5 offset-s7">
+		<i class="material-icons prefix">search</i>
+		<input type="text" placeholder="Traži..." ng-model="$ctrl.searchText" ng-change="$ctrl.filter()" ng-model-options="{ debounce: 200}">
+	</div>
 </div>
 
+<table class="striped responsive-table">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Ime i prezime</th>
+			<th>Korisničko ime</th>
+			<th>Email</th>
+			<th>Tip</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="account in $ctrl.accounts">
+			<td>{{ account.id }}</td>
+			<td>{{ account.fullName }}</td>
+			<td>{{ account.username }}</td>
+			<td>{{ account.email }}</td>
+			<td>Tip korisnika</td>
+			<td>
+				<a href="#" ng-click="$ctrl.edit(account.id)"><i class="material-icons">edit</i></a>
+				<a href="#" ng-click="$ctrl.delete(account.id)"><i class="material-icons">delete</i></a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<div class="right-align">
+	<ul class="pagination">
+		<li ng-class="{ 'disabled': $ctrl.number === 1}"><a href="#" ng-click="$ctrl.goto($ctrl.number - 1)"><i class="material-icons">chevron_left</i></a></li>
+		<li ng-class="{ 'disabled': $ctrl.number === $ctrl.totalPages }"><a href="#" ng-click="$ctrl.goto($ctrl.number + 1)"><i class="material-icons">chevron_right</i></a></li>
+	</ul>
+</div>

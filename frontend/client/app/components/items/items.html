@@ -51,12 +51,12 @@
                 <span style="color:red" ng-show="forma.value.$error.pattern"> *Nevalidan format.</span>
             </div>
 
-            <div class="input-field col s12">
-                <label for="dateOfPurchase">Datum unosa</label>
-                <input type="text" class="validate" placeholder="Ovo polje bih izbacila" ng-model=$ctrl.itemCRD.dateOfPurchas" name="dateOfPurchase" required>
+             <label  class="input-field col s12" for="dateOfPurchase">Datum unosa</label>
+             <div class="input-field col s12">
+                <input type="date" class="datepicker" ng-model=$ctrl.itemCRD.dateOfPurchas" name="dateOfPurchase" required>
                 <span style="color:red" ng-show="forma.dateOfPurchase.$error.required">  *Obavezan podatak.</span>
                 <span style="color:red" ng-show="forma.dateOfPurchase.$error.pattern"> *Nevalidan format.</span>
-            </div>
+             </div>
 
              <div class="row">
                 <div class="input-field col s12">

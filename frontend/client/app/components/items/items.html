@@ -113,8 +113,11 @@
          <td>{{ item.skuNumber }}</td>
          <td>{{ item.unitOfMeasurement }}</td>
          <td>{{ item.value }}</td>
-         <td>{{ item.category }}</td>
+         <!--<td>{{ categories[item.category].name }}</td>-->
+         <td ng-repeat="cat in filt = ($ctrl.allCategories | filter: { id : item.category})" >{{cat.name}}</td>
+         <td ng-hide="filt.length"></td>
          <td>{{ item.location }}</td>
+      
          <td>
             <a href="#" ng-click="$ctrl.edit(item.id)"><i class="material-icons">edit</i></a>
             <a href="#" ng-click="$ctrl.delete(item.id)"><i class="material-icons">delete</i></a>

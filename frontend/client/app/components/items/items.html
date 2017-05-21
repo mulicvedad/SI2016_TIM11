@@ -53,11 +53,11 @@
       </div>
       <div class="row">
          <div class="input-field col s12">
-            <select class="browser-default" required>
+            <select class="browser-default" ng-model="$ctrl.items.unitOfMeasurement" required>
                <option value="" disabled selected>Mjerna jedinica</option>
-               <option value="1">kom</option>
-               <option value="2">kg</option>
-               <option value="3">m</option>
+               <option value="kom">kom</option>
+               <option value="kg">kg</option>
+               <option value="m">m</option>
             </select>
             <span class="error" ng-show="form.$submitted && form.$error.required">Obavezno polje.</span>
          </div>
@@ -66,7 +66,7 @@
          <div class="input-field col s12">
             <select class="browser-default" ng-model="$ctrl.items.categoryID">
                <option value="" disabled selected>Izaberite kategoriju</option>
-               <option ng-repeat="category in $ctrl.categories" value="{{ category.id }}"> {{ category.name }} </option>
+               <option ng-repeat="category in $ctrl.categories" value="{{ category.id }}"> {{ category.name }}{{ category.name }}{{ category.name }}{{ category.name }} </option>
             </select>
          </div>
       </div>
@@ -81,6 +81,17 @@
       <br>
       <button class="btn waves-effect waves-light right"  data-ng-click="$ctrl.registerItem()" name="action"> Dodaj inventurnu stavku
       </button>
+      {{$ctrl.items.skuNumber}}
+      {{$ctrl.items.name}}
+      {{$ctrl.items.personResponsible}}
+      {{$ctrl.items.purchasedBy}}
+      {{$ctrl.items.unitOfMeasurement}}
+      {{$ctrl.items.value}}
+      {{$ctrl.items.dateOfPurchas}}
+      {{$ctrl.items.locationID}}
+      {{$ctrl.items.categoryID}}
+
+
       <br><br>
    </form>
    <br><br>

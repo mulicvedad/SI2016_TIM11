@@ -7,7 +7,6 @@ export default class ItemService extends BaseService {
 	}
 
 	create(item) {
-		console.log("proslo");
 		return super.post('items', item);
 	}
     

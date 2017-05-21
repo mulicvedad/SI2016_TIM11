@@ -13,7 +13,8 @@ export default class LocationTypeService extends BaseService {
 	{
 		return super.get('locationTypes/page/'+page);
 	}
-	delete(index){
-		//..
+
+	delete(id) {
+		return super.delete('locationTypes/' + id);
 	}
 }

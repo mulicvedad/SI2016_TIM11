@@ -5,7 +5,8 @@
    <form ng-submit="$ctrl.registerStatus()" name="$ctrl.form" novalidate>
       <div class="row">
          <div class="input-field col s12">
-            <input type="text" class="validate" placeholder="Naziv" ng-model="$ctrl._status.name">
+            <input type="text" id="naziv" name="naziv" placeholder="Naziv" ng-model="$ctrl._status.naziv" required>
+            <label for="naziv">Nazive</label>
          </div>
       </div>
       <br>

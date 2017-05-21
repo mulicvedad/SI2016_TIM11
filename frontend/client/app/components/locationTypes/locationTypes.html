@@ -1,51 +1,46 @@
-<h3 class="center">Tipovi lokacija</h3>
+<h4>Tipovi sala</h4>
+<div class="card-panel teal lighten-5">
+   <h5>Kreiranje novog tipa lokacije</h5>
+   <form class="col s12">
+      <div class="row">
+         <div class="input-field col s12">
+            <label>Naziv</label>
+            <input type="text" class="validate" placeholder="Naziv" ng-model="$ctrl.locationType.name"> 
+         </div>
+      </div>
+      <div class="row">
+         <div class="input-field col s12">
+            <label>Opis</label>
+            <input type="text" class="validate" placeholder="Opis" ng-model="$ctrl.locationType.description"> 
+         </div>
+      </div>
+      <button class="btn waves-effect waves-light" data-ng-click="$ctrl.registerLocationType()" name="action">Kreiraj</button>
+   </form>
+</div>
 <div class="row">
-    <div class="col s6">
-        <h4>Lista tipova lokacija</h4>
-        <table class="striped">
-            <tr>
-                <th>Naziv</th>
-                <th>Opis</th>
-                <th>Opcije</th>
-            </tr>
-            <tr ng-repeat="locationType in $ctrl.locationTypes">
-                  <td>{{ locationType.name }}</td>
-                  <td>{{ locationType.description }}</td>
-                  <td><button data-ng-click="$ctrl.deleteLocationType($index)">Izbrisi</button></td>
-            </tr>
-        </table>
-        <div class="center">
-            Page: <strong>{{$ctrl.number}}</strong>
-            |
-            <button class="pageBtn" ng-click="$ctrl.goto(1)" ng-disabled="$ctrl.number == 1"> << </button>
-            <button class="pageBtn" ng-click="$ctrl.goto($ctrl.number-1)" ng-disabled="$ctrl.number <= 1"> < </button>
-            <snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number !=1" ng-repeat="page in $ctrl.totalPages"><button class="pageBtn" ng-if="$ctrl.number!=$ctrl.totalPages.length && page >= $ctrl.number -1 && page <= $ctrl.number +1" ng-disabled="$ctrl.number == page">{{page}}</button></snap>
-            <snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number !=1" ng-repeat="page in $ctrl.totalPages"><button class="pageBtn" ng-if="$ctrl.number==$ctrl.totalPages.length && page >= $ctrl.number -2 && page <= $ctrl.number +1" ng-disabled="$ctrl.number == page">{{page}}</button></snap>
-            <snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number ==1" ng-repeat="page in $ctrl.totalPages"><button class="pageBtn" class="pageBtn" ng-if="page >= $ctrl.number -1 && page <= $ctrl.number +2" ng-disabled="$ctrl.number == page">{{page}}</button></snap>
-
-            <button class="pageBtn" ng-click="$ctrl.goto($ctrl.number+1)" ng-disabled="$ctrl.number > $ctrl.totalPages.length-1"> > </button>
-            <button class="pageBtn" ng-click="$ctrl.goto($ctrl.totalPages.length)" ng-disabled="$ctrl.totalPages.length==0 || $ctrl.number == $ctrl.totalPages.length"> >> </button>
-        </div>
-
-
-    </div>
-    <div class="col s6" style="border-left:1px solid black;">
-        <h4>Kreiranje novog tipa lokacije</h4>
-        <form class="col s12">
-            <div class="row">
-                <div class="input-field col s12">
-                    <input type="text" class="validate" placeholder="Naziv" ng-model="$ctrl.locationType.name"> </div>
-            </div>
-            <div class="row">
-              <div class="input-field col s12">
-                  <input type="text" class="validate" placeholder="Opis" ng-model="$ctrl.locationType.description"> </div>
-            </div>
-
-            <br>
-            <br>
-            <br>
-            <button class="btn waves-effect waves-light right" data-ng-click="$ctrl.registerLocationType()" name="action">Kreiraj</button>
-        </form>
-        <br>
-        <br> </div>
+   <div class="input-field col s5 offset-s7">
+      <i class="material-icons prefix">search</i>
+      <input type="text" placeholder="Traži..." ng-model="$ctrl.searchText" ng-change="$ctrl.filter()" ng-model-options="{ debounce: 200}">
+   </div>
+</div>
+<table class="striped">
+   <tr>
+      <th>Naziv</th>
+      <th>Opis</th>
+      <th></th>
+   </tr>
+   <tr ng-repeat="locationType in $ctrl.locationTypes">
+      <td>{{ locationType.name }}</td>
+      <td>{{ locationType.description }}</td>
+      <td>
+         <!--<td><button data-ng-click="$ctrl.deleteLocationType($index)">Izbrisi</button></td>-->
+         <a href="#" ng-click="$ctrl.delete(locationType.id)"><i class="material-icons">delete</i></a>
+      </td>
+   </tr>
+</table>
+<div class="right-align">
+   <ul class="pagination">
+      <li ng-class="{ 'disabled': $ctrl.number === 1}"><a href="#" ng-click="$ctrl.goto($ctrl.number - 1)"><i class="material-icons">chevron_left</i></a></li>
+      <li ng-class="{ 'disabled': $ctrl.number === $ctrl.totalPages }"><a href="#" ng-click="$ctrl.goto($ctrl.number + 1)"><i class="material-icons">chevron_right</i></a></li>
+   </ul>
 </div>

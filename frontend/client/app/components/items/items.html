@@ -12,23 +12,15 @@
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <input type="text" id="name" name="name" placeholder="Naziv" ng-model="$ctrl.items.name" ng-pattern="/^[a-z][a-z0-9]{1,15}$/i" required>
+                <input type="text" id="name" name="name" placeholder="Naziv" ng-model="$ctrl.items.name" required>
                 <label for="name">Naziv</label>
                 <span class="error" ng-show="form.$submitted && form.name.$error.required">Naziv je obavezno polje.</span>
                 <span class="error" ng-show="form.$submitted && form.name.$error.pattern">Naziv mora imati najmanje 2 znaka, od kojih je prvo slovo, a ostali su slova ili brojevi.</span>
             </div>
         </div>
         <div class="row">
-           <div class="input-field col s12">
-                <input type="text" id="mjerna_jedinica" name="mjerna_jedinica" placeholder="Mjerna jedinica" ng-model="$ctrl.items.unitOfMeasurement" ng-pattern="/^[a-z][a-z0-9]{0,19}$/i" required>
-                <label for="mjerna_jedinica">Mjerna jedinica</label>
-                <!--<span class="error" ng-show="form.$submitted && form.name.$error.required">Naziv je obavezno polje.</span>  NE ZNAM DA LI JE OVO POLJE OBAVEZNO -->
-                <span class="error" ng-show="form.$submitted && form.mjerna_jedinica.$error.pattern">Mjerna jedinica ne smije imati više od 20 znakova, od kojih je prvo slovo, a ostali su slova ili brojevi.</span>
-            </div>
-        </div>
-        <div class="row">
             <div class="input-field col s12">
-                <input type="text" id="unesenoOd" name="unesenoOd" placeholder="Uneseno od" ng-model="$ctrl.items.purchasedBy" ng-pattern="/^[a-z][a-z0-9]$/i" required>
+                <input type="text" id="unesenoOd" name="unesenoOd" placeholder="Uneseno od" ng-model="$ctrl.items.purchasedBy" required>
                 <label for="unesenoOd">Uneseno od</label>
                 <span class="error" ng-show="form.$submitted && form.unesenoOd.$error.required">Obavezno polje.</span>
                  <span class="error" ng-show="form.$submitted && form.unesenoOd.$error.pattern">Polje ne smije pocinjat brojem.</span>
@@ -36,7 +28,7 @@
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <input type="text" id="odgovornaOsoba" name="odgovornaOsoba" placeholder="Odgovorna osoba" ng-model="$ctrl.items.personResponsible" ng-pattern="/^[a-z][a-z0-9]$/i"  required>
+                <input type="text" id="odgovornaOsoba" name="odgovornaOsoba" placeholder="Odgovorna osoba" ng-model="$ctrl.items.personResponsible" required>
                 <label for="odgovornaOsoba">Odgovorna osoba</label>
                 <span class="error" ng-show="form.$submitted && form.odgovornaOsoba.$error.required">Obavezno polje.</span>
                 <span class="error" ng-show="form.$submitted && form.odgovornaOsoba.$error.pattern">Naziv odgovorne osobe ne smije pocinjat brojem.</span>
@@ -54,13 +46,22 @@
             <label  class="input-field col s12" for="dateOfPurchase">Datum unosa</label>
              <div class="input-field col s12">
                 <input type="date" class="validate" ng-model="$ctrl.items.dateOfPurchas" name="dateOfPurchase" required >
-                <span style="color:red" ng-show="forma.dateOfPurchase.$error.required">  *Obavezan podatak.</span>
+                <span class="error" ng-show="forma.dateOfPurchase.$error.required">  *Obavezan podatak.</span>
                 <span class="error" ng-show="form.input.$error.date"> Not a valid date!</span>
             </div>
-
-
-
         </div>
+         <div class="row">
+           <div class="input-field col s12">
+                <select class="browser-default" required>
+                    <option value="" disabled selected>Mjerna jedinica</option>
+                    <option value="1">kom</option>
+                    <option value="2">kg</option>
+                    <option value="3">m</option>
+                </select>
+                <span class="error" ng-show="form.$submitted && form.$error.required">Obavezno polje.</span>
+            </div>
+        </div>
+
         <div class="row">
             <div class="input-field col s12">
                     <select class="browser-default" ng-model="$ctrl.items.categoryID">

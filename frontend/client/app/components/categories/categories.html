@@ -50,23 +50,9 @@
    </tr>
 </table>
 
-<div class="center">
-   Page: <strong>{{$ctrl.number}}</strong>
-   <button class="pageBtn" ng-click="$ctrl.goto(1)" ng-disabled="$ctrl.number == 1"> << </button>
-   <button class="pageBtn" ng-click="$ctrl.goto($ctrl.number-1)" ng-disabled="$ctrl.number <= 1"> < </button>
-   <snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number !=1" ng-repeat="page in $ctrl.totalPages">
-      <button class="pageBtn" ng-if="$ctrl.number!=$ctrl.totalPages.length && page >= $ctrl.number -1 && page <= $ctrl.number +1" ng-disabled="$ctrl.number == page">{{page}}</button>
-   </snap>
-   <snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number !=1" ng-repeat="page in $ctrl.totalPages">
-      <button class="pageBtn" ng-if="$ctrl.number==$ctrl.totalPages.length && page >= $ctrl.number -2 && page <= $ctrl.number +1" ng-disabled="$ctrl.number == page">{{page}}</button>
-   </snap>
-   <snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number ==1" ng-repeat="page in $ctrl.totalPages">
-      <button class="pageBtn" class="pageBtn" ng-if="page >= $ctrl.number -1 && page <= $ctrl.number +2" ng-disabled="$ctrl.number == page">{{page}}</button>
-   </snap>
-   <button class="pageBtn" ng-click="$ctrl.goto($ctrl.number+1)" ng-disabled="$ctrl.number > $ctrl.totalPages.length-1"> > </button>
-   <button class="pageBtn" ng-click="$ctrl.goto($ctrl.totalPages.length)" ng-disabled="$ctrl.totalPages.length==0 || $ctrl.number == $ctrl.totalPages.length"> >> </button>
-</div>
-
-<div class="row">
-   <!-- Samo bezveze da imam neki div da ne bude tabela skroz na kraju  -->
+<div class="right-align">
+  <ul class="pagination">
+    <li ng-class="{ 'disabled': $ctrl.number === 1}"><a href="#" ng-click="$ctrl.goto($ctrl.number - 1)"><i class="material-icons">chevron_left</i></a></li>
+    <li ng-class="{ 'disabled': $ctrl.number === $ctrl.totalPages }"><a href="#" ng-click="$ctrl.goto($ctrl.number + 1)"><i class="material-icons">chevron_right</i></a></li>
+  </ul>
 </div>

@@ -22,17 +22,21 @@
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <input type="password" id="new-password" name="newPassword" placeholder="Nova lozinka" ng-model="$ctrl.myAccount.newPassword">
+                <input type="password" id="new-password" name="newPassword" placeholder="Nova lozinka" ng-model="$ctrl.myAccount.newPassword" minlength="8">
                 <label for="new-password">Nova lozinka</label>
                 <div class="user-errors" ng-show="$ctrl.form.$submitted">
-                    <span class="error" ng-show="$ctrl.form.password.$error.minlength">Lozinka ne smije biti kraća od 8 znakova.</span>
+                    <span class="error" ng-show="$ctrl.form.newPassword.$error.minlength">Lozinka ne smije biti kraća od 8 znakova.</span>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <input type="password" id="current-password" name="currentPassword" placeholder="Trenutna lozinka" ng-model="$ctrl.myAccount.currentPassword">
+                <input type="password" id="current-password" name="currentPassword" placeholder="Trenutna lozinka" ng-model="$ctrl.myAccount.currentPassword" minlength="8" required>
                 <label for="current-password">Trenutna lozinka</label>
+                <div class="user-errors" ng-show="$ctrl.form.$submitted">
+                    <span class="error" ng-show="$ctrl.form.currentPassword.$error.required">Trenutna lozinka je obavezna.</span>
+                    <span class="error" ng-show="$ctrl.form.currentPassword.$error.minlength">Lozinka ne može biti kraća od 8 znakova.</span>
+                </div>
             </div>
         </div>
         <button class="btn" type="submit">Sačuvaj</button>

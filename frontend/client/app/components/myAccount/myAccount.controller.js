@@ -11,11 +11,24 @@ class MyAccountController {
 
     loadMyAccount() {
         this.myAccountService.current().then(response => {
-            console.log(response.data);
+            this.myAccount = response.data;
         });
     }
 
-    save() {}
+    save() {
+        if (!this.form.$valid) {
+            return;
+        }
+
+        let data = {
+            newPassword: this.myAccount.newPassword,
+            currentPassword: this.myAccount.currentPassword
+        };
+
+        this.myAccountService.update(data).then(response => {
+            console.log(response);
+        });
+    }
 }
 
 export default MyAccountController;

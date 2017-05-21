@@ -53,5 +53,9 @@ public class AccountService extends BaseService<Account, AccountRepository> {
         return repository.findByUsername(username);
     }
 
-    
+    public Account updatePassword(Account account, String newPassword) throws ServiceException {
+    	account.setPassword(BCrypt.hashpw(newPassword, BCrypt.gensalt()));
+
+    	return super.save(account);
+    }
 }

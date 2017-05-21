@@ -4,6 +4,7 @@ class LocationTypesController {
 	constructor(locationTypeService) {
 		this.locationTypeService = locationTypeService;
 		this.loadLocationTypes(1);
+		this.loadAllLocationTypes();
 		this.setEmptyLocationType();
 
 	}
@@ -13,6 +14,7 @@ class LocationTypesController {
 			console.log("Added a Location Type!");
 			this.locationTypes.push(response.data);
         	this.loadLocationTypes(1);
+        	this.loadAllLocationTypes();
 			this.setEmptyLocationType();
 		}, (error) => {
 			console.log("Error while creating a Location Type.");
@@ -32,6 +34,7 @@ class LocationTypesController {
     } );
     }*/
 
+
     loadLocationTypes(page) {
         this.locationTypeService.getPage(page).then( (response) => {
             this.locationTypes = response.data.content;
@@ -45,6 +48,13 @@ class LocationTypesController {
     } );
     }
 
+    
+     loadAllLocationTypes() {
+        this.locationTypeService.all().then(response => {
+            this.loadAllLocationTypes = response.data;
+        });
+    }
+
     goto(newPage)
 	{
         this.loadLocationTypes(newPage);
@@ -53,6 +63,15 @@ class LocationTypesController {
     deleteLocationType(index) {
     //.....
   }
+
+  delete(id) {
+ 		if (confirm('Da li ste sigurni da želite obrisati tip sale?')) {
+ 			this.locationTypeService.delete(id).then(response => {
+ 				this.loadLocationTypes(this.number);
+                this.loadAllLocationTypes();
+ 			});
+ 		}
+ 	}
 }
 
 export default LocationTypesController;

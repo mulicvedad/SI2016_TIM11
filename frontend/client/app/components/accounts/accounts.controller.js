@@ -8,12 +8,15 @@ class AccountsController {
 	}
 
 	registerAccount() {
+		if (!this.form.$valid) {
+			return;
+		}
+
 		this.accountService.create(this.account).then(response => {
 			this.accounts.push(response.data);
 			this.loadAccounts(1);
-			this.setEmptyAccount();
-		}, error => {
-		});
+			this.resetForm();
+		}, error => {});
 	}
 
 	setEmptyAccount() {
@@ -23,7 +26,7 @@ class AccountsController {
 	loadAccounts(page) {
 		this.accountService.getPage(page).then(response => {
 			this.accounts = response.data.content;
-			this.number = response.data.number+1;
+			this.number = response.data.number + 1;
 			this.totalPages = response.data.totalPages;
 		});
 	}
@@ -40,6 +43,13 @@ class AccountsController {
 				this.loadAccounts(this.number);
 			});
 		}
+	}
+
+	resetForm() {
+		this.form.$setPristine();
+		this.form.$setUntouched();
+		this.form.$submitted = false;
+		this.setEmptyAccount();
 	}
 }
 

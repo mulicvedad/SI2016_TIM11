@@ -1,10 +1,9 @@
 export default class SessionService {
-    static $inject = ['$window', '$state'];
+    static $inject = ['$window'];
 
-    constructor($window, $state){
+    constructor($window){
         this.$window = $window;
         this.currentUser = JSON.parse($window.localStorage.getItem('user'));
-        this.$state = $state;
     }
 
     startSession(authServerResponse){
@@ -19,7 +18,6 @@ export default class SessionService {
     destroySession(){
         this.$window.localStorage.setItem('user', null);
         this.currentUser = null;
-        this.$state.go('pocetna');
     }
 
     isUserLoggedIn(){

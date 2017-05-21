@@ -4,6 +4,7 @@ class AccountsController {
 	constructor(accountService) {
 		this.accountService = accountService;
 		this.loadAccounts(1);
+		this.loadAllAccounts();
 		this.setEmptyAccount();
 	}
 
@@ -15,6 +16,7 @@ class AccountsController {
 		this.accountService.create(this.account).then(response => {
 			this.accounts.push(response.data);
 			this.loadAccounts(1);
+			this.loadAllAccounts();
 			this.resetForm();
 		}, error => {});
 	}
@@ -31,6 +33,12 @@ class AccountsController {
 		});
 	}
 
+ 	loadAllAccounts() {
+        this.accountService.all().then(response => {
+            this.allAccounts = response.data;
+        });
+    }
+
 	goto(newPage) {
 		this.loadAccounts(newPage);
 	}
@@ -41,6 +49,7 @@ class AccountsController {
 		if (confirm('Da li ste sigurni da želite obrisati korisnički račun?')) {
 			this.accountService.delete(id).then(response => {
 				this.loadAccounts(this.number);
+				this.loadAllAccounts();
 			});
 		}
 	}

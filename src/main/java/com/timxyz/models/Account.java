@@ -1,6 +1,7 @@
 package com.timxyz.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
@@ -64,6 +65,7 @@ public class Account extends BaseModel {
         this.password = password;
     }
 
+    @JsonIgnore
     @OneToMany(mappedBy = "account")
     public Collection<AccessLog> getAccessLogs() {
         return accessLogs;

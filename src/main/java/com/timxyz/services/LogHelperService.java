@@ -5,13 +5,12 @@ import com.timxyz.models.Account;
 import com.timxyz.models.BaseModel;
 import com.timxyz.repositories.AccessLogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-/**
- * Created by muhamed on 5/6/17.
- */
+@Service
 public class LogHelperService {
     @Autowired
     private static AccessLogRepository accessLogRepository;
@@ -53,6 +52,7 @@ public class LogHelperService {
         log(account, model, "created");
     }
 
+    // suvisno - ubrzo ce biti obrisano
     public static void logSelect(Account account, BaseModel model) {
         log(account, model, "selected");
     }

@@ -11,25 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(path="/")
 public class TestController {
 
-    @RequestMapping(value = "test", method = RequestMethod.GET)
-    public String testMe() {
-        String tst = "Test test test achtung achtung";
-        return tst;
-    }
-
-    @PreAuthorize("hasRole('fehim)")
-    public String forAdmin(){
-        String tst = "Hi Admin";
-        return tst;
-    }
-
-    @PreAuthorize("hasRole('ROLE_TEACHER')")
-    @RequestMapping(value = "/zbornica")
-    public String giveItToTeacher() {
-        String tst = "Zbornica";
-        return tst;
-    }
-
 
 }
 

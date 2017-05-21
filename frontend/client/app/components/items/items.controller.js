@@ -25,9 +25,9 @@ class ItemsController {
     }
     
     registerItem() {
-        this.itemCRDService.create(this.item).then((response) => {
+        this.itemService.create(this.item).then((response) => {
             console.log("Added an item!");
-            this.items.push(response.data);
+            this.item.push(response.data);
             this.setEmptyItem();
         }, (error) => {
             console.log("Error while creating an item.");

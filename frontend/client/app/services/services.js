@@ -9,6 +9,7 @@ import itemService from './itemService';
 import itemCRDService from './itemCRDService';
 import sessionService from './sessionService';
 import jwtService from './jwtService';
+import myAccountService from './myAccountService';
 
 export default angular
   .module('app.services', [])
@@ -22,5 +23,6 @@ export default angular
     itemService,
     itemCRDService,
     sessionService,
-    jwtService
+    jwtService,
+    myAccountService
 }).name;

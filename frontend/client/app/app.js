@@ -26,17 +26,24 @@ angular.module('app', [
 .directive('showForRole', ShowForRole)
 .run((sessionService, $state, $transitions) => {
     'ngInject';
-    $transitions.onStart({ to: '*' }, (trans) => {
-        if (!sessionService.isUserLoggedIn()) {
-            return $state.target('login');
+    sessionService.destroySession();
+    
+    
+    $transitions.onStart({ to: 'login' }, (trans) => {
+        if (sessionService.isUserLoggedIn() && trans.$to.name != "login") {
+            return $state.target('home');
         }
         else {
             return true;
         }
     });
-    $transitions.onStart({ to: 'login' }, (trans) => {
-        if (sessionService.isUserLoggedIn()) {
-            return $state.target('home');
+    
+
+    $transitions.onStart({ to: (state) =>{
+        return state.name != 'login';
+    } }, (trans) => {
+        if (!sessionService.isUserLoggedIn()) {
+            return $state.target('login');
         }
         else {
             return true;

@@ -1,3 +1,8 @@
+<ul id="moj-racun" class="dropdown-content">
+    <li><a ui-sref="myAccount">Izmjeni</a></li>
+    <li class="divider"></li>
+    <li><a ng-click="$ctrl.logout()">Odjavi se</a></li>
+</ul>
 <nav>
     <div class="nav-wrapper teal lighten-3">
         <a ui-sref="home" class="brand-logo">Inventura</a>
@@ -11,6 +16,7 @@
             <li><a ui-sref="status">Status</a></li>
             <li><a ui-sref="items">Inventurne stavke</a></li>
             <li><a ui-sref="items">Inventura</a></li>
+            <li><a class="dropdown-button" data-activates="moj-racun">Moj račun <i class="material-icons right">arrow_drop_down</i></a></li>
         </ul>
         <ul class="side-nav" id="nav-mobile">
             <li><a ui-sref="home">Početna</a></li>
@@ -21,9 +27,14 @@
             <li><a ui-sref="status">Status</a></li>
             <li><a ui-sref="items">Inventurne stavke</a></li>
             <li><a ui-sref="items">Inventura</a></li>
+            <li><a ui-sref="myAccount">Moj račun</a></li>
+            <li><a ng-click="$ctrl.logout()">Odjavi se</a></li>
         </ul>
     </div>
 </nav>
 <script>
-    $('.button-collapse').sideNav();
+    $(document).ready(function() {
+        $('.button-collapse').sideNav();
+        $('.dropdown-button').dropdown();
+    });
 </script>

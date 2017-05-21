@@ -1,5 +1,6 @@
 package com.timxyz.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
@@ -57,6 +58,7 @@ public class Account extends BaseModel {
     @Basic
     @Column(name = "password")
     @Size(min = 8, max = 255) @NotNull
+    @JsonIgnore
     public String getPassword() {
         return password;
     }

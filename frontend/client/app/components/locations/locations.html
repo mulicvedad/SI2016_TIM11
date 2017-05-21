@@ -1,4 +1,4 @@
-<h3 class="center">Sale</h3>
+<h3>Sale</h3>
 <div class="card-panel teal lighten-5">
    <div class="row">
       <h5>Kreiranje nove sale</h5>
@@ -30,15 +30,20 @@
             </div>
          </div>
          <br>
-         <button class="btn waves-effect waves-light right" data-ng-click="$ctrl.registerLocation()" name="action">Kreiraj</button>
+         <button class="btn waves-effect waves-light" data-ng-click="$ctrl.registerLocation()" name="action">Kreiraj</button>
       </form>
    </div>
 </div>
 <div class="row">
 <div class="col s12">
-<br>
-<br>
-   <h5>Lista sala</h5>
+
+<div class="row">
+  <div class="input-field col s5 offset-s7">
+    <i class="material-icons prefix">search</i>
+    <input type="text" placeholder="Traži..." ng-model="$ctrl.searchText" ng-change="$ctrl.filter()" ng-model-options="{ debounce: 200}">
+  </div>
+</div>
+
    <table class="striped">
       <tr>
          <th>Naziv</th>
@@ -51,21 +56,17 @@
          <td>{{ location.parent }}</td>
          <td>{{ location.type }}</td>
          <td>  
-            <button type="button" ng-click="ctrl.edit(category.id)" class="btn waves-effect waves-light green">Promijeni</button>  
-            <button type="button" ng-click="ctrl.remove(category.id)" class="btn waves-effect waves-light red">Izbriš</button>
+            <a href="#" ng-click="$ctrl.edit(location.id)"><i class="material-icons">edit</i></a>
+            <a href="#" ng-click="$ctrl.delete(location.id)"><i class="material-icons">delete</i></a>
          </td>
       </tr>
    </table>
-   <div class="center">
-      Page: <strong>{{$ctrl.number}}</strong>
-      |
-      <button class="pageBtn" ng-click="$ctrl.goto(1)" ng-disabled="$ctrl.number == 1"> << </button>
-      <button class="pageBtn" ng-click="$ctrl.goto($ctrl.number-1)" ng-disabled="$ctrl.number <= 1"> < </button>
-      <snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number !=1" ng-repeat="page in $ctrl.totalPages"><button class="pageBtn" ng-if="$ctrl.number!=$ctrl.totalPages.length && page >= $ctrl.number -1 && page <= $ctrl.number +1" ng-disabled="$ctrl.number == page">{{page}}</button></snap>
-      <snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number !=1" ng-repeat="page in $ctrl.totalPages"><button class="pageBtn" ng-if="$ctrl.number==$ctrl.totalPages.length && page >= $ctrl.number -2 && page <= $ctrl.number +1" ng-disabled="$ctrl.number == page">{{page}}</button></snap>
-      <snap ng-click="$ctrl.goto(page)" ng-show="$ctrl.number ==1" ng-repeat="page in $ctrl.totalPages"><button class="pageBtn" class="pageBtn" ng-if="page >= $ctrl.number -1 && page <= $ctrl.number +2" ng-disabled="$ctrl.number == page">{{page}}</button></snap>
-      <button class="pageBtn" ng-click="$ctrl.goto($ctrl.number+1)" ng-disabled="$ctrl.number > $ctrl.totalPages.length-1"> > </button>
-      <button class="pageBtn" ng-click="$ctrl.goto($ctrl.totalPages.length)" ng-disabled="$ctrl.totalPages.length==0 || $ctrl.number == $ctrl.totalPages.length"> >> </button>
-   </div>
+
+<div class="right-align">
+  <ul class="pagination">
+    <li ng-class="{ 'disabled': $ctrl.number === 1}"><a href="#" ng-click="$ctrl.goto($ctrl.number - 1)"><i class="material-icons">chevron_left</i></a></li>
+    <li ng-class="{ 'disabled': $ctrl.number === $ctrl.totalPages }"><a href="#" ng-click="$ctrl.goto($ctrl.number + 1)"><i class="material-icons">chevron_right</i></a></li>
+  </ul>
+</div>
 </div>
 </div>

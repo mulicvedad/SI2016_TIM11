@@ -5,6 +5,7 @@ class LocationsController {
 		this.locationService = locationService;
 		this.locationTypeService = locationTypeService;
 		this.loadLocations(1);
+		this.loadAllLocations();
         this.loadLocationTypes();
 		this.setEmptyLocation();
 
@@ -31,10 +32,25 @@ class LocationsController {
 		} );
 	}*/
 
+	loadAllLocations() {
+        this.locationService.all().then(response => {
+            this.allLocations = response.data;
+        });
+    }
+
     loadLocationTypes() {
 		this.locationTypeService.all().then( (response) => {
 			this.locationTypes = response.data;
 		} );
+	}
+
+
+	delete(id) {
+		if (confirm('Da li ste sigurni da želite obrisati salu?')) {
+			this.locationService.delete(id).then(response => {
+				this.loadLocations(this.number);
+			});
+		}
 	}
 
 	loadLocations(page) {

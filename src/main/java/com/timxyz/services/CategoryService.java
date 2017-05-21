@@ -13,7 +13,6 @@ public class CategoryService extends BaseService<Category, CategoryRepository> {
         else if(model.getId() != null) {
             // TO-DO: Finish proper partial update logic (shouldn't send the whole object during update)
         }
-
         try {
             return super.save(model);
         } catch (ServiceException e) {

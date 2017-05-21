@@ -80,7 +80,7 @@
 			<td>{{ account.fullName }}</td>
 			<td>{{ account.username }}</td>
 			<td>{{ account.email }}</td>
-			<td>Sada cu ovo</td>
+			<td>{{ account.role.name }}</td>
 			<td>
 				<a href="#" ng-click="$ctrl.edit(account.id)"><i class="material-icons">edit</i></a>
 				<a href="#" ng-click="$ctrl.delete(account.id)"><i class="material-icons">delete</i></a>

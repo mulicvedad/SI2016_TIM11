@@ -37,6 +37,15 @@ class LocationsController {
 		} );
 	}
 
+
+	delete(id) {
+		if (confirm('Da li ste sigurni da želite obrisati salu?')) {
+			this.locationService.delete(id).then(response => {
+				this.loadLocations(this.number);
+			});
+		}
+	}
+
 	loadLocations(page) {
 			this.locationService.getPage(page).then( (response) => {
 					this.locations = response.data.content;

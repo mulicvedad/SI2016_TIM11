@@ -9,6 +9,7 @@ import Items from './items/items';
 import ItemsCRD from './itemsCRD/itemsCRD';
 import Login from './login/login';
 import Navbar from './navbar/navbar';
+import MyAccount from './myAccount/myAccount';
 
 let Components = angular.module('app.components', [
   Home,
@@ -20,7 +21,8 @@ let Components = angular.module('app.components', [
   Items,
   ItemsCRD,
   Navbar,
-  Login
+  Login,
+  MyAccount
 ])
 .name;
 

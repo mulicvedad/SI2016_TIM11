@@ -39,6 +39,18 @@ public class TokenAuthenticationService {
     static final String FIELD_NAME_ROLE = "role";
     static final String FIELD_NAME_USERNAME = "username";
     static final String HEADER_STRING = "Authorization";
+    
+    public static String parseJwt(String token) {
+    	if (token != null) {
+    		return Jwts.parser()
+    			.setSigningKey(SECRET)
+    			.parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+    			.getBody()
+    			.getSubject();
+    	}
+    	
+    	return null;
+    }
 
     //ovdje cemo morati dodati uloge u odgovor da bi na klijentskoj strani znali privilegije
     public static void addAuthentication(HttpServletRequest req,
@@ -73,26 +85,18 @@ public class TokenAuthenticationService {
         WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
         accountRepository = webApplicationContext.getBean(AccountRepository.class);
 
-        String token = request.getHeader(HEADER_STRING);
-        if (token != null) {
-            String userReq = Jwts.parser()
-                .setSigningKey(SECRET)
-                .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
-                .getBody()
-                .getSubject();
+        String userReq = parseJwt(request.getHeader(HEADER_STRING));
 
-            /*Account account = accountRepository.findByUsername(userReq);
+        /*Account account = accountRepository.findByUsername(userReq);
 
-            Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
-	        if (account != null) {
-	            grantedAuthorities.add(new SimpleGrantedAuthority(account.getRole().getName()));
-	        }     
+        if (account != null) {
+            grantedAuthorities.add(new SimpleGrantedAuthority(account.getRole().getName()));
+        }     
 
-	        logger.info(grantedAuthorities.toArray()[0].toString());*/
+        logger.info(grantedAuthorities.toArray()[0].toString());*/
 
-	        return userReq != null ? new UsernamePasswordAuthenticationToken(userReq, null, emptyList()) : null;
-        }
-        return null;
+        return userReq != null ? new UsernamePasswordAuthenticationToken(userReq, null, emptyList()) : null;
     }
 }

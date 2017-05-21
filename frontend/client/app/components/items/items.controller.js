@@ -8,6 +8,7 @@ class ItemsController {
 	    this.loadCategories();
         this.loadItems();
         this.loadLocations();
+        this.loadAllItems();
         this.setEmptyItem();
         
     }
@@ -39,6 +40,12 @@ class ItemsController {
     loadItems() {
         this.itemsService.all().then((response) => {
             this.items = response.data;
+        });
+    }
+
+    loadAllItems() {
+        this.itemsService.all().then(response => {
+            this.allItems = response.data;
         });
     }
 

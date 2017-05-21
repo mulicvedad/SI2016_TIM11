@@ -5,6 +5,7 @@ class LocationsController {
 		this.locationService = locationService;
 		this.locationTypeService = locationTypeService;
 		this.loadLocations(1);
+		this.loadAllLocations();
         this.loadLocationTypes();
 		this.setEmptyLocation();
 
@@ -30,6 +31,12 @@ class LocationsController {
 			this.locations = response.data;
 		} );
 	}*/
+
+	loadAllLocations() {
+        this.locationService.all().then(response => {
+            this.allLocations = response.data;
+        });
+    }
 
     loadLocationTypes() {
 		this.locationTypeService.all().then( (response) => {

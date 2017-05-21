@@ -24,7 +24,7 @@
         </div>
         <button class="btn" type="submit">Kreiraj kategoriju</button>
     </form>
-    
+
 </div>
 <div class="row">
   <div class="input-field col s5 offset-s7">
@@ -41,7 +41,8 @@
    </tr>
    <tr ng-repeat="category in $ctrl.categories">
       <td>{{ category.name }}</td>
-      <td>{{ category.parent }}</td>
+      <td ng-repeat="cat in filt = ($ctrl.categories | filter: { id : category.parent})" >{{cat.name}}</td>
+      <td ng-hide="filt.length"></td>
       <td>  
          <a href="#" ng-click="$ctrl.edit(category.id)"><i class="material-icons">edit</i></a>
             <a href="#" ng-click="$ctrl.delete(category.id)"><i class="material-icons">delete</i></a>

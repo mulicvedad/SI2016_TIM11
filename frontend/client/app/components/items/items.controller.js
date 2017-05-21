@@ -66,9 +66,6 @@ class ItemsController {
 				this.loadItems(this.number);
 			});
 		}
-    }
-
-  
-    
+    }   
 }
 export default ItemsController;

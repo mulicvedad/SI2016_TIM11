@@ -12,15 +12,21 @@ import org.springframework.stereotype.Service;
 public class StatusService extends BaseService<Status, StatusRepositoy> {
 
     public Status save(Status model) throws ServiceException {
-        if(getByName(model.getName()) != null)
+        if(model.getId() == null && getByName(model.getName()) != null)
             throw new ServiceException("A status with this name already exists!");
+        else if(model.getId() != null) {
+            // TO-DO: Finish proper partial update logic (shouldn't send the whole object during update)
+        }
 
         try {
             return super.save(model);
         } catch (ServiceException e) {
-            throw new ServiceException(" ");
+            throw new ServiceException("Unknown role ID!");
         }
     }
 
-    public Status getByName(String name) {return repository.findFirstByName(name);}
+    public Status getByName(String name) {
+        return repository.findFirstByName(name);}
 }
+
+

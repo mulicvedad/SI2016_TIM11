@@ -13,3 +13,4 @@ import org.springframework.stereotype.Repository;
 public interface StatusRepositoy extends PagingAndSortingRepository<Status, Long> {
     Status findFirstByName(String name);
 }
+

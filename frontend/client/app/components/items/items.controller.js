@@ -37,6 +37,7 @@ class ItemsController {
     setEmptyItem() {
         //to be implemented
     }
+    
     loadItems() {
         this.itemService.all().then((response) => {
             this.items = response.data;

@@ -48,6 +48,14 @@ class CategoriesController {
         this.loadCategories(newPage);
     }
 
+    delete(id) {
+		if (confirm('Da li ste sigurni da želite obrisati kategoriju?')) {
+			this.categoryService.delete(id).then(response => {
+				this.loadCategories(this.number);
+			});
+		}
+	}
+
 }
 
 export default CategoriesController;

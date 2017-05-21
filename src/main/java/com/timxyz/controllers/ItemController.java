@@ -39,7 +39,7 @@ public class ItemController extends BaseController<Item, ItemService> {
     }
 
     @ResponseBody
-    public ResponseEntity create(@RequestBody @Valid @ItemCreateForm newItem) {
+    public ResponseEntity create(@RequestBody @Valid ItemCreateForm newItem) {
         try {
             Location location = locationService.get(newItem.getLocationID());
             Category category = categoryService.get(newItem.getCategoryID());

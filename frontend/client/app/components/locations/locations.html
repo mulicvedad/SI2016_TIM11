@@ -51,8 +51,8 @@
          <td>{{ location.parent }}</td>
          <td>{{ location.type }}</td>
          <td>  
-            <button type="button" ng-click="ctrl.edit(category.id)" class="btn waves-effect waves-light green">Promijeni</button>  
-            <button type="button" ng-click="ctrl.remove(category.id)" class="btn waves-effect waves-light red">Izbriš</button>
+            <a href="#" ng-click="$ctrl.edit(location.id)"><i class="material-icons">edit</i></a>
+            <a href="#" ng-click="$ctrl.delete(location.id)"><i class="material-icons">delete</i></a>
          </td>
       </tr>
    </table>

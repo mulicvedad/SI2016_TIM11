@@ -13,4 +13,9 @@ export default class CategoryService extends BaseService {
     {
         return super.get('categories/page/'+page);
     }
+
+    delete(id) {
+		return super.delete('categories/' + id);
+	}
+
 }

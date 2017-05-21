@@ -1,8 +1,8 @@
 class ItemsController {
     static $inject = ['itemService', 'locationService' , 'categoryService','itemCRDService'];
     
-    constructor(itemsService,locationService,categoryService,itemsCRDService) {
-        this.itemsService = itemsService;
+    constructor(itemService,locationService,categoryService,itemsCRDService) {
+        this.itemService = itemService;
         this.locationService = locationService;
         this.categoryService = categoryService;
 	    this.loadCategories();
@@ -38,19 +38,19 @@ class ItemsController {
         //to be implemented
     }
     loadItems() {
-        this.itemsService.all().then((response) => {
+        this.itemService.all().then((response) => {
             this.items = response.data;
         });
     }
 
     loadAllItems() {
-        this.itemsService.all().then(response => {
+        this.itemService.all().then(response => {
             this.allItems = response.data;
         });
     }
 
     filter(searchedText) {
-    this.itemsService.getByFilter(searchedText).then((response) => {
+    this.itemService.getByFilter(searchedText).then((response) => {
            this.items = response.data;
         });
     }
@@ -62,7 +62,7 @@ class ItemsController {
     
     delete(id) {
 		if (confirm('Da li ste sigurni da želite obrisati inventurnu stavku?')) {
-			this.itemsService.delete(id).then(response => {
+			this.itemService.delete(id).then(response => {
 				this.loadItems(this.number);
 			});
 		}

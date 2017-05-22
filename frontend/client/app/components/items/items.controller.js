@@ -1,28 +1,38 @@
 class ItemsController {
-    static $inject = ['itemService', 'locationService' , 'categoryService','itemCRDService'];
+    static $inject = ['itemService', 'locationService' , 'categoryService'];
     
-    constructor(itemService,locationService,categoryService,itemsCRDService) {
+    constructor(itemService, locationService, categoryService) {
         this.itemService = itemService;
         this.locationService = locationService;
         this.categoryService = categoryService;
 	    this.loadCategories();
-        this.loadItems();
         this.loadLocations();
-        this.loadAllItems();
+        this.loadItems(1);
         this.setEmptyItem();
-        
     }
     
     loadLocations() {
-		this.locationService.all().then( (response) => {
+		this.locationService.all().then(response => {
 			this.locations = response.data;
-		} );
+		});
     }
     
-    loadCategories(){
-        this.categoryService.all().then( (response) => {
+    loadCategories() {
+        this.categoryService.all().then(response => {
 			this.categories = response.data;
-		} );
+		});
+    }
+
+    loadItems(page) {
+        this.itemService.getPage(page).then(response => {
+            this.items = response.data.content;
+            this.number = response.data.number + 1;
+            this.totalPages = response.data.totalPages;
+        });
+    }
+
+    goto(newPage) {
+        this.loadItems(newPage);
     }
     
     registerItem() {
@@ -34,25 +44,14 @@ class ItemsController {
             console.log("Error while creating an item.");
         });
     }
+
     setEmptyItem() {
         //to be implemented
     }
-    
-    loadItems() {
-        this.itemService.all().then((response) => {
+
+    filter() {
+        this.itemService.getByFilter(this.searchText).then(response => {
             this.items = response.data;
-        });
-    }
-
-    loadAllItems() {
-        this.itemService.all().then(response => {
-            this.allItems = response.data;
-        });
-    }
-
-    filter(searchedText) {
-    this.itemService.getByFilter(searchedText).then((response) => {
-           this.items = response.data;
         });
     }
     

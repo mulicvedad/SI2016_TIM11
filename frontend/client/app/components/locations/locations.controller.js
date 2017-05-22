@@ -26,12 +26,6 @@ class LocationsController {
 		this.location = {name: "", parentId: "null", typeId: ""};
 	}
 
-	/*loadLocations() {
-		this.locationService.all().then( (response) => {
-			this.locations = response.data;
-		} );
-	}*/
-
 	loadAllLocations() {
         this.locationService.all().then(response => {
             this.allLocations = response.data;
@@ -43,34 +37,39 @@ class LocationsController {
 			this.locationTypes = response.data;
 		} );
 	}
-
+	
+	loadLocations(page) {
+		this.locationService.getPage(page).then((response) => {
+			this.locations = response.data.content;
+			this.number = response.data.number+1;
+			this.totalPages = response.data.totalPages;
+		});
+	}
+	
+	
+	goto(newPage) {
+		if (newPage > 0 && newPage <= this.totalPages) {
+			this.loadLocations(newPage);
+		}
+	}
 
 	delete(id) {
 		if (confirm('Da li ste sigurni da želite obrisati salu?')) {
 			this.locationService.delete(id).then(response => {
-				this.loadLocations(this.number);
 				this.loadAllLocations();
+				if (this.locations.count > 0) {
+					this.loadLocations(this.number);
+				 }
+				 else if (this.number > 0) {
+					// ako se obrise entitet koji je zadnji na stranici onda ucitaj prethodnu stranicu
+					this.loadLocations(this.number - 1);
+				 }
+				 else {
+					 this.locations = [];
+				 }
 			});
 		}
 	}
-	
-	loadLocations(page) {
-			this.locationService.getPage(page).then( (response) => {
-					this.locations = response.data.content;
-					this.number = response.data.number+1;
-					this.totalPages = new Array(response.data.totalPages);
-					for(var i = 0; i< response.data.totalPages; i++)
-		{
-			this.totalPages[i]=i+1;
-		}
-			console.log(response.data);
-	} );
-	}
-
-	goto(newPage)
-{
-			this.loadLocations(newPage);
-}
 
 }
 

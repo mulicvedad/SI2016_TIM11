@@ -40,14 +40,25 @@ class CategoriesController {
     }
 
     goto(newPage) {
-        this.loadCategories(newPage);
+        if (newPage > 0 && newPage <= this.totalPages) {
+            this.loadCategories(newPage);
+		}
     }
 
     delete(id) {
 		if (confirm('Da li ste sigurni da želite obrisati kategoriju?')) {
 			this.categoryService.delete(id).then(response => {
-				this.loadCategories(this.number);
                 this.loadAllCategories();
+                if (this.categories.count > 0) {
+					this.loadCategories(this.number);
+				}
+				else if (this.number > 0) {
+					// ako se obrise entitet koji je zadnji na stranici onda ucitaj prethodnu stranicu
+					this.loadCategories(this.number - 1);
+				}
+				else {
+					 this.locationTypes = [];
+				}
 			});
 		}
 	}

@@ -32,7 +32,9 @@ class ItemsController {
     }
 
     goto(newPage) {
-        this.loadItems(newPage);
+        if (newPage > 0 && newPage <= this.totalPages) {
+            this.loadItems(newPage);
+		}
     }
     
     registerItem() {
@@ -63,7 +65,17 @@ class ItemsController {
     delete(id) {
 		if (confirm('Da li ste sigurni da želite obrisati inventurnu stavku?')) {
 			this.itemService.delete(id).then(response => {
-				this.loadItems(this.number);
+                this.loadItems(this.number);
+                if (this.items.count > 0) {
+                    this.loadItems(this.number);
+                }
+                else if (this.number > 0) {
+                    // ako se obrise entitet koji je zadnji na stranici onda ucitaj prethodnu stranicu
+                    this.loadItems(this.number - 1);
+                }
+                else {
+                    this.items = [];
+                }
 			});
 		}
     }   

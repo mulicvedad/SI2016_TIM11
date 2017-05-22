@@ -66,6 +66,7 @@ public class Account extends BaseModel {
         this.password = password;
     }
 
+    @JsonIgnore
     @OneToMany(mappedBy = "account")
     public Collection<AccessLog> getAccessLogs() {
         return accessLogs;
@@ -86,6 +87,7 @@ public class Account extends BaseModel {
         this.role = role;
     }
 
+    @JsonIgnore
     @OneToMany(mappedBy = "account")
     public Collection<Audit> getAudits() {
         return audits;

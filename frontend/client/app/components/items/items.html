@@ -96,52 +96,53 @@
    </form>
    <br><br>
 </div>
+
+<div class="row">
+    <div class="input-field col s5 offset-s7">
+        <i class="material-icons prefix">search</i>
+        <input type="text" placeholder="Traži..." ng-model="$ctrl.searchText" ng-change="$ctrl.filter()" ng-model-options="{ debounce: 200 }">
+    </div>
 </div>
-<br><br>
+
 <table class="striped responsive-table">
-   <thead>
-      <tr>
-         <th>#</th>
-         <th>Naziv</th>
-         <th>Datum unosa</th>
-         <th>Odgovorna osoba</th>
-         <th>Uneseno od</th>
-         <th>Inventurni broj</th>
-         <th>Mjerna jedinica</th>
-         <th>Vrijednost</th>
-         <th>Kategorija</th>
-         <th>Lokacija</th>
-         <th></th>
-      </tr>
-   </thead>
-   <tbody>
-      <tr ng-repeat="item in $ctrl.items">
-         <td>{{ item.id }}</td>
-         <td>{{ item.name }}</td>
-         <td>{{ item.dateOfPurchase }}</td>
-         <td>{{ item.personResponsible }}</td>
-         <td>{{ item.purchasedBy }}</td>
-         <td>{{ item.skuNumber }}</td>
-         <td>{{ item.unitOfMeasurement }}</td>
-         <td>{{ item.value }}</td>
-         <td>{{ item.category }}</td>
-          <!-- Ne radi iz cudnog nekog razloga...<td ng-repeat="cat in filt = ($ctrl.allCategories | filter: { id : item.category})" >{{cat.name}}</td>
-         <td ng-hide="filt.length"></td>-->
-         <td>{{ item.location }}</td>
-         <!--Ne radi iz cudnog nekog razloga...<td ng-repeat="cat in filt = ($ctrl.allLocations | filter: { id : item.location})" >{{cat.name}}</td>
-         <td ng-hide="filt.length"></td>-->     
-         <td>
-            <a href="#" ng-click="$ctrl.edit(item.id)"><i class="material-icons">edit</i></a>
-            <a href="#" ng-click="$ctrl.delete(item.id)"><i class="material-icons">delete</i></a>
-         </td>
-      </tr>
-   </tbody>
+    <thead>
+        <tr>
+            <th>Inventurni broj</th>
+            <th>Naziv</th>
+            <th>Unio</th>
+            <th>Odgovorna osoba</th>
+            <th>Vrijednost</th>
+            <th>Datum unosa</th>
+            <th>Mjerna jedinica</th>
+            <th>Kategorija</th>
+            <th>Lokacija</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="item in $ctrl.items">
+            <td>{{ item.skuNumber }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.purchasedBy }}</td>
+            <td>{{ item.personResponsible }}</td>
+            <td>{{ item.value | currency : '' }} KM</td>
+            <td>{{ item.dateOfPurchase | date : 'dd/MM/yyyy' }}</td>
+            <td>{{ item.unitOfMeasurement }}</td>
+            <td ng-repeat="cat in (catFilt = $ctrl.categories | filter: { id: item.category })">{{ cat.name }}</td>
+            <td ng-show="catFilt.length === 0"></td>
+            <td ng-repeat="loc in (locFilt = $ctrl.locations | filter: { id: item.location })">{{ loc.name }}</td>
+            <td ng-show="locFilt.length === 0"></td>
+            <td>
+                <a href="#" ng-click="$ctrl.edit(item.id)"><i class="material-icons">edit</i></a>
+                <a href="#" ng-click="$ctrl.delete(item.id)"><i class="material-icons">delete</i></a>
+            </td>
+        </tr>
+    </tbody>
 </table>
 
 <div class="right-align">
-   <ul class="pagination">
-      <li ng-class="{ 'disabled': $ctrl.number === 1}"><a href="#" ng-click="$ctrl.goto($ctrl.number - 1)"><i class="material-icons">chevron_left</i></a></li>
-      <li ng-class="{ 'disabled': $ctrl.number === $ctrl.totalPages }"><a href="#" ng-click="$ctrl.goto($ctrl.number + 1)"><i class="material-icons">chevron_right</i></a></li>
-   </ul>
+    <ul class="pagination">
+        <li ng-class="{ 'disabled': $ctrl.number === 1}"><a href="#" ng-click="$ctrl.goto($ctrl.number - 1)"><i class="material-icons">chevron_left</i></a></li>
+        <li ng-class="{ 'disabled': $ctrl.number === $ctrl.totalPages }"><a href="#" ng-click="$ctrl.goto($ctrl.number + 1)"><i class="material-icons">chevron_right</i></a></li>
+    </ul>
 </div>
-

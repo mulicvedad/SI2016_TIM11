@@ -9,7 +9,11 @@ class StatusController {
 
 
 	registerStatus() {
-		this.statusService.create(this._status).then((response) => {
+		 if (!this.form.$valid) {
+            return;
+        }
+
+		this.statusService.create(this.status).then((response) => {
 			console.log("Added a status!");
 			this.status.push(response.data);
         	this.loadStatus(1);

@@ -53,6 +53,7 @@ public class ItemController extends BaseController<Item, ItemService> {
             BigDecimal value = newItem.getValue();
             Collection<AuditItem> auditItems = null;
             Collection<PastAuditItem> pastAuditItems = null;
+            
 
             return ResponseEntity.ok(service.save(new Item(skuNumber, name, unitOfMeasurement, purchasedBy, personResponsible, dateOfPurchase, value, auditItems, category, location, pastAuditItems)));
         } catch(ServiceException e) {

@@ -15,4 +15,8 @@ export default class StatusService extends BaseService {
     {
         return super.get('status/page/'+page);
     }
+
+    delete(id) {
+		return super.delete('status/' + id);
+	}
 }

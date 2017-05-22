@@ -50,6 +50,15 @@ class StatusController {
         this.loadStatus(newPage);
     }
 
+      delete(id) {
+		if (confirm('Da li ste sigurni da želite obrisati status?')) {
+			this.statusService.delete(id).then(response => {
+				this.loadStatus(this.number);
+                this.loadAllStatus();
+			});
+		}
+	}
+
 }
 
 export default StatusController;

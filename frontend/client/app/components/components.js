@@ -1,6 +1,7 @@
 import angular from 'angular';
 import Home from './home/home';
 import Accounts from './accounts/accounts';
+import Audit from './audit/audit';
 import Locations from './locations/locations';
 import LocationTypes from './locationTypes/locationTypes';
 import Categories from './categories/categories';
@@ -14,6 +15,7 @@ import MyAccount from './myAccount/myAccount';
 let Components = angular.module('app.components', [
   Home,
   Accounts,
+  Audit,
   Locations,
   Categories,
   Status,

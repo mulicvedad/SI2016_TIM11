@@ -6,6 +6,7 @@ let accessLogsModule =  angular.module('accessLogs', [
     uiRouter
 ])
 .config(($stateProvider) => {
+    'ngInject';
     $stateProvider
         .state('accessLogs', {
             url: '/pristupni-logovi',

@@ -20,9 +20,12 @@ import java.util.List;
 @RestController
 public class LocationTypeController extends BaseController<LocationType, LocationTypeService> {
     @ResponseBody
-    public ResponseEntity create(@RequestBody @Valid LocationTypeCreateForm newLocType) {
+    public ResponseEntity create(@RequestBody @Valid LocationTypeCreateForm newLocType,
+                                 @RequestHeader("Authorization") String token) {
         try {
-            return ResponseEntity.ok(service.save(modelMapper.map(newLocType, LocationType.class)));
+            LocationType model = service.save(modelMapper.map(newLocType, LocationType.class));
+            logForCreate(token, model);
+            return ResponseEntity.ok(model);
         } catch(ServiceException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

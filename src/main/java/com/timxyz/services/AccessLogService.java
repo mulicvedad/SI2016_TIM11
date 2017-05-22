@@ -10,15 +10,7 @@ import java.util.List;
 
 @Service
 public class AccessLogService extends ReadOnlyService<AccessLog, AccessLogRepository> {
-
-    public List<AccessLog> getByAccountUsername(String username) {
-        return repository.getAllByAccountUsername(username);
-    }
-
-    public List<AccessLog> getByAccountFullName(String fullName) {
-        return repository.getAllByAccountFullName(fullName);
-    }
-
+    
     public List<AccessLog> getAllByFilter(String filter) {
         return repository.getAllByFilter(filter);
     }

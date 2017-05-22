@@ -9,9 +9,8 @@ export default class AccessLogService extends BaseService {
 		return super.get('access-logs/page/' + page);
 	}
 	
-    getByFilter(searchedText)
-    {
-        return super.get('access-logs/search-by/filter?name='+searchedText);
+    getByFilter(searchedText) {
+        return super.get('access-logs/search-by/filter/' + searchedText);
     }
 
 }

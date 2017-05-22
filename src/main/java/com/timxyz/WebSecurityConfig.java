@@ -31,7 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             // razlog: @PreAuthorize("hasrole('ADMIN')") je neuspjesno testiran
             // NAPOMENA: Iako su role u bazi spasene sa prefiksom "ROLE_"
             // njega ne treba navoditi u metodi 'hasRole(string roleName)'
-            .antMatchers("/accounts").hasRole("ADMIN")
+            //.antMatchers("/accounts").hasRole("ADMIN")
             .antMatchers(HttpMethod.POST, "/login").permitAll()
             .anyRequest().authenticated()
             .and()

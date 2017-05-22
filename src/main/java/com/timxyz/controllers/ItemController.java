@@ -39,7 +39,7 @@ public class ItemController extends BaseController<Item, ItemService> {
     }
 
     @ResponseBody
-    public ResponseEntity create(@RequestBody @Valid ItemCreateForm newItem) {
+    public ResponseEntity create(@RequestBody @Valid ItemCreateForm newItem, @RequestHeader("Authorization") String token) {
         try {
             Location location = locationService.get(newItem.getLocationID());
             Category category = categoryService.get(newItem.getCategoryID());
@@ -53,8 +53,10 @@ public class ItemController extends BaseController<Item, ItemService> {
             BigDecimal value = newItem.getValue();
             Collection<AuditItem> auditItems = null;
             Collection<PastAuditItem> pastAuditItems = null;
-
-            return ResponseEntity.ok(service.save(new Item(skuNumber, name, unitOfMeasurement, purchasedBy, personResponsible, dateOfPurchase, value, auditItems, category, location, pastAuditItems)));
+            Item model = service.save(new Item(skuNumber, name, unitOfMeasurement, purchasedBy,
+                    personResponsible, dateOfPurchase, value, auditItems, category, location, pastAuditItems));
+            logForCreate(token, model);
+            return ResponseEntity.ok(model);
         } catch(ServiceException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

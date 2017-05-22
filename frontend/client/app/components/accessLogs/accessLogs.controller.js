@@ -4,22 +4,31 @@ class AccessLogsController {
     constructor(accessLogService) {
         this.accessLogService = accessLogService;
         this.loadAccessLogs(1);
+        this.searchedText = "";
     }
 
     loadAccessLogs(page) {
-        accessLogService.getPage(page).then(response => {
-            console.log("uspjesno dohvacanje logeva");
+        this.accessLogService.getPage(page).then((response) => {
             this.accessLogs = response.data.content;
             this.number = response.data.number+1;
 			this.totalPages = response.data.totalPages;
         },
         (error) => {
-            console.log("neuspjesno dohvacanje logeva\n" + JSON.stringify(error));
+            //ispisati gresku umjesto tabele
         });
     }
 
     goToPage(page) {
         this.loadAccessLogs(page);
+    }
+
+    filter() {
+        if(this.searchedText) {
+            this.accessLogService.getByFilter(this.searchedText).then((response) => {
+                this.accessLogs = response.data;
+            });
+        }
+
     }
 }
 

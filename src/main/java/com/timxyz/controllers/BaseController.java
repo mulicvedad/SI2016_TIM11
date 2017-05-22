@@ -1,6 +1,5 @@
 package com.timxyz.controllers;
 
-import com.timxyz.models.Account;
 import com.timxyz.models.BaseModel;
 import com.timxyz.services.BaseService;
 import com.timxyz.services.exceptions.ServiceException;
@@ -14,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import com.timxyz.services.LogHelperService;
+
 public abstract class BaseController<M extends BaseModel, S extends BaseService<M, ? > > {
     protected S service;
 
@@ -25,15 +26,19 @@ public abstract class BaseController<M extends BaseModel, S extends BaseService<
         this.service = service;
     }
 
+    @Autowired
+    protected LogHelperService logHelperService;
+
     @ResponseBody
     public Iterable<M> all() {
         return service.all();
     }
 
     @ResponseBody
-    public ResponseEntity create(@RequestBody @Valid M newModel) {
+    public ResponseEntity create(@RequestBody @Valid M newModel, @RequestHeader("Authorization") String token) {
         try {
             M model = service.save(newModel);
+            logForCreate(token, model);
             return ResponseEntity.ok(model);
         } catch(ServiceException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -50,8 +55,10 @@ public abstract class BaseController<M extends BaseModel, S extends BaseService<
     }
 
     @ResponseBody
-    public ResponseEntity delete(@PathVariable("id") Long id) {
+    public ResponseEntity delete(@PathVariable("id") Long id, @RequestHeader("Authorization") String token)
+            throws ServiceException {
         service.delete(id);
+        logForDelete(token, service.get(id));
         return ResponseEntity.ok(true);
     }
 
@@ -59,5 +66,17 @@ public abstract class BaseController<M extends BaseModel, S extends BaseService<
     public ResponseEntity getPage(@PathVariable("pageNumber") int pageNumber) {
         Pageable page =new PageRequest(pageNumber-1, 5);
         return ResponseEntity.ok(service.listAllByPage(page));
+    }
+
+    protected void logForCreate (String token, BaseModel model) {
+        logHelperService.logCreate(token, model);
+    }
+
+    protected void logForUpdate (String token, BaseModel model) {
+        logHelperService.logUpdate(token, model);
+    }
+
+    protected void logForDelete (String token, BaseModel model) {
+        logHelperService.logDelete(token, model);
     }
 }

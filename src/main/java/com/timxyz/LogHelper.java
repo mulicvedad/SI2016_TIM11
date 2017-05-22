@@ -1,12 +1,9 @@
-package com.timxyz;
+/*package com.timxyz;
 
 import com.timxyz.models.Account;
 import com.timxyz.models.BaseModel;
 import com.timxyz.services.LogHelperService;
 
-/**
- * Created by muhamed on 5/4/17.
- */
 public class LogHelper {
     public static void logCreate(Account account, BaseModel model) {
         LogHelperService.logCreate(account, model);
@@ -24,3 +21,4 @@ public class LogHelper {
         LogHelperService.logDelete(account, model);
     }
 }
+*/

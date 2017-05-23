@@ -15,7 +15,19 @@ class AccountsController {
 		this.accountService.create(this.account).then(response => {
 			this.loadAccounts(1);
 			this.resetForm();
-		}, error => {});
+		}, error => {
+			console.log(JSON.stringify(error));
+			// ovo je poseban slucaj koji nastaje 
+			// kada se desi bacanje custom izuzetka na backendu
+			if (error.status == "400") {
+				this.error = { "error" : "Invalid request",
+						      "message": error.data.message.string 
+				};
+			}
+			else {
+				this.error = error;
+			}
+		});
 	}
 
 	setEmptyAccount() {

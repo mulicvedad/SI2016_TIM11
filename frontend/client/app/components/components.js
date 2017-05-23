@@ -11,6 +11,7 @@ import ItemsCRD from './itemsCRD/itemsCRD';
 import Login from './login/login';
 import Navbar from './navbar/navbar';
 import MyAccount from './myAccount/myAccount';
+import ErrorDisplay from './errorDisplay/errorDisplay';
 
 let Components = angular.module('app.components', [
   Home,
@@ -24,7 +25,8 @@ let Components = angular.module('app.components', [
   ItemsCRD,
   Navbar,
   Login,
-  MyAccount
+  MyAccount,
+  ErrorDisplay
 ])
 .name;
 

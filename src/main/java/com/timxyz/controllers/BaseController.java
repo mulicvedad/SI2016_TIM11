@@ -11,6 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.validation.Valid;
 
 import com.timxyz.services.LogHelperService;
@@ -78,5 +81,13 @@ public abstract class BaseController<M extends BaseModel, S extends BaseService<
 
     protected void logForDelete (String token, BaseModel model) {
         logHelperService.logDelete(token, model);
+    }
+    
+    @ResponseBody
+    protected ResponseEntity error(Exception e) {
+    	JsonObjectBuilder objectBuilder = Json.createObjectBuilder()
+                .add("message", e.getMessage());
+        JsonObject responseObj = objectBuilder.build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseObj);
     }
 }

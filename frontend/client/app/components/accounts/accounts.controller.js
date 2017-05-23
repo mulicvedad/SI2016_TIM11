@@ -15,6 +15,12 @@ class AccountsController {
 		this.accountService.create(this.account).then(response => {
 			this.loadAccounts(1);
 			this.resetForm();
+
+			swal({
+				title: 'Bravo!',
+				text: 'Novi korisnik je uspješno kreiran!',
+				type: 'success'
+			});
 		}, error => {
 			console.log(JSON.stringify(error));
 			// ovo je poseban slucaj koji nastaje 

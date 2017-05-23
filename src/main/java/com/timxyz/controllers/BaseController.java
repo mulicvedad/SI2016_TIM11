@@ -1,7 +1,5 @@
 package com.timxyz.controllers;
 
-import com.timxyz.LogHelper;
-import com.timxyz.models.Account;
 import com.timxyz.models.BaseModel;
 import com.timxyz.services.BaseService;
 import com.timxyz.services.exceptions.ServiceException;
@@ -13,6 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.validation.Valid;
 
 public abstract class BaseController<M extends BaseModel, S extends BaseService<M, ? > > {
@@ -60,5 +61,13 @@ public abstract class BaseController<M extends BaseModel, S extends BaseService<
     public ResponseEntity getPage(@PathVariable("pageNumber") int pageNumber) {
         Pageable page =new PageRequest(pageNumber-1, 5);
         return ResponseEntity.ok(service.listAllByPage(page));
+    }
+    
+    @ResponseBody
+    protected ResponseEntity error(Exception e) {
+    	JsonObjectBuilder objectBuilder = Json.createObjectBuilder()
+                .add("message", e.getMessage());
+        JsonObject responseObj = objectBuilder.build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseObj);
     }
 }

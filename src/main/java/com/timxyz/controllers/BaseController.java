@@ -60,8 +60,8 @@ public abstract class BaseController<M extends BaseModel, S extends BaseService<
     @ResponseBody
     public ResponseEntity delete(@PathVariable("id") Long id, @RequestHeader("Authorization") String token)
             throws ServiceException {
+    	logForDelete(token, service.get(id));
         service.delete(id);
-        logForDelete(token, service.get(id));
         return ResponseEntity.ok(true);
     }
 

@@ -26,7 +26,11 @@ class MyAccountController {
         };
 
         this.myAccountService.update(data).then(response => {
-            console.log(response);
+            swal({
+                title: 'Bravo!',
+                text: 'Novi podaci koje ste unijeli su sačuvani.',
+                type: 'success'
+            });
         });
     }
 }

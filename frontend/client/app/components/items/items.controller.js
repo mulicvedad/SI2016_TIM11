@@ -1,10 +1,12 @@
 class ItemsController {
-    static $inject = ['itemService', 'locationService' , 'categoryService'];
+    static $inject = ['itemService', 'locationService' , 'categoryService', 'swalService'];
     
-    constructor(itemService, locationService, categoryService) {
+    constructor(itemService, locationService, categoryService, swalService) {
         this.itemService = itemService;
         this.locationService = locationService;
         this.categoryService = categoryService;
+        this.swalService = swalService;
+
 	    this.loadCategories();
         this.loadLocations();
         this.loadItems(1);
@@ -38,17 +40,30 @@ class ItemsController {
     }
     
     registerItem() {
-        this.itemService.create(this.items).then((response) => {
-            console.log("Added an item!");
+        if (!this.form.$valid) {
+            return;
+        }
+
+        this.itemService.create(this.item).then(response => {
             this.items.push(response.data);
             this.setEmptyItem();
-        }, (error) => {
-            console.log("Error while creating an item.");
-        });
+
+            this.swalService.success('Nova inventurna stavka je uspješno kreirana.');
+        }, error => {});
     }
 
     setEmptyItem() {
-        //to be implemented
+        this.item = {
+            skuNumber: '',
+            name: '',
+            purchasedBy: '',
+            personResponsible: '',
+            value: '',
+            dateOfPurchase: '',
+            unitOfMeasurement: '',
+            categoryID: null,
+            locationID: null
+        };
     }
 
     filter() {
@@ -57,27 +72,18 @@ class ItemsController {
         });
     }
     
-    shouldHide(date){
-        // funkcija nije gotova treba jos dodati logiku za sakrivanje delete ikone
-        return date == 1495292400000 ? true : false;
-    }
-    
     delete(id) {
-		if (confirm('Da li ste sigurni da želite obrisati inventurnu stavku?')) {
+        this.swalService.confirm('Obrisana inventurna stavka se ne može vratiti.', () => {
 			this.itemService.delete(id).then(response => {
-                this.loadItems(this.number);
-                if (this.items.count > 0) {
+                if (this.items.length > 1) {
                     this.loadItems(this.number);
-                }
-                else if (this.number > 0) {
-                    // ako se obrise entitet koji je zadnji na stranici onda ucitaj prethodnu stranicu
-                    this.loadItems(this.number - 1);
-                }
-                else {
+                } else if (this.totalPages > 1) {
+                    this.goto(this.number - 1);
+                } else {
                     this.items = [];
                 }
 			});
-		}
+		});
     }   
 }
 export default ItemsController;

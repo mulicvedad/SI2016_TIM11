@@ -1,8 +1,10 @@
 class AccountsController {
-	static $inject = ['accountService'];
+	static $inject = ['accountService', 'swalService'];
 
-	constructor(accountService) {
+	constructor(accountService, swalService) {
 		this.accountService = accountService;
+		this.swalService = swalService;
+
 		this.loadAccounts(1);
 		this.setEmptyAccount();
 	}
@@ -16,11 +18,7 @@ class AccountsController {
 			this.loadAccounts(1);
 			this.resetForm();
 
-			swal({
-				title: 'Bravo!',
-				text: 'Novi korisnik je uspješno kreiran!',
-				type: 'success'
-			});
+			this.swalService.success('Novi korisnik je uspješno kreiran.');
 		}, error => {
 			console.log(JSON.stringify(error));
 			// ovo je poseban slucaj koji nastaje 
@@ -63,15 +61,7 @@ class AccountsController {
 	edit(id) {}
 
 	delete(id) {
-		swal({
-			title: 'Da li ste sigurni?',
-			text: 'Obrisani korisnički se ne može vratiti nakon brisanja.',
-			type: 'warning',
-			showCancelButton: true,
-			confirmButtonText: 'Da, obriši',
-			cancelButtonText: 'Ne',
-			closeOnConfirm: true
-		}, () => {
+		this.swalService.areYouSure('Obrisani korisnički račun se ne može vratiti.', () => {
 			this.accountService.delete(id).then(response => {
 				if (this.accounts.length > 1) {
 					this.loadAccounts(this.number);

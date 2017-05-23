@@ -12,6 +12,7 @@ import sessionService from './sessionService';
 import jwtService from './jwtService';
 import myAccountService from './myAccountService';
 import accessLogService from './accessLogService';
+import swalService from './swalService';
 
 export default angular
   .module('app.services', [])
@@ -28,5 +29,6 @@ export default angular
     sessionService,
     jwtService,
     myAccountService,
-    accessLogService
+    accessLogService,
+    swalService
 }).name;

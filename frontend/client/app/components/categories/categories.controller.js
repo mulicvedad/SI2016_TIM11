@@ -1,8 +1,10 @@
 class CategoriesController {
-	static $inject = ['categoryService'];
+	static $inject = ['categoryService', 'swalService'];
 
-	constructor(categoryService) {
+	constructor(categoryService, swalService) {
 		this.categoryService = categoryService;
+        this.swalService = swalService;
+
 		this.loadCategories(1);
         this.loadAllCategories();
 		this.setEmptyCategory();
@@ -18,6 +20,8 @@ class CategoriesController {
         	this.loadCategories(1);
             this.loadAllCategories();
 			this.resetForm();
+
+            this.swalService.success('Nova kategorija je uspješno kreirana.');
 		}, error => {});
 	}
 
@@ -46,21 +50,20 @@ class CategoriesController {
     }
 
     delete(id) {
-		if (confirm('Da li ste sigurni da želite obrisati kategoriju?')) {
+        this.swalService.areYouSure('Obrisana kategorija se ne može vratiti.', () => {
 			this.categoryService.delete(id).then(response => {
-                this.loadAllCategories();
-                if (this.categories.count > 0) {
-					this.loadCategories(this.number);
-				}
-				else if (this.number > 0) {
-					// ako se obrise entitet koji je zadnji na stranici onda ucitaj prethodnu stranicu
-					this.loadCategories(this.number - 1);
-				}
-				else {
-					 this.locationTypes = [];
-				}
+                if (this.accounts.length > 1) {
+                    this.loadCategories(this.number);
+                    this.loadAllCategories();
+                } else if (this.totalPages > 1) {
+                    this.goto(this.number - 1);
+                    this.loadAllCategories();
+                } else {
+                    this.categories = [];
+                    this.allCategories = [];
+                }
 			});
-		}
+		});
 	}
 
     resetForm() {

@@ -88,6 +88,7 @@ public class Account extends BaseModel {
         this.role = role;
     }
 
+    @JsonIgnore
     @OneToMany(mappedBy = "account")
     public Collection<Audit> getAudits() {
         return audits;

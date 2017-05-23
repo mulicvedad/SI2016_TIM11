@@ -1,6 +1,7 @@
 import angular from 'angular';
 import Home from './home/home';
 import Accounts from './accounts/accounts';
+import Audit from './audit/audit';
 import Locations from './locations/locations';
 import LocationTypes from './locationTypes/locationTypes';
 import Categories from './categories/categories';
@@ -11,10 +12,12 @@ import Login from './login/login';
 import Navbar from './navbar/navbar';
 import MyAccount from './myAccount/myAccount';
 import AccessLogs from './accessLogs/accessLogs';
+import ErrorDisplay from './errorDisplay/errorDisplay';
 
 let Components = angular.module('app.components', [
   Home,
   Accounts,
+  Audit,
   Locations,
   Categories,
   Status,
@@ -24,7 +27,8 @@ let Components = angular.module('app.components', [
   Navbar,
   Login,
   MyAccount,
-  AccessLogs
+  AccessLogs,
+  ErrorDisplay
 ])
 .name;
 

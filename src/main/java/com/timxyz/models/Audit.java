@@ -1,5 +1,8 @@
 package com.timxyz.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -54,7 +57,9 @@ public class Audit extends BaseModel {
     public void setFinished(Byte finished) {
         this.finished = finished;
     }
-
+    
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "id", nullable = false)
     public Account getAccount() {
@@ -64,7 +69,9 @@ public class Audit extends BaseModel {
     public void setAccount(Account account) {
         this.account = account;
     }
-
+    
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     @ManyToOne
     @JoinColumn(name = "locationId", referencedColumnName = "id")
     public Location getLocation() {

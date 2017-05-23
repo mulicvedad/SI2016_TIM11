@@ -3,7 +3,7 @@ class StatusController {
 
 	constructor(statusService) {
 		this.statusService = statusService;
-		this.loadStatus(1);
+		this.loadStatuses(1);
 		this.setEmptyStatus();
 	}
 
@@ -14,10 +14,8 @@ class StatusController {
         }
 
 		this.statusService.create(this.status).then((response) => {
-			console.log("Added a status!");
-			this.status.push(response.data);
-        	this.loadStatus(1);
-			this.setEmptyStatus();
+        	this.loadStatuses(1);
+			this.resetForm();
 		}, (error) => {
 			console.log("Error while creating a status.");
 		});
@@ -27,37 +25,43 @@ class StatusController {
 		this.status = {name: ""};
 	}
 
-	/*loadStatus() {
-		this.statusService.all().then( (response) => {
-			this.status = response.data;
-			// radi
-		} );
-	}*/
-
-    loadStatus(page) {
-        this.statusService.getPage(page).then( (response) => {
-            this.status = response.data.content;
-        this.number = response.data.number+1;
-        this.totalPages = new Array(response.data.totalPages);
-        for(var i = 0; i< response.data.totalPages; i++) {
-            this.totalPages[i] = i + 1;
-        }
-    } );
+    loadStatuses(page) {
+        this.statusService.getPage(page).then((response) => {
+            this.statuses = response.data.content;
+        	this.number = response.data.number+1;
+        	this.totalPages = response.data.totalPages;
+    	});
     }
 
-    goto(newPage)
-    {
-        this.loadStatus(newPage);
+    goto(newPage) {
+		if (newPage > 0 && newPage <= this.totalPages) {
+        	this.loadStatuses(newPage);
+		}
     }
 
-      delete(id) {
+    delete(id) {
 		if (confirm('Da li ste sigurni da želite obrisati status?')) {
-			this.statusService.delete(id).then(response => {
-				this.loadStatus(this.number);
-                this.loadAllStatus();
+			this.statusService.delete(id).then((response) => {
+				if (this.status.count > 0) {
+					this.loadStatuses(this.number);
+				 }
+				 else if (this.number > 0) {
+					// ako se obrise entitet koji je zadnji na stranici onda ucitaj prethodnu stranicu
+					this.loadStatuses(this.number - 1);
+				 }
+				 else {
+					 this.statuses = [];
+				 }
 			});
 		}
 	}
+
+	resetForm() {
+        this.form.$setPristine();
+        this.form.$setUntouched();
+        this.form.$submitted = false;
+        this.setEmptyStatus();
+    }
 
 }
 

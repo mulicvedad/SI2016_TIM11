@@ -5,8 +5,13 @@ import com.timxyz.models.Account;
 import com.timxyz.services.AccountService;
 import com.timxyz.services.exceptions.ServiceException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.validation.Valid;
 
 @RestController
@@ -23,7 +28,12 @@ public class AccountController extends BaseController<Account, AccountService> {
             logForCreate(token, acc);
             return ResponseEntity.ok(acc);
         } catch(ServiceException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            // nacin na koji se vracao response nije omogucavao pristup
+            // poruci o greski na frontendu
+            JsonObjectBuilder objectBuilder = Json.createObjectBuilder()
+                    .add("message", e.getMessage());
+            JsonObject responseObj = objectBuilder.build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseObj);
         }
     }
 

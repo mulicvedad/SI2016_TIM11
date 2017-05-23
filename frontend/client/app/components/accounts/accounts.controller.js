@@ -57,20 +57,25 @@ class AccountsController {
 	edit(id) {}
 
 	delete(id) {
-		if (confirm('Da li ste sigurni da želite obrisati korisnički račun?')) {
+		swal({
+			title: 'Da li ste sigurni?',
+			text: 'Obrisani korisnički se ne može vratiti nakon brisanja.',
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Da, obriši',
+			cancelButtonText: 'Ne',
+			closeOnConfirm: true
+		}, () => {
 			this.accountService.delete(id).then(response => {
-				if (this.accounts.count > 0) {
+				if (this.accounts.length > 1) {
 					this.loadAccounts(this.number);
-				 }
-				 else if (this.number > 0) {
-					// ako se obrise entitet koji je zadnji na stranici onda ucitaj prethodnu stranicu
-					this.loadAccounts(this.number - 1);
-				 }
-				 else {
-					 this.accounts = [];
-				 }
+				} else if (this.totalPages > 1) {
+					this.goto(this.number - 1);
+				} else {
+					this.accounts = [];
+				}
 			});
-		}
+		});
 	}
 
 	resetForm() {

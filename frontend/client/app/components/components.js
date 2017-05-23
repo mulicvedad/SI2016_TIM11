@@ -13,7 +13,7 @@ import Navbar from './navbar/navbar';
 import MyAccount from './myAccount/myAccount';
 import AccessLogs from './accessLogs/accessLogs';
 import ErrorDisplay from './errorDisplay/errorDisplay';
-import DoAudit from './doAudit/doAudit';
+// import DoAudit from './doAudit/doAudit';
 
 let Components = angular.module('app.components', [
   Home,
@@ -30,7 +30,7 @@ let Components = angular.module('app.components', [
   MyAccount,
   AccessLogs,
   ErrorDisplay,
-  DoAudit
+  // DoAudit
 ])
 .name;
 

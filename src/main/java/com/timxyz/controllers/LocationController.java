@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,12 +27,14 @@ public class LocationController extends BaseController<Location, LocationService
     }
 
     @ResponseBody
-    public ResponseEntity create(@RequestBody @Valid LocationCreateForm newLocation) {
+    public ResponseEntity create(@RequestBody @Valid LocationCreateForm newLocation,
+                                 @RequestHeader("Authorization") String token) {
         try {
             Location parent = service.get(newLocation.getParentId());
             LocationType type = locationTypeService.get(newLocation.getTypeId());
-
-            return ResponseEntity.ok(service.save(new Location(newLocation.getName(), parent, type)));
+            Location model = service.save(new Location(newLocation.getName(), parent, type));
+            logForCreate(token, model);
+            return ResponseEntity.ok(model);
         } catch(ServiceException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

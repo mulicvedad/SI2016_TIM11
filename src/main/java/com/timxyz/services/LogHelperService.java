@@ -3,65 +3,83 @@ package com.timxyz.services;
 import com.timxyz.models.AccessLog;
 import com.timxyz.models.Account;
 import com.timxyz.models.BaseModel;
+import com.timxyz.repositories.AccountRepository;
+import com.timxyz.services.TokenAuthenticationService;
 import com.timxyz.repositories.AccessLogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-/**
- * Created by muhamed on 5/6/17.
- */
+@Service
 public class LogHelperService {
+
     @Autowired
-    private static AccessLogRepository accessLogRepository;
-    private static final String descriptionTemplate = "User %s %s object with id %d of table %s on %s";
-    // Username, action, object id, table name, date and time
+    private AccessLogRepository accessLogRepository;
 
-    private static String getTableName(BaseModel model) {
-        // This is a terrible solution but it should work
+    @Autowired
+    private AccountRepository accountRepository;
+
+    private final String descriptionTemplate = "Korisnik/ca %s je %s objekat sa ID-em %d u tebeli %s";
+    // Username, action, object id, table name
+
+    private String getTableName(BaseModel model) {
         String className = model.getClass().toString();
-
-        if (className.equals("Role")) {
-            return "roles";
-        }
-        else {
-            return className.substring(0, 1).toLowerCase() + className.substring(1);
-        }
+        String entityName = className.substring(className.lastIndexOf('.') + 1);
+        
+        return entityName.isEmpty() ? className : entityName;
     }
 
-    private static void log(Account account, BaseModel model, String action) {
+    private void log(Account account, BaseModel model, String action) {
         String username = account.getUsername();
         Long objectId = model.getId();
         String tableName = getTableName(model);
         Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
         String description =
-                String.format(descriptionTemplate, username, action, objectId, tableName, timestamp.toString());
+                String.format(descriptionTemplate, username, action, objectId, tableName);
 
         AccessLog accessLog = new AccessLog();
         accessLog.setAccount(account);
         accessLog.setDate(timestamp);
         accessLog.setDescription(description);
         accessLog.setObjectId(objectId);
-        accessLog.setType(action.toUpperCase()); // For now, can be improved (e.g. should be SELECT instead of SELECTED)
+        accessLog.setType(action.toUpperCase());
         accessLog.setTableName(tableName);
 
         accessLogRepository.save(accessLog);
     }
 
-    public static void logCreate(Account account, BaseModel model) {
-        log(account, model, "created");
+    // svjesno narusavanje DRY principa zbog citljivosti
+
+    public void logCreate(String accessToken, BaseModel model) {
+        //Account account = accountRepository.findByUsername(TokenAuthenticationService.parseJwt(accessToken));
+        // hardkodirano za sad jer korisnik admin kojeg mi koristimo za pristup
+        // ne postoji u bazi
+        Account account = accountRepository.findOne((long)1);
+
+        if (account != null && model != null) {
+            log(account, model, "kreirao/la");
+        }
     }
 
-    public static void logSelect(Account account, BaseModel model) {
-        log(account, model, "selected");
+    public void logUpdate(String accessToken, BaseModel model) {
+        // Account account = accountRepository.findByUsername(TokenAuthenticationService.parseJwt(accessToken));
+        // hardkodirano za sad
+        Account account = accountRepository.findOne((long)1);
+
+        if (account != null && model != null) {
+            log(account, model, "promijenio/la");
+        }
     }
 
-    public static void logUpdate(Account account, BaseModel model) {
-        log(account, model, "updated");
-    }
+    public void logDelete(String accessToken, BaseModel model) {
+        // Account account = accountRepository.findByUsername(TokenAuthenticationService.parseJwt(accessToken));
+        // hardkodirano za sad
+        Account account = accountRepository.findOne((long)1);
 
-    public static void logDelete(Account account, BaseModel model) {
-        log(account, model, "deleted");
+        if (account != null && model != null) {
+            log(account, model, "obrisao/la");
+        }
     }
 }

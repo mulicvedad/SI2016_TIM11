@@ -51,6 +51,7 @@ public class MyAccountController extends BaseController<Account, AccountService>
 		
 		try {
 			service.updatePassword(account, updatedAccount.getNewPassword());
+			logForUpdate(token, account);
 		} catch (ServiceException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}

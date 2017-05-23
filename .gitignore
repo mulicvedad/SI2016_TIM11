@@ -17,6 +17,10 @@ frontend/node_modules/
 *.iml
 *.ipr
 
+### Sublime Text ###
+*.sublime-project
+*.sublime-workspace
+
 # Compiled class file
 *.class
 

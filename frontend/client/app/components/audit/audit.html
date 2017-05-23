@@ -21,9 +21,12 @@
             <td>{{ audit.createdAt | date: 'dd.MM.yyyy.' }}</td>
             <td>{{ audit.finished | intToBool }}</td>
             <td>
-                <button class="btn" ng-click="$ctrl.generateReport(audit.id)"> 
-                    <i class="material-icons">file_download</i> 
-                </button>
+                <a ui-sref="doAudit({auditID: audit.id})" ng-show="!audit.finished">
+                   <span class="material-icons">toc</span>
+                </a>
+                <a href="#" ng-click="$ctrl.generateReport(audit.id)">
+                    <span class="material-icons">file_download</span> 
+                </a>
             </td>
         </tr>
     </tbody>

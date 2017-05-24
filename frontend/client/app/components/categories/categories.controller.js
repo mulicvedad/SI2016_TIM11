@@ -99,6 +99,8 @@ class CategoriesController {
     delete(id) {
         this.swalService.areYouSure('Obrisana kategorija se ne može vratiti.', () => {
             this.categoryService.delete(id).then(response => {
+                this.refresh();
+
                 this.swalService.success('Kategorija je uspješno obrisana.');
             });
         });

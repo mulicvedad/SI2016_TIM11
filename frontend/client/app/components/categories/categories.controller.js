@@ -52,10 +52,10 @@ class CategoriesController {
     delete(id) {
         this.swalService.areYouSure('Obrisana kategorija se ne može vratiti.', () => {
 			this.categoryService.delete(id).then(response => {
-                if (this.accounts.length > 1) {
-                    this.loadCategories(this.number);
+               if (this.categories.length > 1) {
+					this.loadCategories(this.number);
                     this.loadAllCategories();
-                } else if (this.totalPages > 1) {
+				} else if (this.totalPages > 1) {
                     this.goto(this.number - 1);
                     this.loadAllCategories();
                 } else {

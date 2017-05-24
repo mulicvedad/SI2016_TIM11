@@ -42,10 +42,9 @@ class StatusController {
     delete(id) {
 		if (confirm('Da li ste sigurni da želite obrisati status?')) {
 			this.statusService.delete(id).then((response) => {
-				if (this.status.count > 0) {
+				if (this.statuses.length > 1) {
 					this.loadStatuses(this.number);
-				 }
-				 else if (this.number > 0) {
+				} else if (this.totalPages > 1) {
 					// ako se obrise entitet koji je zadnji na stranici onda ucitaj prethodnu stranicu
 					this.loadStatuses(this.number - 1);
 				 }

@@ -23,4 +23,8 @@ export default class SessionService {
     isUserLoggedIn(){
         return this.currentUser == null ? false : true;
     }
+
+    currentRole() {
+        return this.currentUser == null ? "" : this.currentUser.role;
+    }
 }

@@ -18,8 +18,10 @@ class AccessLogsController {
         });
     }
 
-    goToPage(page) {
-        this.loadAccessLogs(page);
+    goto(newPage) {
+        if (newPage > 0 && newPage <= this.totalPages) {
+            this.loadAccessLogs(newPage);
+        }
     }
 
     filter() {

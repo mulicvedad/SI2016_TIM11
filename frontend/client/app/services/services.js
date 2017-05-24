@@ -13,6 +13,8 @@ import jwtService from './jwtService';
 import myAccountService from './myAccountService';
 import accessLogService from './accessLogService';
 import swalService from './swalService';
+import roleService from './roleService';
+import transitionService from './transitionService';
 
 export default angular
   .module('app.services', [])
@@ -30,5 +32,7 @@ export default angular
     jwtService,
     myAccountService,
     accessLogService,
-    swalService
+    swalService,
+    roleService,
+    transitionService
 }).name;

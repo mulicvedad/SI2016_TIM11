@@ -5,5 +5,5 @@ import com.timxyz.repositories.RoleRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RoleService extends BaseService<Role, RoleRepository> {
+public class RoleService extends ReadOnlyService<Role, RoleRepository> {
 }

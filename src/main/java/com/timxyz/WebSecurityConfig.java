@@ -19,21 +19,39 @@ import com.timxyz.services.CustomUserDetailsService;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-  
+
+    private final String ROLE_ADMIN = "ADMIN";
+    private final String ROLE_FINANCE = "FINANCE";
+    private final String ROLE_AUDIT_TEAM = "AUDITTEAM";
+
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-            .antMatchers("/").permitAll()
-            // sad za sad cemo koristiti ovaj nacin upravljanja privilegijama 
-            // razlog: @PreAuthorize("hasrole('ADMIN')") je neuspjesno testiran
-            // NAPOMENA: Iako su role u bazi spasene sa prefiksom "ROLE_"
-            // njega ne treba navoditi u metodi 'hasRole(string roleName)'
-            //.antMatchers("/accounts").hasRole("ADMIN")
+
+                // salje se GET prilikom izlistavanja inventura tako da se mora dozvoliti svima
+                // HTTP GET za /accounts
+                // ako se nadje neko drugo rjesenje za inventure onda sljedecu liniju treba izbrisati
+            .antMatchers(HttpMethod.GET,"/accounts/**").authenticated()
+
+            .antMatchers("/accounts/**").hasRole(ROLE_ADMIN)
+            .antMatchers(HttpMethod.GET,"/audits/**", "/items/**").authenticated()
+            .antMatchers("/audits/**").hasAnyRole(ROLE_ADMIN,ROLE_AUDIT_TEAM)
+                // SRS FZ17-18
+                // Korisnik sa administratorskim privilegijama ili korisnik finansijske službe može
+                // kreirati/obrisati novu prostoriju #LOL
+            .antMatchers("/locations/**").hasAnyRole(ROLE_ADMIN,ROLE_FINANCE)
+            .antMatchers("/locaitonTypes/**").hasRole(ROLE_ADMIN)
+            .antMatchers("/categories/**").hasRole(ROLE_ADMIN)
+            .antMatchers("/status/**").hasRole(ROLE_ADMIN)
+            .antMatchers("/items/**").hasAnyRole(ROLE_ADMIN, ROLE_AUDIT_TEAM)
+            .antMatchers("/access-logs/**").hasAnyRole(ROLE_ADMIN, ROLE_FINANCE)
             .antMatchers(HttpMethod.POST, "/login").permitAll()
+
             .anyRequest().authenticated()
+
             .and()
             // filtriramo sve zahtjeve za login sa nasim filterom JWTLoginFilter
             .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
@@ -52,10 +70,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //auth.userDetailsService(customUserDetailsService);
-        auth.inMemoryAuthentication()
+        auth.userDetailsService(customUserDetailsService);
+       /* auth.inMemoryAuthentication()
             .withUser("admin")
             .password("adminpass")
-            .roles("ADMIN");
+            .roles("ADMIN");*/
     }
 }

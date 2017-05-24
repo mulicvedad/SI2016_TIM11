@@ -7,7 +7,7 @@ function ShowForRole(sessionService) {
             scope.sessionService = sessionService;
 
             scope.$watch('sessionService.currentUser.role', (val) => {
-                if (attrs.showForRole === val) {
+                if (attrs.showForRole.search(val) != -1) {
                     element.css({ display: 'inherit'});
                 } 
                 else {

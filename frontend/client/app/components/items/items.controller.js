@@ -76,8 +76,8 @@ class ItemsController {
         this.swalService.confirm('Obrisana inventurna stavka se ne može vratiti.', () => {
 			this.itemService.delete(id).then(response => {
                 if (this.items.length > 1) {
-                    this.loadItems(this.number);
-                } else if (this.totalPages > 1) {
+					this.loadItems(this.number);
+				} else if (this.totalPages > 1) {
                     this.goto(this.number - 1);
                 } else {
                     this.items = [];

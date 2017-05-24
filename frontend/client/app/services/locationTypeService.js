@@ -9,8 +9,7 @@ export default class LocationTypeService extends BaseService {
 		return super.post('locationTypes', locType);
 	}
 
-	getPage(page)
-	{
+	getPage(page){
 		return super.get('locationTypes/page/'+page);
 	}
 

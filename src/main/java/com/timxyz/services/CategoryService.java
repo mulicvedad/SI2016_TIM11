@@ -5,19 +5,23 @@ import com.timxyz.repositories.CategoryRepository;
 import com.timxyz.services.exceptions.ServiceException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+
 @Service
 public class CategoryService extends BaseService<Category, CategoryRepository> {
+
     public Category save(Category model) throws ServiceException {
-        if(model.getId() == null && getByName(model.getName()) != null)
+        Category sameName = getByName(model.getName());
+
+        if (sameName != null && model.getId() != sameName.getId()) {
             throw new ServiceException("A category with this name already exists!");
-        else if(model.getId() != null) {
-            // TO-DO: Finish proper partial update logic (shouldn't send the whole object during update)
         }
-        try {
-            return super.save(model);
-        } catch (ServiceException e) {
-            throw new ServiceException("Unknown role ID!");
-        }
+
+        return super.save(model);
+    }
+
+    public Collection<Category> filterByName(String name) {
+        return repository.filterByName(name);
     }
 
     public Category getByName(String name) {

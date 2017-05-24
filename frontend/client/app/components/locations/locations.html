@@ -12,7 +12,7 @@
          <div class="row">
             <div class="input-field col s12">
                <select class="browser-default" ng-model="$ctrl.location.parentId">
-                  <option value="null" selected>Bez parent lokacije</option>
+                  <option value="null" selected>Bez parentId lokacije</option>
                   <option ng-repeat="location in $ctrl.locations" value="{{ location.id }}" >
                      {{ location.name }}
                   </option>
@@ -53,7 +53,7 @@
       </tr>
       <tr ng-repeat="location in $ctrl.locations">
          <td>{{ location.name }}</td>
-         <td>{{ location.parent }}</td>
+         <td>{{ location.parentId }}</td>
          <td>{{ location.type }}</td>
          <td>  
             <a href="#" ng-click="$ctrl.edit(location.id)"><i class="material-icons">edit</i></a>

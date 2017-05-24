@@ -37,6 +37,7 @@ public class CategoryController extends BaseController<Category, CategoryService
             Category category = service.get(id);
 
             category.setName(updatedCategory.getName());
+            category.setParent(service.get(updatedCategory.getParentId()));
 
             category = service.save(category);
 

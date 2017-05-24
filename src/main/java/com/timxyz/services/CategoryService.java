@@ -12,9 +12,12 @@ public class CategoryService extends BaseService<Category, CategoryRepository> {
 
     public Category save(Category model) throws ServiceException {
         Category sameName = getByName(model.getName());
+        Category parent = model.getParent();
 
         if (sameName != null && model.getId() != sameName.getId()) {
             throw new ServiceException("A category with this name already exists!");
+        } else if (model.getId() != null && parent != null && model.equals(parent)) {
+            throw new ServiceException("Parent can't be the same category!");
         }
 
         return super.save(model);

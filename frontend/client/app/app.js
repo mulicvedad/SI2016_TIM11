@@ -14,17 +14,18 @@ angular.module('app', [
     services
 ])
 .constant('ENV', env)
-.config(($locationProvider, $httpProvider) => {
+.config(($locationProvider, $httpProvider, $qProvider) => {
     'ngInject';
     // @see: https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions
     // #how-to-configure-your-server-to-work-with-html5mode
+    $qProvider.errorOnUnhandledRejections(false);
     $locationProvider.html5Mode(true).hashPrefix('!');
     $httpProvider.interceptors.push(authInterceptor);
 })
 .component('app', AppComponent)
 .directive('showAuthenticated', ShowAuthenticated)
 .directive('showForRole', ShowForRole)
-.run((sessionService, $state, $transitions) => {
+.run((sessionService, $state, $transitions, transitionService) => {
     'ngInject';
     
     $transitions.onStart({ to: 'login' }, (trans) => {

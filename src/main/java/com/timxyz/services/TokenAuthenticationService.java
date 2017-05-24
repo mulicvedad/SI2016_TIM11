@@ -61,7 +61,7 @@ public class TokenAuthenticationService {
                 WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
             accountRepository = webApplicationContext.getBean(AccountRepository.class);
         }
-        //Account account = accountRepository.findByUsername(username);
+        Account account = accountRepository.findByUsername(username);
         String JWT = Jwts.builder()
             .setSubject(username)
             .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
@@ -71,8 +71,7 @@ public class TokenAuthenticationService {
         JsonObjectBuilder objectBuilder = Json.createObjectBuilder()
         	.add(FIELD_NAME_USERNAME, username)
             .add(FIELD_NAME_TOKEN, JWT)
-            .add(FIELD_NAME_ROLE, "ROLE_ADMIN");            
-            //.add(FIELD_NAME_ROLE, account.getRole().getName());
+            .add(FIELD_NAME_ROLE, account.getRole().getName());
 
         JsonObject responseObj = objectBuilder.build();
         logger.info(responseObj.toString());
@@ -87,7 +86,7 @@ public class TokenAuthenticationService {
 
         String userReq = parseJwt(request.getHeader(HEADER_STRING));
 
-        /*Account account = accountRepository.findByUsername(userReq);
+        Account account = accountRepository.findByUsername(userReq);
 
         Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
@@ -95,8 +94,8 @@ public class TokenAuthenticationService {
             grantedAuthorities.add(new SimpleGrantedAuthority(account.getRole().getName()));
         }     
 
-        logger.info(grantedAuthorities.toArray()[0].toString());*/
+        logger.info(grantedAuthorities.toArray()[0].toString());
 
-        return userReq != null ? new UsernamePasswordAuthenticationToken(userReq, null, emptyList()) : null;
+        return userReq != null ? new UsernamePasswordAuthenticationToken(userReq, null, grantedAuthorities) : null;
     }
 }

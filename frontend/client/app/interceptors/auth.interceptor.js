@@ -15,7 +15,10 @@ function authInterceptor(jwtService, ENV, $state, $q) {
                 // token vise nije validan 
                 // ovdje ce mozda ici provjera da li postoji refresh token kako bi se obnovio JWT
                 jwtService.destroyToken();     
-                //$state.go('home');
+                $state.go('home');
+            }
+            else if ( rejection.status === 403 || rejection.status ===-1) {
+                $state.go('home');
             }
             return $q.reject(rejection);
         }

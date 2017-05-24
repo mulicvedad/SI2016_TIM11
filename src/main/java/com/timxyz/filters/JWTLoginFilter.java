@@ -48,18 +48,18 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
         throws AuthenticationException, IOException, ServletException {
         
         res.addHeader(HEADER_CORS, ALLOWED_ORIGIN);
-        /*
+
         ServletContext servletContext = req.getServletContext();
         WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
         accountRepository = webApplicationContext.getBean(AccountRepository.class);    
-        */
+
         Credentials creds = new ObjectMapper()
             .readValue(req.getInputStream(), Credentials.class);
 
-        //Account account = accountRepository.findByUsername(creds.getUsername());
+        Account account = accountRepository.findByUsername(creds.getUsername());
 
         // precica zbog bcrypt hashiranja passworda 
-       /* if (account != null) {
+        if (account != null) {
             if (BCrypt.checkpw(creds.getPassword(), account.getPassword()))
                 creds.setPassword(account.getPassword());
             else
@@ -70,13 +70,13 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
         if (account != null) {
             grantedAuthorities.add(new SimpleGrantedAuthority(account.getRole().getName()));
-        }  */    
+        }
 
         return getAuthenticationManager().authenticate(
             new UsernamePasswordAuthenticationToken(
                 creds.getUsername(),
                 creds.getPassword(),
-                Collections.emptyList()
+                grantedAuthorities //Collections.emptyList()
             )
         );
     }

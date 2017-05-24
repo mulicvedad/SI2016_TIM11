@@ -57,10 +57,9 @@ class LocationsController {
 		if (confirm('Da li ste sigurni da želite obrisati salu?')) {
 			this.locationService.delete(id).then(response => {
 				this.loadAllLocations();
-				if (this.locations.count > 0) {
+				if (this.locations.length > 1) {
 					this.loadLocations(this.number);
-				 }
-				 else if (this.number > 0) {
+				} else if (this.totalPages > 1) {
 					// ako se obrise entitet koji je zadnji na stranici onda ucitaj prethodnu stranicu
 					this.loadLocations(this.number - 1);
 				 }

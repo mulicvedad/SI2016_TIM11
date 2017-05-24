@@ -1,11 +1,13 @@
 class AccountsController {
-	static $inject = ['accountService', 'swalService'];
+	static $inject = ['accountService', 'swalService', 'roleService'];
 
-	constructor(accountService, swalService) {
+	constructor(accountService, swalService, roleService) {
 		this.accountService = accountService;
 		this.swalService = swalService;
+		this.roleService = roleService;
 
 		this.loadAccounts(1);
+		this.loadRoles();
 		this.setEmptyAccount();
 	}
 
@@ -72,6 +74,12 @@ class AccountsController {
 				}
 			});
 		});
+	}
+
+	loadRoles() {
+		this.roleService.all().then( response => {
+			this.roles = response.data;
+		})
 	}
 
 	resetForm() {

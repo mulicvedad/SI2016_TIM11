@@ -5,7 +5,10 @@ class CategoriesController {
 		this.categoryService = categoryService;
         this.swalService = swalService;
 
-		this.refresh();
+        // Filters are disabled at first
+        this.searchText = '';
+
+		this.load();
         this.setEmptyCategory();
 	}
 
@@ -13,9 +16,13 @@ class CategoriesController {
         if (this.searchText) {
             this.filter();
         } else {
-            this.loadCategories();
-            this.loadAllCategories();
+            this.load();
         }
+    }
+
+    load(page = 1) {
+        this.loadCategories(page);
+        this.loadAllCategories();
     }
 
     loadCategories(page = 1) {
@@ -79,7 +86,12 @@ class CategoriesController {
 
     edit(id) {
         this.categoryService.find(id).then(response => {
-            this.category = response.data;
+            this.category = {
+                id: response.data.id,
+                name: response.data.name,
+                parentId: response.data.parent
+            };
+
             this.openModal();
         });
     }
@@ -87,7 +99,7 @@ class CategoriesController {
     delete(id) {
         this.swalService.areYouSure('Obrisana kategorija se ne može vratiti.', () => {
             this.categoryService.delete(id).then(response => {
-                this.refresh();
+                this.swalService.success('Kategorija je uspješno obrisana.');
             });
         });
     }
@@ -109,13 +121,9 @@ class CategoriesController {
     }
 
     filter() {
-        if (!this.searchText) {
-            this.loadCategories();
-        } else {
-            this.categoryService.filterByName(this.searchText).then(response => {
-                this.categories = response.data;
-            });
-        }
+        this.categoryService.filterByName(this.searchText).then(response => {
+            this.categories = response.data;
+        });
     }
 }
 

@@ -10,7 +10,7 @@ export default class CategoryService extends BaseService {
 	}
 
     getPage(page) {
-        return super.get('categories/page/'+page);
+        return super.get('categories/page/' + page);
     }
 
     delete(id) {

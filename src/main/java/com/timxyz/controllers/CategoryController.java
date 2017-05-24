@@ -6,15 +6,14 @@ import com.timxyz.services.CategoryService;
 import com.timxyz.services.exceptions.ServiceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collection;
 
 @RestController
 public class CategoryController extends BaseController<Category, CategoryService> {
+
     @ResponseBody
     public ResponseEntity create(@RequestBody @Valid CategoryCreateForm newCategory,
                                  @RequestHeader("Authorization") String token) {
@@ -25,6 +24,10 @@ public class CategoryController extends BaseController<Category, CategoryService
         } catch(ServiceException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    }
+
+    public Collection<Category> filterByName(@RequestParam("name") String name) {
+        return service.filterByName(name);
     }
 }
 

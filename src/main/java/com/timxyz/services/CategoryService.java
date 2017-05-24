@@ -5,8 +5,11 @@ import com.timxyz.repositories.CategoryRepository;
 import com.timxyz.services.exceptions.ServiceException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+
 @Service
 public class CategoryService extends BaseService<Category, CategoryRepository> {
+
     public Category save(Category model) throws ServiceException {
         if(model.getId() == null && getByName(model.getName()) != null)
             throw new ServiceException("A category with this name already exists!");
@@ -18,6 +21,10 @@ public class CategoryService extends BaseService<Category, CategoryRepository> {
         } catch (ServiceException e) {
             throw new ServiceException("Unknown role ID!");
         }
+    }
+
+    public Collection<Category> filterByName(String name) {
+        return repository.filterByName(name);
     }
 
     public Category getByName(String name) {

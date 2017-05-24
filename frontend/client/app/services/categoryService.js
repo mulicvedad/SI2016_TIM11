@@ -5,12 +5,11 @@ export default class CategoryService extends BaseService {
 		return super.get('categories/all');
 	}
 
-	create(account) {
-		return super.post('categories', account);
+	create(category) {
+		return super.post('categories', category);
 	}
 
-    getPage(page)
-    {
+    getPage(page) {
         return super.get('categories/page/'+page);
     }
 
@@ -18,4 +17,15 @@ export default class CategoryService extends BaseService {
 		return super.delete('categories/' + id);
 	}
 
+    find(id) {
+        return super.get('categories/' + id);
+    }
+
+    update(id, category) {
+        return super.post('categories/' + id, category);
+    }
+
+    filterByName(name) {
+        return super.get('categories/filter-by/name?name=' + name);
+    }
 }

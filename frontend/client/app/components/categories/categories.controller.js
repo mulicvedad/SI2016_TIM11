@@ -21,8 +21,9 @@ class CategoriesController {
     }
 
     load(page = 1) {
-        this.loadCategories(page);
-        this.loadAllCategories();
+        this.loadAllCategories().then(response => {
+            this.loadCategories(page);
+        });
     }
 
     loadCategories(page = 1) {
@@ -34,7 +35,7 @@ class CategoriesController {
     }
 
     loadAllCategories() {
-        this.categoryService.all().then(response => {
+        return this.categoryService.all().then(response => {
             this.allCategories = response.data;
         });
     }
@@ -126,6 +127,12 @@ class CategoriesController {
         this.categoryService.filterByName(this.searchText).then(response => {
             this.categories = response.data;
         });
+    }
+
+    getCategoryName(categoryID) {
+        let category = this.allCategories.find(category => category.id === categoryID);
+
+        return category ? category.name : null;
     }
 }
 

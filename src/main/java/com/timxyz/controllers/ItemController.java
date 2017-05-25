@@ -129,8 +129,8 @@ public class ItemController extends BaseController<Item, ItemService> {
             item.setSkuNumber(updatedItem.getSkuNumber());
             item.setPurchasedBy(updatedItem.getPurchasedBy());
 
-            item.setCategory(service.get(updatedItem.getCategory()));
-            item.setLocation(service.get(updatedItem.getLocation()));
+            item.setCategory(categoryService.get(updatedItem.getCategoryID()));
+            item.setLocation(locationService.get(updatedItem.getLocationID()));
 
             item = service.save(item);
 

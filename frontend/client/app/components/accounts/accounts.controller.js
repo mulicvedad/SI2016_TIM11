@@ -6,88 +6,128 @@ class AccountsController {
 		this.swalService = swalService;
 		this.roleService = roleService;
 
-		this.loadAccounts(1);
-		this.loadRoles();
+		// Filters are disabled by first
+		this.searchText = '';
+
 		this.setEmptyAccount();
-	}
 
-	registerAccount() {
-		if (!this.form.$valid) {
-			return;
-		}
+		this.roleService.all().then(response => {
+			this.roles = response.data;
 
-		this.accountService.create(this.account).then(response => {
-			this.loadAccounts(1);
-			this.resetForm();
-
-			this.swalService.success('Novi korisnik je uspješno kreiran.');
-		}, error => {
-			console.log(JSON.stringify(error));
-			// ovo je poseban slucaj koji nastaje 
-			// kada se desi bacanje custom izuzetka na backendu
-			if (error.status == "400") {
-				this.error = { "error" : "Invalid request",
-						      "message": error.data.message.string 
-				};
-			}
-			else {
-				this.error = error;
-			}
+			this.loadAccounts();
 		});
 	}
 
-	setEmptyAccount() {
-		this.account = {fullName: "", username: "", email: "", password: "", roleId: 1};
+	refresh() {
+		if (this.searchText) {
+			this.filter();
+		} else {
+			this.loadAccounts();
+		}
 	}
 
-	loadAccounts(page) {
+	loadAccounts(page = 1) {
 		this.accountService.getPage(page).then(response => {
 			this.accounts = response.data.content;
 			this.number = response.data.number + 1;
 			this.totalPages = response.data.totalPages;
-		});
-	}
-
- 	loadAllAccounts() {
-        this.accountService.all().then(response => {
-            this.allAccounts = response.data;
-        });
-    }
-
-	goto(newPage) {
-		if (newPage > 0 && newPage <= this.totalPages) {
-			this.loadAccounts(newPage);
-		}
-	}
-
-	edit(id) {}
-
-	delete(id) {
-		this.swalService.areYouSure('Obrisani korisnički račun se ne može vratiti.', () => {
-			this.accountService.delete(id).then(response => {
-				if (this.accounts.length > 1) {
-					this.loadAccounts(this.number);
-				} else if (this.totalPages > 1) {
-					this.goto(this.number - 1);
-				} else {
-					this.accounts = [];
-				}
-			});
-		});
-	}
-
-	loadRoles() {
-		this.roleService.all().then( response => {
-			this.roles = response.data;
 		})
 	}
 
 	resetForm() {
-		this.form.$setPristine();
-		this.form.$setUntouched();
-		this.form.$submitted = false;
-		this.setEmptyAccount();
-	}
+        this.form.$setPristine();
+        this.form.$setUntouched();
+        this.form.$submitted = false;
+        this.setEmptyAccount();
+    }
+
+    setEmptyAccount() {
+    	this.account = {
+    		id: null,
+    		fullName: '',
+    		username: '',
+    		email: '',
+    		password: '',
+    		roleId: null
+    	};
+    }
+
+    saveAccount() {
+    	if (!this.form.$valid) {
+    		return;
+    	}
+
+    	if (this.account.id) {
+    		this.updateAccount();
+    	} else {
+    		this.createAccount();
+    	}
+    }
+
+    createAccount() {
+    	this.accountService.create(this.account).then(response => {
+    		this.refresh();
+    		this.closeModal();
+
+    		this.swalService.success('Nova kategorija je uspješno kreirana.');
+    	}, error => {});
+    }
+
+    updateAccount() {
+    	this.accountService.update(this.account.id, this.account).then(response => {
+    		this.refresh();
+    		this.closeModal();
+
+    		this.swalService.success('Izmjene su uspješno sačuvane.');
+    	}, error => {});
+    }
+
+    edit(id) {
+    	this.accountService.find(id).then(response => {
+    		this.account = {
+    			id: response.data.id,
+    			fullName: response.data.fullName,
+    			username: response.data.username,
+    			email: response.data.email,
+    			password: null,
+    			roleId: response.data.role.id
+    		};
+
+    		this.openModal();
+    	})
+    }
+
+    delete(id) {
+    	this.swalService.areYouSure('Obrisani korisnički račun se ne može vratiti.', () => {
+    		this.refresh();
+
+    		this.swalService.success('Korisnički račun je uspješno obrisan.');
+    	});
+    }
+
+    closeModal() {
+    	$('#user-modal').modal('close');
+    }
+
+    openModal() {
+    	$('#user-modal').modal({
+    		complete: () => this.resetForm()
+    	}).modal('open');
+
+        $('#full-name').focus();
+    }
+
+    goto(newPage) {
+    	if (newPage > 0 && newPage <= this.totalPages) {
+    		this.loadAccounts(newPage);
+    	}
+    }
+
+    filter() {
+    	this.accountService.filterByEmail(this.searchText).then(response => {
+    		this.accounts = response.data;
+    	});
+    }
 }
 
 export default AccountsController;

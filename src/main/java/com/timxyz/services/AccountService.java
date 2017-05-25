@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -16,21 +17,17 @@ public class AccountService extends BaseService<Account, AccountRepository> {
     private RoleService roleService;
 
     public Account save(Account model) throws ServiceException {
-        // Is this a new account that is being created (id == null), and is the email or username already
-        // in use?
-        if(model.getId() == null && getByEmailOrUsername(model.getEmail(), model.getUsername()) != null)
-            throw new ServiceException("An account with this email or username already exists!");
-        else if(model.getId() != null) {
-            // Account is being updated ... username can't be changed.
-            // TO-DO: Finish proper partial update logic (shouldn't send the whole object during update)
+        Account sameEmail = getByEmail(model.getEmail());
+        Account sameUsername = getByUsername(model.getUsername());
+
+        if (sameEmail != null && model.getId() != sameEmail.getId()) {
+            throw new ServiceException("An account with this e-mail address already exists!");
+        } else if (sameUsername != null && model.getId() != sameUsername.getId()) {
+            throw new ServiceException("An account with this username already exists!");
         }
 
         try {
-            // We first need to set the role, because currently our model
-            // only has the role's ID which was sent in JSON, not it's actual
-            // reference to the row and other info in DB
             model.setRole(roleService.get(model.getRole().getId()));
-            model.setPassword(BCrypt.hashpw(model.getPassword(), BCrypt.gensalt()));
             return super.save(model);
         } catch (ServiceException e) {
             throw new ServiceException("Unknown role ID!");
@@ -41,21 +38,11 @@ public class AccountService extends BaseService<Account, AccountRepository> {
         return repository.findFirstByEmail(email);
     }
 
-    public Account getByEmailOrUsername(String email, String username) {
-        return repository.findFirstByEmailOrUsername(email, username);
-    }
-
-    public List<Account> getByPartOfEmail(String partOfEmail) {
-        return repository.findByEmailContaining(partOfEmail);
+    public Collection<Account> filterByEmail(String email) {
+        return repository.filterByEmail(email);
     }
 
     public Account getByUsername(String username) {
         return repository.findByUsername(username);
-    }
-
-    public Account updatePassword(Account account, String newPassword) throws ServiceException {
-    	account.setPassword(BCrypt.hashpw(newPassword, BCrypt.gensalt()));
-
-    	return super.save(account);
     }
 }

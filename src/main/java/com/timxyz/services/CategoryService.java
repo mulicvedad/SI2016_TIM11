@@ -12,12 +12,22 @@ public class CategoryService extends BaseService<Category, CategoryRepository> {
 
     public Category save(Category model) throws ServiceException {
         Category sameName = getByName(model.getName());
-        Category parent = model.getParent();
 
         if (sameName != null && model.getId() != sameName.getId()) {
             throw new ServiceException("A category with this name already exists!");
-        } else if (model.getId() != null && parent != null && model.equals(parent)) {
-            throw new ServiceException("Parent can't be the same category!");
+        }
+
+        if (model.getId() != null) {
+            // Check against cyclic parent categories
+            Category parent = model.getParent();
+
+            while (parent != null) {
+                if (parent.getId() == model.getId()) {
+                    throw new ServiceException("Cyclic categories detected!");
+                }
+
+                parent = parent.getParent();
+            }
         }
 
         return super.save(model);

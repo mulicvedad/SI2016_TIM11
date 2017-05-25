@@ -3,6 +3,7 @@ package com.timxyz.services;
 import com.timxyz.models.Status;
 import com.timxyz.repositories.StatusRepositoy;
 import com.timxyz.services.exceptions.ServiceException;
+import java.util.Collection;
 import org.springframework.stereotype.Service;
 
 /**
@@ -10,23 +11,22 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class StatusService extends BaseService<Status, StatusRepositoy> {
-
+        
     public Status save(Status model) throws ServiceException {
-        if(model.getId() == null && getByName(model.getName()) != null)
+        Status sameName = getByName(model.getName());
+        
+        if (sameName != null && model.getId() != sameName.getId()) {
             throw new ServiceException("A status with this name already exists!");
-        else if(model.getId() != null) {
-            // TO-DO: Finish proper partial update logic (shouldn't send the whole object during update)
         }
-
-        try {
-            return super.save(model);
-        } catch (ServiceException e) {
-            throw new ServiceException("Unknown role ID!");
-        }
+        return super.save(model);
     }
 
     public Status getByName(String name) {
         return repository.findFirstByName(name);}
+
+    public Collection<Status> filterByName(String name) {
+        return repository.filterByName(name);
+    }
 }
 
 

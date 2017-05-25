@@ -1,29 +1,44 @@
-<h4>Tipovi sala</h4>
-<div class="card-panel teal lighten-5">
-   <h5>Kreiranje novog tipa lokacije</h5>
-   <form class="col s12">
-      <div class="row">
-         <div class="input-field col s12">
-            <label>Naziv</label>
-            <input type="text" class="validate" placeholder="Naziv" ng-model="$ctrl.locationType.name"> 
+<div id="locationTypes-modal" class="modal">
+   <form ng-submit="$ctrl.saveLocationType()" name="$ctrl.form" novalidate>
+      <div class="modal-content">
+         <h4>{{ $ctrl.locationType.id ? 'Izmjena tipa sale' : 'Novi tip sale' }}</h4>
+         <div class="row">
+            <div class="input-field col s12">
+               <input type="text" id="name" name="name" placeholder="Naziv" ng-model="$ctrl.locationType.name" ng-pattern="/^[a-z0-9\-\,\&\s]{2,255}$/i" required>
+               <label for="name">Naziv</label>
+               <div class="user-errors" ng-show="$ctrl.form.$submitted">
+                  <span class="error" ng-show="$ctrl.form.name.$error.required">Naziv tipa sale je obavezan.</span>
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="input-field col s12">
+               <input type="text" id="description" name="description" placeholder="Opis" ng-model="$ctrl.locationType.description" ng-pattern="/^[a-z0-9\-\,\&\s]{2,255}$/i" required>
+               <label for="description">Opis</label>
+               <div class="user-errors" ng-show="$ctrl.form.$submitted">
+                  <span class="error" ng-show="$ctrl.form.name.$error.required">Opis je obavezan.</span>
+               </div>
+            </div>
          </div>
       </div>
-      <div class="row">
-         <div class="input-field col s12">
-            <label>Opis</label>
-            <input type="text" class="validate" placeholder="Opis" ng-model="$ctrl.locationType.description"> 
-         </div>
+      <div class="modal-footer">
+         <button class="btn" type="submit">Sačuvaj</button>
       </div>
-      <button class="btn waves-effect waves-light" data-ng-click="$ctrl.registerLocationType()" name="action">Kreiraj</button>
    </form>
 </div>
+
+<h4>Tipovi sala</h4>
 <div class="row">
-   <div class="input-field col s5 offset-s7">
+   <div class="col s7 create-btn">
+      <a class="btn" ng-click="$ctrl.openModal()">Dodaj novu salu</a>
+   </div>
+   <div class="input-field col s5">
       <i class="material-icons prefix">search</i>
-      <input type="text" placeholder="Traži..." ng-model="$ctrl.searchText" ng-change="$ctrl.filter()" ng-model-options="{ debounce: 200}">
+      <input type="text" placeholder="Traži..." ng-model="$ctrl.searchText" ng-change="$ctrl.refresh()" ng-model-options="{ debounce: 200}">
    </div>
 </div>
-<table class="striped">
+
+<table class="striped responsive-table">
    <tr>
       <th>Naziv</th>
       <th>Opis</th>
@@ -38,6 +53,7 @@
       </td>
    </tr>
 </table>
+
 <div class="right-align">
    <ul class="pagination">
       <li ng-class="{ 'disabled': $ctrl.number === 1}"><a href="#" ng-click="$ctrl.goto($ctrl.number - 1)"><i class="material-icons">chevron_left</i></a></li>

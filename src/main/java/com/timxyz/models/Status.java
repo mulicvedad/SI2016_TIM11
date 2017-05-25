@@ -1,5 +1,8 @@
 package com.timxyz.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -35,8 +38,9 @@ public class Status extends BaseModel {
     public void setAuditItems(Collection<AuditItem> auditItems) {
         this.auditItems = auditItems;
     }
-
-    @OneToMany(mappedBy = "status")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    @OneToMany(mappedBy = "status", cascade = CascadeType.ALL)
     public Collection<PastAuditItem> getPastAuditItems() {
         return pastAuditItems;
     }

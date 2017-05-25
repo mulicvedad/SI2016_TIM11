@@ -1,26 +1,34 @@
+<div id="status-modal" class="modal">
+    <form ng-submit="$ctrl.saveStatus()" name="$ctrl.form" novalidate>
+        <div class="modal-content">
+            <h4>{{ $ctrl.status.id ? 'Izmjene statusa' : 'Novi status' }}</h4>
+            <div class="row">
+                <div class="input-field col s12">
+                     <input type="text" id="name" name="name" placeholder="Naziv" ng-model="$ctrl.status.name" ng-pattern="/^[a-z0-9\-\,\&\s]{2,255}$/i" required>
+                     <label for="name">Naziv</label>
+                     <div class="user-errors" ng-show="$ctrl.form.$submitted">
+                        <span class="error" ng-show="$ctrl.form.name.$error.required"> Naziv je obavezno polje.</span>
+                        <span class="error" ng-show="$ctrl.form.name.$error.pattern">Naziv statusa mora sadržati između 2 i 255 znakova. Dozvoljena je upotreba slova, brojeva, povlake i razmaka.</span>
+                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" type="submit">Sačuvaj</button>
+        </div>
+    </form>
+</div>
+
 <h4>Statusi</h4>
 
-<div class="card-panel teal lighten-5">
-   <h5>Kreiranje novog statusa</h5>
-   <form ng-submit="$ctrl.registerStatus()" name="$ctrl.form" novalidate>
-      <div class="row">
-         <div class="input-field col s12">
-            <input type="text" id="name" name="name" placeholder="Naziv" ng-model="$ctrl.status.name" ng-pattern="/^[a-z0-9\-\,\&\s]{2,255}$/i" required>
-            <label for="name">Naziv</label>
-            <div class="user-errors" ng-show="$ctrl.form.$submitted">
-               <span class="error" ng-show="$ctrl.form.name.$error.required"> Naziv je obavezno polje.</span>
-               <span class="error" ng-show="$ctrl.form.name.$error.pattern">Naziv statusa mora sadržati između 2 i 255 znakova. Dozvoljena je upotreba slova, brojeva, povlake i razmaka.</span>
-            </div>
-         </div>
-      </div>
-    <button class="btn" type="submit">Kreiraj status</button>
-   </form>
-</div>
 <div class="row">
-   <div class="input-field col s5 offset-s7">
-      <i class="material-icons prefix">search</i>
-      <input type="text" placeholder="Traži..." ng-model="$ctrl.searchText" ng-change="$ctrl.filter()" ng-model-options="{ debounce: 200}">
-   </div>
+    <div class="col s7 create-btn">
+        <a class="btn" ng-click="$ctrl.openModal()">Dodaj novi status</a>
+    </div>
+    <div class="input-field col s5">
+        <i class="material-icons prefix">search</i>
+        <input type="text" placeholder="Traži..." ng-model="$ctrl.searchText" ng-change="$ctrl.filter()" ng-model-options="{ debounce: 200}">
+    </div>
 </div>
 
 <table class="striped responsive-table">
@@ -35,7 +43,6 @@
          <td>{{ s.id }}</td>
          <td>{{ s.name }}</td>
          <td>  
-            <a href="#" ng-click="$ctrl.edit(s.id)"><i class="material-icons">edit</i></a>
             <a href="#" ng-click="$ctrl.delete(s.id)"><i class="material-icons">delete</i></a>
          </td>
       </tr>

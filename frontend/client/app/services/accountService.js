@@ -20,4 +20,16 @@ export default class AccountService extends BaseService {
 	login(user) {
 		return super.post('login', user);
 	}
+
+	find(id) {
+		return super.get('accounts/' + id);
+	}
+
+	update(id, account) {
+		return super.post('accounts/' + id, account);
+	}
+
+	filterByEmail(email) {
+		return super.get('accounts/filter-by/email?email=' + email);
+	}
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -96,5 +97,9 @@ public class Account extends BaseModel {
 
     public void setAudits(Collection<Audit> audits) {
         this.audits = audits;
+    }
+
+    public void setRawPassword(String password) {
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }
 }

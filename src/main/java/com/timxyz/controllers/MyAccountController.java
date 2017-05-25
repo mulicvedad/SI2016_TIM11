@@ -2,6 +2,7 @@ package com.timxyz.controllers;
 
 import javax.validation.Valid;
 
+import com.timxyz.controllers.forms.MyAccount.MyAccountUpdateForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.timxyz.controllers.forms.MyAccount.UpdateMyAccountForm;
 import com.timxyz.models.Account;
 import com.timxyz.services.AccountService;
 import com.timxyz.services.TokenAuthenticationService;
@@ -42,7 +42,7 @@ public class MyAccountController extends BaseController<Account, AccountService>
 	}
 	
 	@ResponseBody
-	public ResponseEntity update(@RequestHeader("Authorization") String token, @RequestBody @Valid UpdateMyAccountForm updatedAccount) {
+	public ResponseEntity update(@RequestHeader("Authorization") String token, @RequestBody @Valid MyAccountUpdateForm updatedAccount) {
 		Account account = findAccountByToken(token);
 		
 		if (account == null || !BCrypt.checkpw(updatedAccount.getCurrentPassword(), account.getPassword())) {
@@ -50,12 +50,17 @@ public class MyAccountController extends BaseController<Account, AccountService>
 		}
 		
 		try {
-			service.updatePassword(account, updatedAccount.getNewPassword());
+			if (updatedAccount.isPasswordUpdated()) {
+			    account.setRawPassword(updatedAccount.getNewPassword());
+            }
+
+			account = service.save(account);
+
 			logForUpdate(token, account);
 		} catch (ServiceException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 		
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok(account);
 	}
 }

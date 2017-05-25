@@ -115,6 +115,8 @@ class CategoriesController {
         $('#category-modal').modal({
             complete: () => this.resetForm()
         }).modal('open');
+
+        $('#name').focus();
     }
 
     goto(newPage) {

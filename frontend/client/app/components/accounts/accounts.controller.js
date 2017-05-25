@@ -113,6 +113,8 @@ class AccountsController {
     	$('#user-modal').modal({
     		complete: () => this.resetForm()
     	}).modal('open');
+
+        $('#full-name').focus();
     }
 
     goto(newPage) {

@@ -4,7 +4,7 @@
 			<h4>{{ $ctrl.account.id ? 'Izmjene korisničkog računa' : 'Novi korisnički račun' }}</h4>
 			<div class="row">
 				<div class="input-field col s12">
-					<input type="text" id="full-name" name="fullName" placeholder="Ime i prezime" ng-model="$ctrl.account.fullName" required autofocus>
+					<input type="text" id="full-name" name="fullName" placeholder="Ime i prezime" ng-model="$ctrl.account.fullName" required>
 					<label for="full-name">Ime i prezime</label>
 					<div class="user-errors" ng-show="$ctrl.form.$submitted">
 						<span class="error" ng-show="$ctrl.form.fullName.$error.required">Ime i prezime je obavezno.</span>

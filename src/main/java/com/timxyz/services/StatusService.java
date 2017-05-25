@@ -11,11 +11,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class StatusService extends BaseService<Status, StatusRepositoy> {
-
+        
     public Status save(Status model) throws ServiceException {
         Status sameName = getByName(model.getName());
-         if (sameName != null && model.getId() != sameName.getId()) {
-            throw new ServiceException("A category with this name already exists!");
+        
+        if (sameName != null && model.getId() != sameName.getId()) {
+            throw new ServiceException("A status with this name already exists!");
         }
         return super.save(model);
     }

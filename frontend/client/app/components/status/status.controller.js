@@ -77,12 +77,22 @@ class StatusController {
 
 
     updateStatus() {
-       this.statusService.update(this.status.id, this.status).then(response => {
+        this.statusService.update(this.status.id, this.status).then(response => {
             this.refresh();
             this.closeModal();
 
             this.swalService.success('Izmjene su uspješno sačuvane.');
         }, error => {});
+    }
+
+    edit(id) {
+        this.statusService.find(id).then(response => {
+            this.status = {
+                id: response.data.id,
+                name: response.data.name,
+            };
+            this.openModal();
+        });
     }
 
     delete(id) {

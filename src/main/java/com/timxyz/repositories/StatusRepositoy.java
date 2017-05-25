@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface StatusRepositoy extends PagingAndSortingRepository<Status, Long> {
+    
     Status findFirstByName(String name);
     
     @Query("select s from Status s where s.name like %:name%")

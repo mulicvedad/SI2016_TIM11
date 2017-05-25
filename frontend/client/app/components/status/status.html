@@ -27,7 +27,7 @@
     </div>
     <div class="input-field col s5">
         <i class="material-icons prefix">search</i>
-        <input type="text" placeholder="Traži..." ng-model="$ctrl.searchText" ng-change="$ctrl.filter()" ng-model-options="{ debounce: 200}">
+        <input type="text" placeholder="Traži..." ng-model="$ctrl.searchText" ng-change="$ctrl.refresh()" ng-model-options="{ debounce: 200}">
     </div>
 </div>
 
@@ -43,6 +43,7 @@
          <td>{{ s.id }}</td>
          <td>{{ s.name }}</td>
          <td>  
+            <a href="#" ng-click="$ctrl.edit(s.id)"><i class="material-icons">edit</i></a>
             <a href="#" ng-click="$ctrl.delete(s.id)"><i class="material-icons">delete</i></a>
          </td>
       </tr>

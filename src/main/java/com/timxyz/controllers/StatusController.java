@@ -2,7 +2,6 @@ package com.timxyz.controllers;
 
 import com.timxyz.controllers.forms.Status.StatusCreateForm;
 import com.timxyz.controllers.forms.Status.StatusUpdateForm;
-import com.timxyz.models.Category;
 import com.timxyz.models.Status;
 import com.timxyz.services.StatusService;
 import com.timxyz.services.exceptions.ServiceException;
@@ -25,8 +24,11 @@ public class StatusController extends BaseController<Status, StatusService> {
     public ResponseEntity create(@RequestBody @Valid StatusCreateForm newStatus,
                                  @RequestHeader("Authorization") String token) {
         try {
-            Status model = service.save(new Status(newStatus.getName()));
+            Status model = service.save(new Status(
+                    newStatus.getName()));
+            
             logForCreate(token, model);
+            
             return ResponseEntity.ok(model);
         } catch (ServiceException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -52,6 +54,4 @@ public class StatusController extends BaseController<Status, StatusService> {
       public Collection<Status> filterByName(@RequestParam("name") String name) {
         return service.filterByName(name);
     }
-
-   
 }

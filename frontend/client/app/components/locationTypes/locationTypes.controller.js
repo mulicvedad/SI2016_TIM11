@@ -57,6 +57,16 @@ class LocationTypesController {
  			});
  		}
  	}
+
+ 	 closeModal() {
+        $('#locationTypes-modal').modal('close');
+    }
+
+    openModal() {
+        $('#locationTypes-modal').modal({
+            complete: () => this.resetForm()
+        }).modal('open');
+    }
 }
 
 export default LocationTypesController;

@@ -52,6 +52,15 @@ class ItemsController {
         }, error => {});
     }
 
+     updateItem() {
+        this.itemService.update(this.item.id, this.item).then(response => {
+            this.refresh();
+            this.closeModal();
+
+            this.swalService.success('Izmjene su uspješno sačuvane.');
+        }, error => {});
+    }
+
     setEmptyItem() {
         this.item = {
             skuNumber: '',
@@ -85,5 +94,15 @@ class ItemsController {
 			});
 		});
     }   
+
+    closeModal() {
+        $('#category-modal').modal('close');
+    }
+
+    openModal() {
+        $('#category-modal').modal({
+            complete: () => this.resetForm()
+        }).modal('open');
+    }
 }
 export default ItemsController;

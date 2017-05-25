@@ -1,3 +1,115 @@
+<div id="category-modal" class="modal">
+    <form ng-submit="$ctrl.registerItem()" name="$ctrl.form" novalidate>
+        <div class="modal-content">
+
+            <h4>{{ $ctrl.category.id ? 'Izmjeni inv. stavku' : 'Nova inv. stavka' }}</h4>
+
+            <div class="row">
+            <div class="input-field col s12">
+                    <input type="text" id="skuNumber" name="skuNumber" placeholder="Inventurni broj" ng-model="$ctrl.item.skuNumber" required>
+                    <label for="skuNumber">Inventurni broj</label>
+                    <div class="user-errors" ng-show="$ctrl.form.$submitted">
+                        <div class="error" ng-show="$ctrl.form.skuNumber.$error.required">Inventurni broj je obavezno polje.</div>
+                    </div>
+            </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="text" id="name" name="name" placeholder="Naziv" ng-model="$ctrl.item.name" required>
+                    <label for="name">Naziv</label>
+                    <div class="user-errors" ng-show="$ctrl.form.$submitted">
+                        <span class="error" ng-show="$ctrl.form.name.$error.required">Naziv je obavezno polje.</span>
+                        <span class="error" ng-show="$ctrl.form.name.$error.pattern">Naziv mora imati najmanje 2 znaka, od kojih je prvo slovo, a ostali su slova ili brojevi.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="text" id="purchased-by" name="purchasedBy" placeholder="Uneseno od" ng-model="$ctrl.item.purchasedBy" required>
+                    <label for="purchased-by">Unio</label>
+                    <div class="user-errors" ng-show="$ctrl.form.$submitted">
+                        <span class="error" ng-show="$ctrl.form.purchasedBy.$error.required">Obavezno polje.</span>
+                        <span class="error" ng-show="$ctrl.form.purchasedBy.$error.pattern">Polje ne smije pocinjat brojem.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="text" id="person-responsible" name="personResponsible" placeholder="Odgovorna osoba" ng-model="$ctrl.item.personResponsible" required>
+                    <label for="person-responsible">Odgovorna osoba</label>
+                    <div class="user-errors" ng-show="$ctrl.form.$submitted">
+                        <span class="error" ng-show="$ctrl.form.personResponsible.$error.required">Obavezno polje.</span>
+                        <span class="error" ng-show="$ctrl.form.personResponsible.$error.pattern">Naziv odgovorne osobe ne smije pocinjat brojem.</span>
+                    </div>
+                </div>l
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="number" id="value" step="0.01" min="0" max="9999999999999999.99" name="value" placeholder="Vrijednost" ng-model="$ctrl.item.value" required>
+                    <label for="value">Vrijednost</label>
+                    <div class="user-errors" ng-show="$ctrl.form.$submitted">
+                        <span class="error" ng-show="$ctrl.form.value.$error.required">Obavezno polje.</span>
+                        <span class="error" ng-show="$ctrl.form.value.$error.number">Vrijednost mora biti pozitivan broj sa najviše 16 cifara i 2 decimale.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                   <!-- <input type="date" class="datepicker" id="date-of-purchase" ng-model="$ctrl.item.dateOfPurchase" name="dateOfPurchase" required> input-date type="text" -->
+                  <input type="date" class="datepicker" id="date-of-purchase" format="yyyy-mm-dd" ng-model="$ctrl.item.dateOfPurchase" name="dateOfPurchase" required>
+                    <label for="date-of-purchase">Datum unosa(yyyy-mm-dd)</label>
+                    <div class="user-errors" ng-show="$ctrl.form.$submitted">
+                        <span class="error" ng-show="$ctrl.form.dateOfPurchase.$error.required">  *Obavezan podatak.</span>
+                        <span class="error" ng-show="$ctrl.form.dateOfPurchase.$error.date"> Not a valid date!</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <label>Mjerna jedinica</label>
+                    <select class="browser-default" ng-model="$ctrl.item.unitOfMeasurement" required>
+                        <option value="" disabled selected>Mjerna jedinica</option>
+                        <option value="kom">kom</option>
+                        <option value="kg">kg</option>
+                        <option value="m">m</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <label>Kategorija</label>
+                    <select class="browser-default" ng-model="$ctrl.item.categoryID">
+                        <option value="" disabled selected>Izaberite kategoriju</option>
+                        <option ng-repeat="category in $ctrl.categories" value="{{ category.id }}">{{ category.name }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <label>Lokacija</label>
+                    <select class="browser-default" ng-model="$ctrl.item.locationID">
+                        <option value="" disabled selected>Izaberite lokaciju</option>
+                        <option ng-repeat="location in $ctrl.locations" value="{{ location.id }}"> {{ location.name }} </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" type="submit">Sačuvaj</button>
+        </div>
+    </form>
+</div>
+
+<h4>Inventurne stavke</h4>
+
+<div class="row">
+    <div class="col s7 create-btn">
+        <a class="btn" ng-click="$ctrl.openModal()">Dodaj novu inv. stavku</a>
+    </div>
+</div>
+
+<!--
+
 <h4>Inventurne stavke</h4>
 
 <div class="card-panel teal lighten-5">
@@ -25,7 +137,7 @@
         <div class="row">
             <div class="input-field col s12">
                 <input type="text" id="purchased-by" name="purchasedBy" placeholder="Uneseno od" ng-model="$ctrl.item.purchasedBy" required>
-                <label for="purchased-by">Uneseno od</label>
+                <label for="purchased-by">Unio</label>
                 <div class="user-errors" ng-show="$ctrl.form.$submitted">
                     <span class="error" ng-show="$ctrl.form.purchasedBy.$error.required">Obavezno polje.</span>
                     <span class="error" ng-show="$ctrl.form.purchasedBy.$error.pattern">Polje ne smije pocinjat brojem.</span>
@@ -40,7 +152,7 @@
                     <span class="error" ng-show="$ctrl.form.personResponsible.$error.required">Obavezno polje.</span>
                     <span class="error" ng-show="$ctrl.form.personResponsible.$error.pattern">Naziv odgovorne osobe ne smije pocinjat brojem.</span>
                 </div>
-            </div>
+            </div>l
         </div>
         <div class="row">
             <div class="input-field col s12">
@@ -54,8 +166,9 @@
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <input type="date" class="datepicker" id="date-of-purchase" ng-model="$ctrl.item.dateOfPurchase" name="dateOfPurchase" required>
-                <label for="date-of-purchase">Datum unosa</label>
+               <!-- <input type="date" class="datepicker" id="date-of-purchase" ng-model="$ctrl.item.dateOfPurchase" name="dateOfPurchase" required> input-date type="text" -->
+            <!--  <input type="date" class="datepicker" id="date-of-purchase" format="yyyy-mm-dd" ng-model="$ctrl.item.dateOfPurchase" name="dateOfPurchase" required>
+                <label for="date-of-purchase">Datum unosa(yyyy-mm-dd)</label>
                 <div class="user-errors" ng-show="$ctrl.form.$submitted">
                     <span class="error" ng-show="$ctrl.form.dateOfPurchase.$error.required">  *Obavezan podatak.</span>
                     <span class="error" ng-show="$ctrl.form.dateOfPurchase.$error.date"> Not a valid date!</span>
@@ -94,7 +207,7 @@
         <button class="btn" type="submit">Kreiraj račun</button>
     </form>
 </div>
-
+-->
 <div class="row">
     <div class="input-field col s5 offset-s7">
         <i class="material-icons prefix">search</i>
@@ -156,6 +269,6 @@
         clear: 'Počisti',
         close: false,
         firstDay: 1,
-        format: 'dd. mmmm yyyy.'
+        format: 'yyyy-mm-dd'
     });
 </script>

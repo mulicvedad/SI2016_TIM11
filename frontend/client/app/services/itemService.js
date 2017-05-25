@@ -21,4 +21,16 @@ export default class ItemService extends BaseService {
     delete(id) {
 		return super.delete('items/' + id);
     }
+
+    update(id, item) {
+        return super.post('items/' + id, item);
+    }
+
+    filterByName(name) {
+        return super.get('items/filter-by/name?name=' + name);
+    }
+
+    find(id) {
+        return super.get('items/' + id);
+    }
 }

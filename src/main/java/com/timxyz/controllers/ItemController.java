@@ -1,6 +1,7 @@
 package com.timxyz.controllers;
 
 import com.timxyz.controllers.forms.Item.ItemCreateForm;
+import com.timxyz.controllers.forms.Item.ItemUpdateForm;
 import com.timxyz.models.*;
 import com.timxyz.services.CategoryService;
 import com.timxyz.services.ItemService;
@@ -20,9 +21,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Dario on 5/9/2017.
- */
+
 @RestController
 public class ItemController extends BaseController<Item, ItemService> {
     private CategoryService categoryService;
@@ -55,6 +54,7 @@ public class ItemController extends BaseController<Item, ItemService> {
             Collection<PastAuditItem> pastAuditItems = null;
             Item model = service.save(new Item(skuNumber, name, unitOfMeasurement, purchasedBy,
                     personResponsible, dateOfPurchase, value, auditItems, category, location, pastAuditItems));
+            
             logForCreate(token, model);
             return ResponseEntity.ok(model);
         } catch(ServiceException e) {
@@ -115,4 +115,34 @@ public class ItemController extends BaseController<Item, ItemService> {
         return  new ResponseEntity<List<Item>>(items, HttpStatus.OK);
     }
     */
+
+     @ResponseBody
+    public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid ItemUpdateForm updatedItem, @RequestHeader("Authorization") String token) {
+        try {
+            Item item = service.get(id);
+
+            item.setName(updatedItem.getName());
+            item.setUnitOfMeasurement(updatedItem.getUnitOfMeasurement());
+            item.setValue(updatedItem.getValue()); 
+            item.setPersonResponsible(updatedItem.getPersonResponsible());
+            item.setDateOfPurchase(updatedItem.getDateOfPurchase());
+            item.setSkuNumber(updatedItem.getSkuNumber());
+            item.setPurchasedBy(updatedItem.getPurchasedBy());
+
+            item.setCategory(service.get(updatedItem.getCategory()));
+            item.setLocation(service.get(updatedItem.getLocation()));
+
+            item = service.save(item);
+
+            logForUpdate(token, item);
+
+            return ResponseEntity.ok(item);
+        } catch (ServiceException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public Collection<Item> filterByName(@RequestParam("name") String name) {
+        return service.filterByName(name);
+    }
 }

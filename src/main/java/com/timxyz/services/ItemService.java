@@ -4,6 +4,7 @@ import com.timxyz.models.Item;
 import com.timxyz.repositories.ItemRepository;
 import com.timxyz.services.exceptions.ServiceException;
 import org.springframework.stereotype.Service;
+import java.util.Collection;
 
 
 import java.util.Arrays;
@@ -70,4 +71,11 @@ public class ItemService extends BaseService<Item, ItemRepository> {
     }
 
     public List<Item> getAllByItemName( String name ) { return repository.getAllByItemName(name); }
+
+    public Collection<Item> filterByName(String name) {
+        return repository.filterByName(name);
+    }
+
 }
+
+

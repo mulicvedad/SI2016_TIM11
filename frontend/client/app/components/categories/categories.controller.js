@@ -12,7 +12,7 @@ class CategoriesController {
         this.setEmptyCategory();
 	}
 
-    refresh() {
+   refresh() {
         if (this.searchText) {
             this.filter();
         } else {

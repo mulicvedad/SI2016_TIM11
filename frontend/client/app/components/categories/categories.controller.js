@@ -9,7 +9,6 @@ class CategoriesController {
         this.searchText = '';
 
 		this.load();
-        this.setEmptyCategory();
 	}
 
    refresh() {
@@ -21,7 +20,10 @@ class CategoriesController {
     }
 
     load(page = 1) {
-        this.loadAllCategories().then(response => {
+        this.categoryService.all().then(response => {
+            this.allCategories = response.data;
+
+            this.setEmptyCategory();
             this.loadCategories(page);
         });
     }
@@ -31,12 +33,6 @@ class CategoriesController {
             this.categories = response.data.content;
             this.number = response.data.number + 1;
             this.totalPages = response.data.totalPages;
-        });
-    }
-
-    loadAllCategories() {
-        return this.categoryService.all().then(response => {
-            this.allCategories = response.data;
         });
     }
 
@@ -51,7 +47,7 @@ class CategoriesController {
         this.category = {
             id: null,
             name: '',
-            parentId: null
+            parent: null
         };
     }
 
@@ -59,6 +55,8 @@ class CategoriesController {
         if (!this.form.$valid) {
             return;
         }
+
+        this.category.parentId = this.category.parent ? this.category.parent.id : null;
 
         if (this.category.id) {
             this.updateCategory();
@@ -90,7 +88,7 @@ class CategoriesController {
             this.category = {
                 id: response.data.id,
                 name: response.data.name,
-                parentId: response.data.parent
+                parent: response.data.parent
             };
 
             this.openModal();
@@ -113,7 +111,8 @@ class CategoriesController {
 
     openModal() {
         $('#category-modal').modal({
-            complete: () => this.resetForm()
+            complete: () => this.resetForm(),
+            ready: (modal, trigger) => Materialize.updateTextFields()
         }).modal('open');
 
         $('#name').focus();
@@ -131,10 +130,12 @@ class CategoriesController {
         });
     }
 
-    getCategoryName(categoryID) {
-        let category = this.allCategories.find(category => category.id === categoryID);
+    getCategoryName(category) {
+        let id = category ? category.id : null;
 
-        return category ? category.name : null;
+        let match = this.allCategories.find(cat => cat.id === id);
+
+        return match ? match.name : null;
     }
 }
 

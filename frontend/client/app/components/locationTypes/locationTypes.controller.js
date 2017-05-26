@@ -4,12 +4,12 @@ class LocationTypesController {
     constructor(locationTypeService, swalService) {
         this.locationTypeService = locationTypeService;
         this.swalService = swalService;
+
         // Filters are disabled at first
         this.searchText = '';
-        this.setEmptyLocationType();
 
-            this.loadLocationTypes();
-            this.loadAllLocationTypes();
+        this.setEmptyLocationType();
+        this.loadLocationTypes();
     }
 
     setEmptyLocationType() {
@@ -24,7 +24,7 @@ class LocationTypesController {
         if (this.searchText) {
             this.filter();
         } else {
-            this.loadAllLocationTypes();
+            this.loadLocationTypes();
         }
     }
 
@@ -35,17 +35,11 @@ class LocationTypesController {
         this.setEmptyLocationType();
     }
 
-    loadLocationTypes(page) {
-        this.locationTypeService.getPage(page).then((response) => {
+    loadLocationTypes(page = 1) {
+        this.locationTypeService.getPage(page).then(response => {
             this.locationTypes = response.data.content;
-            this.number = response.data.number+1;
+            this.number = response.data.number + 1;
             this.totalPages = response.data.totalPages;
-        });
-    }
-
-     loadAllLocationTypes() {
-        this.locationTypeService.all().then(response => {
-            this.locationTypes = response.data;
         });
     }
 
@@ -107,14 +101,21 @@ class LocationTypesController {
         });
     }
 
-     closeModal() {
+    closeModal() {
         $('#locationTypes-modal').modal('close');
     }
 
     openModal() {
         $('#locationTypes-modal').modal({
-            complete: () => this.resetForm()
+            complete: () => this.resetForm(),
+            ready: (modal, trigger) => Materialize.updateTextFields()
         }).modal('open');
+    }
+
+    filter() {
+        this.locationTypeService.filterByName(this.searchText).then(response => {
+            this.locationTypes = response.data;
+        });
     }
 }
 

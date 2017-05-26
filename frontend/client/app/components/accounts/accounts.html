@@ -43,10 +43,11 @@
 			<div class="row">
 				<div class="col s12">
 					<label>Tip korisnika</label>
-					<select class="browser-default" ng-model="$ctrl.account.roleId" required>
-						<option value="0" disabled selected>Tip korisnika</option>
-						<option ng-repeat="role in $ctrl.roles" value="{{ role.id }}">{{ role.name }}</option>
+					<select name="type" class="browser-default" ng-model="$ctrl.account.role" ng-options="role.name for role in $ctrl.roles track by role.id" required>
 					</select>
+					<div class="user-errors" ng-show="$ctrl.form.$submitted">
+						<span class="error" ng-show="$ctrl.form.type.$error.required">Tip korisnika mora biti odabran.</span>
+					</div>
 				</div>
 			</div>
 		</div>

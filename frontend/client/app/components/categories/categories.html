@@ -1,7 +1,7 @@
 <div id="category-modal" class="modal">
     <form ng-submit="$ctrl.saveCategory()" name="$ctrl.form" novalidate>
         <div class="modal-content">
-            <h4>{{ $ctrl.item.id ? 'Izmjeni inv. stavku' : 'Nova inv. stavka' }}</h4>
+            <h4>{{ $ctrl.item.id ? 'Izmjene kategorije' : 'Nova kategorija' }}</h4>
             <div class="row">
                 <div class="input-field col s12">
                     <input type="text" id="name" name="name" placeholder="Naziv" ng-model="$ctrl.category.name" ng-pattern="/^[a-z0-9\-\,\&\s]{4,500}$/i" required>
@@ -15,9 +15,8 @@
             <div class="row">
                 <div class="col s12">
                     <label>Nadkategorija</label>
-                    <select class="browser-default" ng-model="$ctrl.category.parentId">
-                        <option value="{{ null }}" selected>Nema nadkategoriju</option>
-                        <option ng-repeat="category in $ctrl.allCategories" value="{{ category.id }}">{{ category.name }}</option>
+                    <select class="browser-default" ng-model="$ctrl.category.parent" ng-options="category.name for category in $ctrl.allCategories track by category.id">
+                        <option value="">Nema nadkategoriju</option>
                     </select>
                 </div>
             </div>
@@ -36,7 +35,7 @@
     </div>
     <div class="input-field col s5">
         <i class="material-icons prefix">search</i>
-        <input type="text" placeholder="Traži..." ng-model="$ctrl.searchText" ng-change="$ctrl.refresh()" ng-model-options="{ debounce: 200}">
+        <input type="text" placeholder="Traži..." ng-model="$ctrl.searchText" ng-change="$ctrl.refresh()" ng-model-options="{ debounce: 200 }">
     </div>
 </div>
 

@@ -8,7 +8,7 @@ public class LocationTypeUpdateForm {
 	@Size(min = 4, max = 255) @NotNull
     private String name;
 
-    @Size(min = 4, max = 255) @NotNull
+    @Size(max = 255)
     private String description;
 
     public String getName() {

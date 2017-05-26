@@ -9,11 +9,10 @@ class AccountsController {
 		// Filters are disabled by first
 		this.searchText = '';
 
-		this.setEmptyAccount();
-
 		this.roleService.all().then(response => {
 			this.roles = response.data;
 
+            this.setEmptyAccount();
 			this.loadAccounts();
 		});
 	}
@@ -48,7 +47,7 @@ class AccountsController {
     		username: '',
     		email: '',
     		password: '',
-    		roleId: null
+    		role: this.roles[0]
     	};
     }
 
@@ -56,6 +55,8 @@ class AccountsController {
     	if (!this.form.$valid) {
     		return;
     	}
+
+        this.account.roleId = this.account.role.id;
 
     	if (this.account.id) {
     		this.updateAccount();
@@ -90,7 +91,7 @@ class AccountsController {
     			username: response.data.username,
     			email: response.data.email,
     			password: null,
-    			roleId: response.data.role.name
+                role: response.data.role
     		};
 
     		this.openModal();
@@ -111,7 +112,8 @@ class AccountsController {
 
     openModal() {
     	$('#user-modal').modal({
-    		complete: () => this.resetForm()
+    		complete: () => this.resetForm(),
+            ready: (modal, trigger) => Materialize.updateTextFields()
     	}).modal('open');
 
         $('#full-name').focus();

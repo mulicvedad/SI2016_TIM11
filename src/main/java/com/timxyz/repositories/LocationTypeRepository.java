@@ -13,6 +13,6 @@ public interface LocationTypeRepository extends PagingAndSortingRepository<Locat
     LocationType findFirstByName(String name);
     LocationType findFirstByDescription(String description);
     
-    @Query("select l from Location l where l.name like %:name%")
+    @Query("select lt from LocationType lt where lt.name like %:name%")
 	public Collection<LocationType> filterByName(@Param("name") String name);
 }

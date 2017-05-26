@@ -12,6 +12,8 @@ class MyAccountController {
     loadMyAccount() {
         this.myAccountService.current().then(response => {
             this.myAccount = response.data;
+
+            Materialize.updateTextFields();
         });
     }
 

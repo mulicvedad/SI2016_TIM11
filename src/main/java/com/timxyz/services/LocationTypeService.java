@@ -12,17 +12,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class LocationTypeService extends BaseService<LocationType, LocationTypeRepository> {
     public LocationType save(LocationType model) throws ServiceException {
-        if(model.getId() == null && getByName(model.getName()) != null)
+        LocationType sameName = getByName(model.getName());
+
+        if (sameName != null && model.getId() != sameName.getId()) {
             throw new ServiceException("A location type with this name already exists!");
-        else if(model.getId() != null) {
-            // TO-DO: Finish proper partial update logic (shouldn't send the whole object during update)
         }
 
-        try {
-            return super.save(model);
-        } catch (ServiceException e) {
-            throw new ServiceException("Unknown role ID!");
-        }
+        return super.save(model);
     }
 
     public Collection<LocationType> filterByName(String name) {

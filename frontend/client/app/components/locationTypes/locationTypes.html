@@ -1,65 +1,64 @@
 <div id="locationTypes-modal" class="modal">
-   <form ng-submit="$ctrl.saveLocationType()" name="$ctrl.form" novalidate>
-      <div class="modal-content">
-         <h4>{{ $ctrl.locationType.id ? 'Izmjena tipa sale' : 'Novi tip sale' }}</h4>
-         <div class="row">
-            <div class="input-field col s12">
-               <input type="text" id="name" name="name" placeholder="Naziv" ng-model="$ctrl.locationType.name" ng-pattern="/^[a-z0-9\-\,\&\s]{2,255}$/i" required>
-               <label for="name">Naziv</label>
-               <div class="user-errors" ng-show="$ctrl.form.$submitted">
-                  <span class="error" ng-show="$ctrl.form.name.$error.required">Naziv tipa sale je obavezan.</span>
-                   <span class="error" ng-show="$ctrl.form.name.$error.pattern">Naziv tipa sale mora sadržati između 4 i 255 znakova. Dozvoljena je upotreba slova, brojeva, povlake i razmaka.</span>
-               </div>
+    <form ng-submit="$ctrl.saveLocationType()" name="$ctrl.form" novalidate>
+        <div class="modal-content">
+            <h4>{{ $ctrl.locationType.id ? 'Izmjena tipa sale' : 'Novi tip sale' }}</h4>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="text" id="name" name="name" placeholder="Naziv" ng-model="$ctrl.locationType.name" ng-pattern="/^[a-z0-9\-\,\&\s]{2,255}$/i" required>
+                    <label for="name">Naziv</label>
+                    <div class="user-errors" ng-show="$ctrl.form.$submitted">
+                        <span class="error" ng-show="$ctrl.form.name.$error.required">Naziv tipa sale je obavezan.</span>
+                        <span class="error" ng-show="$ctrl.form.name.$error.pattern">Naziv tipa sale mora sadržati između 4 i 255 znakova. Dozvoljena je upotreba slova, brojeva, povlake i razmaka.</span>
+                    </div>
+                </div>
             </div>
-         </div>
-         <div class="row">
-            <div class="input-field col s12">
-               <input type="text" id="description" name="description" placeholder="Opis" ng-model="$ctrl.locationType.description" ng-pattern="/^[a-z0-9\-\,\&\s]{2,255}$/i" required>
-               <label for="description">Opis</label>
-               <div class="user-errors" ng-show="$ctrl.form.$submitted">
-                  <span class="error" ng-show="$ctrl.form.name.$error.required">Opis je obavezan.</span>
-                  <span class="error" ng-show="$ctrl.form.name.$error.pattern">Opis tipa sale mora sadržati između 4 i 255 znakova. Dozvoljena je upotreba slova, brojeva, povlake i razmaka.</span>
-               </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="text" id="description" name="description" placeholder="Opis" ng-model="$ctrl.locationType.description" maxlength="255">
+                    <label for="description">Opis</label>
+                    <div class="user-errors" ng-show="$ctrl.form.$submitted">
+                        <div class="error" ng-show="$ctrl.form.description.$error.maxlength">Opis ne smije biti duži od 255 znakova.</div>
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
-      <div class="modal-footer">
-         <button class="btn" type="submit">Sačuvaj</button>
-      </div>
-   </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" type="submit">Sačuvaj</button>
+        </div>
+    </form>
 </div>
 
 <h4>Tipovi sala</h4>
+
 <div class="row">
-   <div class="col s7 create-btn">
-      <a class="btn" ng-click="$ctrl.openModal()">Dodaj novu salu</a>
-   </div>
-   <div class="input-field col s5">
-      <i class="material-icons prefix">search</i>
-      <input type="text" placeholder="Traži..." ng-model="$ctrl.searchText" ng-change="$ctrl.refresh()" ng-model-options="{ debounce: 200}">
-   </div>
+    <div class="col s7 create-btn">
+        <a class="btn" ng-click="$ctrl.openModal()">Dodaj novi tip sale</a>
+    </div>
+    <div class="input-field col s5">
+        <i class="material-icons prefix">search</i>
+        <input type="text" placeholder="Traži..." ng-model="$ctrl.searchText" ng-change="$ctrl.refresh()" ng-model-options="{ debounce: 200 }">
+    </div>
 </div>
 
 <table class="striped responsive-table">
-   <tr>
-      <th>Naziv</th>
-      <th>Opis</th>
-      <th></th>
-   </tr>
-   <tr ng-repeat="locationType in $ctrl.locationTypes">
-      <td>{{ locationType.name }}</td>
-      <td>{{ locationType.description }}</td>
-      <td>
-         <!--<td><button data-ng-click="$ctrl.deleteLocationType($index)">Izbrisi</button></td>-->
-         <a href="#" ng-click="$ctrl.edit(locationType.ids)"><i class="material-icons">edit</i></a>
-         <a href="#" ng-click="$ctrl.delete(locationType.id)"><i class="material-icons">delete</i></a>
-      </td>
-   </tr>
+    <tr>
+        <th>Naziv</th>
+        <th>Opis</th>
+        <th></th>
+    </tr>
+    <tr ng-repeat="locationType in $ctrl.locationTypes">
+        <td>{{ locationType.name }}</td>
+        <td>{{ locationType.description }}</td>
+        <td>
+            <a href="#" ng-click="$ctrl.edit(locationType.id)"><i class="material-icons">edit</i></a>
+            <a href="#" ng-click="$ctrl.delete(locationType.id)"><i class="material-icons">delete</i></a>
+        </td>
+    </tr>
 </table>
 
-<div class="right-align">
-   <ul class="pagination">
-      <li ng-class="{ 'disabled': $ctrl.number === 1}"><a href="#" ng-click="$ctrl.goto($ctrl.number - 1)"><i class="material-icons">chevron_left</i></a></li>
-      <li ng-class="{ 'disabled': $ctrl.number === $ctrl.totalPages }"><a href="#" ng-click="$ctrl.goto($ctrl.number + 1)"><i class="material-icons">chevron_right</i></a></li>
-   </ul>
+<div class="right-align" ng-show="!this.searchText">
+    <ul class="pagination">
+        <li ng-class="{ 'disabled': $ctrl.number === 1}"><a href="#" ng-click="$ctrl.goto($ctrl.number - 1)"><i class="material-icons">chevron_left</i></a></li>
+        <li ng-class="{ 'disabled': $ctrl.number === $ctrl.totalPages }"><a href="#" ng-click="$ctrl.goto($ctrl.number + 1)"><i class="material-icons">chevron_right</i></a></li>
+    </ul>
 </div>

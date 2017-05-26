@@ -15,6 +15,7 @@ import accessLogService from './accessLogService';
 import swalService from './swalService';
 import roleService from './roleService';
 import transitionService from './transitionService';
+import reportService from './reportService';
 
 export default angular
   .module('app.services', [])
@@ -34,5 +35,6 @@ export default angular
     accessLogService,
     swalService,
     roleService,
-    transitionService
+    transitionService, 
+    reportService
 }).name;

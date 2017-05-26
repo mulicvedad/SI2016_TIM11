@@ -16,4 +16,16 @@ export default class LocationTypeService extends BaseService {
 	delete(id) {
 		return super.delete('locationTypes/' + id);
 	}
+
+	find(id) {
+        return super.get('locationTypes/' + id);
+    }
+
+    update(id, locationType) {
+        return super.post('locationTypes/' + id, locationType);
+    }
+
+    filterByName(name) {
+        return super.get('locationTypes/filter-by/name?name=' + name);
+    }
 }

@@ -1,29 +1,51 @@
 class LocationsController {
-	static $inject = ['locationService', 'locationTypeService'];
+	static $inject = ['locationService', 'locationTypeService', 'swalService'];
 
-	constructor(locationService, locationTypeService) {
+	constructor(locationService, locationTypeService, swalService) {
 		this.locationService = locationService;
 		this.locationTypeService = locationTypeService;
-		this.loadLocations(1);
-		this.loadAllLocations();
-        this.loadLocationTypes();
-		this.setEmptyLocation();
+		this.swalService = swalService;
 
+        // Filters are disabled at first
+        this.searchText = '';
+
+        this.setEmptyLocation();
+
+        this.locationTypeService.all().then(response => {
+            this.locationTypes = response.data;
+
+            this.loadLocations();
+            this.loadAllLocations();
+            this.loadAllLocationTypes();
+        });
 	}
 
-	registerLocation() {
-		this.locationService.create(this.location).then( (response) => {
-			console.log("Added a Location!");
-			this.locations.push(response.data);
-			this.loadLocations(1);
-			this.setEmptyLocation();
-		}, (error) => {
-			console.log("Error while creating a Location.");
+	refresh() {
+        if (this.searchText) {
+            this.filter();
+        } else {
+            this.loadLocations();
+        }
+    }
+
+    saveLocation(){
+    	if (!this.form.$valid) {
+            return;
+        }
+
+        if (this.location.id) {
+            this.updateLocation();
+        } else {
+            this.createLocation();
+        }
+    }
+	
+	loadLocations(page = 1) {
+		this.locationService.getPage(page).then((response) => {
+			this.locations = response.data.content;
+			this.number = response.data.number+1;
+			this.totalPages = response.data.totalPages;
 		});
-	}
-
-	setEmptyLocation() {
-		this.location = {name: "", parentId: "null", typeId: ""};
 	}
 
 	loadAllLocations() {
@@ -31,45 +53,102 @@ class LocationsController {
             this.allLocations = response.data;
         });
     }
-
-    loadLocationTypes() {
+	
+	loadLocationTypes() {
 		this.locationTypeService.all().then( (response) => {
 			this.locationTypes = response.data;
 		} );
 	}
-	
-	loadLocations(page) {
-		this.locationService.getPage(page).then((response) => {
-			this.locations = response.data.content;
-			this.number = response.data.number+1;
-			this.totalPages = response.data.totalPages;
-		});
-	}
-	
-	
-	goto(newPage) {
-		if (newPage > 0 && newPage <= this.totalPages) {
-			this.loadLocations(newPage);
-		}
+
+    resetForm() {
+        this.form.$setPristine();
+        this.form.$setUntouched();
+        this.form.$submitted = false;
+        this.setEmptyLocation();
+    }
+
+    setEmptyLocation() {
+		this.location = {
+			name: '', 
+			parentId: null, 
+			typeId: ''};
 	}
 
-	delete(id) {
-		if (confirm('Da li ste sigurni da želite obrisati salu?')) {
-			this.locationService.delete(id).then(response => {
-				this.loadAllLocations();
-				if (this.locations.length > 1) {
-					this.loadLocations(this.number);
-				} else if (this.totalPages > 1) {
-					// ako se obrise entitet koji je zadnji na stranici onda ucitaj prethodnu stranicu
-					this.loadLocations(this.number - 1);
-				 }
-				 else {
-					 this.locations = [];
-				 }
-			});
-		}
-	}
+	createLocation() {
+        this.locationService.create(this.location).then(response => {
+            this.refresh();
+            this.closeModal();
 
+            this.swalService.success('Nova sala je uspješno kreirana.');
+        }, error => {});
+    }
+
+    updateLocation() {
+        this.locationService.update(this.location.id, this.location).then(response => {
+            this.refresh();
+            this.closeModal();
+
+            this.swalService.success('Izmjene su uspješno sačuvane.');
+        }, error => {});
+    }
+
+    edit(id) {
+        this.locationService.find(id).then(response => {
+            this.location = {
+                id: response.data.id,
+                name: response.data.name,
+                parentId: response.data.parent
+            };
+
+            this.openModal();
+        });
+    }
+
+    delete(id) {
+        this.swalService.areYouSure('Obrisana sala se ne može vratiti.', () => {
+            this.locationService.delete(id).then(response => {
+                this.refresh();
+
+                this.swalService.success('Sala je uspješno obrisana.');
+            });
+        });
+    }
+
+    closeModal() {
+        $('#location-modal').modal('close');
+    }
+
+    openModal() {
+        $('#location-modal').modal({
+            complete: () => this.resetForm()
+        }).modal('open');
+
+    }
+
+    goto(newPage) {
+        if (newPage > 0 && newPage <= this.totalPages) {
+            this.loadLocations(newPage);
+		}
+    }
+
+    filter() {
+        this.locationService.filterByName(this.searchText).then(response => {
+            this.locations = response.data;
+        });
+    }
+
+    getLocationName(locationID) {
+        let location = this.allLocations.find(location=> location.id === locationID);
+
+        return location ? location.name : null;
+    }
+
+	loadLocationTypes() {
+		this.locationTypeService.all().then( (response) => {
+			this.locationTypes = response.data;
+		} );
+	}
+	  
 }
 
 export default LocationsController;

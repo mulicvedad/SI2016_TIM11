@@ -69,7 +69,7 @@ class AccountsController {
     		this.refresh();
     		this.closeModal();
 
-    		this.swalService.success('Nova kategorija je uspješno kreirana.');
+    		this.swalService.success('Novi korisnik je uspješno kreirana.');
     	}, error => {});
     }
 
@@ -90,7 +90,7 @@ class AccountsController {
     			username: response.data.username,
     			email: response.data.email,
     			password: null,
-    			roleId: response.data.role.id
+    			roleId: response.data.role.name
     		};
 
     		this.openModal();

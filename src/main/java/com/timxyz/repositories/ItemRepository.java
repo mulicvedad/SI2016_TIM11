@@ -6,12 +6,11 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Dario on 5/9/2017.
- */
+
 public interface ItemRepository extends PagingAndSortingRepository<Item, Long> {
     Item findFirstBySkuNumber(String skuNumber);
 
@@ -35,4 +34,7 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Long> {
 
     @Query("select i from Item i where i.name like %:name%")
     List<Item> getAllByItemName( @Param("name") String name );
+
+    @Query("select c from Item c where c.name like %:name%")
+    Collection<Item> filterByName(@Param("name") String name);
 }

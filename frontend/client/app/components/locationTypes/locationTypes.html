@@ -8,6 +8,7 @@
                <label for="name">Naziv</label>
                <div class="user-errors" ng-show="$ctrl.form.$submitted">
                   <span class="error" ng-show="$ctrl.form.name.$error.required">Naziv tipa sale je obavezan.</span>
+                   <span class="error" ng-show="$ctrl.form.name.$error.pattern">Naziv tipa sale mora sadržati između 4 i 255 znakova. Dozvoljena je upotreba slova, brojeva, povlake i razmaka.</span>
                </div>
             </div>
          </div>
@@ -17,6 +18,7 @@
                <label for="description">Opis</label>
                <div class="user-errors" ng-show="$ctrl.form.$submitted">
                   <span class="error" ng-show="$ctrl.form.name.$error.required">Opis je obavezan.</span>
+                  <span class="error" ng-show="$ctrl.form.name.$error.pattern">Opis tipa sale mora sadržati između 4 i 255 znakova. Dozvoljena je upotreba slova, brojeva, povlake i razmaka.</span>
                </div>
             </div>
          </div>
@@ -49,6 +51,7 @@
       <td>{{ locationType.description }}</td>
       <td>
          <!--<td><button data-ng-click="$ctrl.deleteLocationType($index)">Izbrisi</button></td>-->
+         <a href="#" ng-click="$ctrl.edit(locationType.ids)"><i class="material-icons">edit</i></a>
          <a href="#" ng-click="$ctrl.delete(locationType.id)"><i class="material-icons">delete</i></a>
       </td>
    </tr>

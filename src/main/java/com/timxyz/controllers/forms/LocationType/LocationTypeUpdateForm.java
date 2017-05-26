@@ -3,8 +3,9 @@ package com.timxyz.controllers.forms.LocationType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class LocationTypeCreateForm {
-    @Size(min = 4, max = 255) @NotNull
+public class LocationTypeUpdateForm {
+	
+	@Size(min = 4, max = 255) @NotNull
     private String name;
 
     @Size(min = 4, max = 255) @NotNull
@@ -25,4 +26,5 @@ public class LocationTypeCreateForm {
     public void setDescription(String description) {
         this.description = description;
     }
+
 }

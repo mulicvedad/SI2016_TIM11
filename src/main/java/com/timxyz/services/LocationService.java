@@ -3,6 +3,7 @@ package com.timxyz.services;
 import com.timxyz.models.Location;
 import com.timxyz.repositories.LocationRepository;
 import com.timxyz.services.exceptions.ServiceException;
+import java.util.Collection;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,7 +27,11 @@ public class LocationService extends BaseService<Location, LocationRepository> {
             throw new ServiceException("Couldn't save location!");
         }
     }
-    Location getByName(String name) {
+    public Collection<Location> filterByName(String name) {
+        return repository.filterByName(name);
+    }
+    
+    public Location getByName(String name) {
         return repository.findFirstByName(name);
     }
 }

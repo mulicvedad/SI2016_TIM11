@@ -1,33 +1,46 @@
 class LocationTypesController {
-	static $inject = ['locationTypeService'];
+    static $inject = ['locationTypeService', 'swalService'];
 
-	constructor(locationTypeService) {
-		this.locationTypeService = locationTypeService;
-		this.loadLocationTypes(1);
-		this.setEmptyLocationType();
-	}
+    constructor(locationTypeService, swalService) {
+        this.locationTypeService = locationTypeService;
+        this.swalService = swalService;
+        // Filters are disabled at first
+        this.searchText = '';
+        this.setEmptyLocationType();
 
-	registerLocationType() {
-		this.locationTypeService.create(this.locationType).then((response) => {
-			console.log("Added a Location Type!");
-			//this.locationTypes.push(response.data);
-        	this.loadLocationTypes(1);
-			this.setEmptyLocationType();
-		}, (error) => {
-			console.log("Error while creating a Location Type.");
-		});
-	}
+            this.loadLocationTypes();
+            this.loadAllLocationTypes();
+    }
 
-	setEmptyLocationType() {
-		this.locationType = {name: "", description: ""};
-	}
+    setEmptyLocationType() {
+        this.locationType = {
+            id: null,
+            name: '',
+            description: ''
+        };
+    }
 
-	loadLocationTypes(page) {
+    refresh() {
+        if (this.searchText) {
+            this.filter();
+        } else {
+            this.loadAllLocationTypes();
+        }
+    }
+
+    resetForm() {
+        this.form.$setPristine();
+        this.form.$setUntouched();
+        this.form.$submitted = false;
+        this.setEmptyLocationType();
+    }
+
+    loadLocationTypes(page) {
         this.locationTypeService.getPage(page).then((response) => {
             this.locationTypes = response.data.content;
             this.number = response.data.number+1;
             this.totalPages = response.data.totalPages;
-    	});
+        });
     }
 
      loadAllLocationTypes() {
@@ -36,29 +49,65 @@ class LocationTypesController {
         });
     }
 
+    saveLocationType() {
+        if (!this.form.$valid) {
+            return;
+        }
+
+        if (this.locationType.id) {
+            this.updateLocationType();
+        } else {
+            this.createLocationType();
+        }
+    }
+
+    createLocationType() {
+        this.locationTypeService.create(this.locationType).then(response => {
+            this.refresh();
+            this.closeModal();
+
+            this.swalService.success('Novi tip sale je uspješno kreiran.');
+        }, error => {});
+    }
+
+    updateLocationType() {
+        this.locationTypeService.update(this.locationType.id, this.locationType).then(response => {
+            this.refresh();
+            this.closeModal();
+
+            this.swalService.success('Izmjene su uspješno sačuvane.');
+        }, error => {});
+    }
+
     goto(newPage) {
-		if (newPage > 0 && newPage <= this.totalPages) {
-			this.loadLocationTypes(newPage);
-		}
-	}
+        if (newPage > 0 && newPage <= this.totalPages) {
+            this.loadLocationTypes(newPage);
+        }
+    }
 
-	delete(id) {
- 		if (confirm('Da li ste sigurni da želite obrisati tip sale?')) {
- 			this.locationTypeService.delete(id).then((response) => {
-				 if (this.locationTypes.length > 1) {
-					this.loadLocationTypes(this.number);
-				} else if (this.totalPages > 1) {
-					// ako se obrise entitet koji je zadnji na stranici onda ucitaj prethodnu stranicu
-					this.loadLocationTypes(this.number - 1);
-				 }
-				 else {
-					 this.locationTypes = [];
-				 }
- 			});
- 		}
- 	}
+    edit(id) {
+        this.locationTypeService.find(id).then(response => {
+            this.locationType = {
+                id: response.data.id,
+                name: response.data.name,
+                description: response.data.description
+            };
 
- 	 closeModal() {
+            this.openModal();
+        });
+    }
+
+    delete(id) {
+        this.swalService.areYouSure('Obrisani tip sale se ne može vratiti.', () => {
+            this.locationTypeService.delete(id).then(response => {
+                this.refresh();
+
+                this.swalService.success('Tip sale je uspješno obrisan.');
+            });
+        });
+    }
+
+     closeModal() {
         $('#locationTypes-modal').modal('close');
     }
 

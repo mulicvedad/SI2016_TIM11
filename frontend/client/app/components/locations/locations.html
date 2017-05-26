@@ -1,66 +1,69 @@
-<h3>Sale</h3>
-<div class="card-panel teal lighten-5">
-   <div class="row">
-      <h5>Kreiranje nove sale</h5>
-      <br>
-      <form class="col s12">
-         <div class="row">
-            <div class="input-field col s12">
-               <input type="text" class="validate" placeholder="Naziv" ng-model="$ctrl.location.name"> 
+<div id="location-modal" class="modal">
+    <form ng-submit="$ctrl.saveLocation()" name="$ctrl.form" novalidate>
+        <div class="modal-content">
+            <h4>{{ $ctrl.item.id ? 'Izmjeni salu' : 'Nova sala' }}</h4>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="text" id="edit-name" name="name" placeholder="Naziv" ng-model="$ctrl.location.name" ng-pattern="/^[a-z0-9\-\,\&\s]{4,500}$/i" required>
+                    <label for="edit-name">Naziv</label>
+                    <div class="user-errors" ng-show="$ctrl.form.$submitted">
+                        <span class="error" ng-show="$ctrl.form.name.$error.required">Naziv sale je obavezan.</span>
+                        <span class="error" ng-show="$ctrl.form.name.$error.pattern">Naziv kategorije mora sadržati između 4 i 500 znakova. Dozvoljena je upotreba slova, brojeva, povlake i razmaka.</span>
+                    </div>
+                </div>
             </div>
-         </div>
-         <div class="row">
-            <div class="input-field col s12">
-               <select class="browser-default" ng-model="$ctrl.location.parentId">
-                  <option value="null" selected>Bez parentId lokacije</option>
-                  <option ng-repeat="location in $ctrl.locations" value="{{ location.id }}" >
-                     {{ location.name }}
-                  </option>
-               </select>
+            <div class="row">
+                <div class="input-field col s12">
+                  <select class="browser-default" ng-model="$ctrl.location.parentId">
+                    <option value="null" selected>Bez parentId lokacije</option>
+                    <option ng-repeat="location in $ctrl.locations" value="{{ location.id }}" >{{ location.name }}</option>
+                  </select>
+                </div>
             </div>
-         </div>
-         <div class="row">
-            <div class="input-field col s12">
-               <select class="browser-default" ng-model="$ctrl.location.typeId">
+            <div class="row">
+              <div class="input-field col s12">
+                <select class="browser-default" ng-model="$ctrl.location.typeId">
                   <option value="" disabled selected>Izaberite tip</option>
-                  <option ng-repeat="type in $ctrl.locationTypes" value="{{ type.id }}" >
-                     {{ type.name }}
-                  </option>
-               </select>
+                  <option ng-repeat="type in $ctrl.locationTypes" value="{{ type.id }}" >{{ type.name }}</option>
+                </select>
+              </div>
             </div>
-         </div>
-         <br>
-         <button class="btn waves-effect waves-light" data-ng-click="$ctrl.registerLocation()" name="action">Kreiraj</button>
-      </form>
-   </div>
-</div>
-<div class="row">
-<div class="col s12">
-
-<div class="row">
-  <div class="input-field col s5 offset-s7">
-    <i class="material-icons prefix">search</i>
-    <input type="text" placeholder="Traži..." ng-model="$ctrl.searchText" ng-change="$ctrl.filter()" ng-model-options="{ debounce: 200}">
-  </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" type="submit">Sačuvaj</button>
+        </div>
+    </form>
 </div>
 
-   <table class="striped">
-      <tr>
-         <th>Naziv</th>
-         <th>Nadlokacija</th>
-         <th>Tip</th>
-         <th></th>
-      </tr>
-      <tr ng-repeat="location in $ctrl.locations">
-         <td>{{ location.name }}</td>
-         <td>{{ location.parentId }}</td>
-         <td>{{ location.type }}</td>
-         <td>  
-            <a href="#" ng-click="$ctrl.edit(location.id)"><i class="material-icons">edit</i></a>
-            <a href="#" ng-click="$ctrl.delete(location.id)"><i class="material-icons">delete</i></a>
-         </td>
-      </tr>
-   </table>
+<h3>Sale</h3>
+
+<div class="row">
+    <div class="col s7 create-btn">
+        <a class="btn" ng-click="$ctrl.openModal()">Dodaj novu salu</a>
+    </div>
+    <div class="input-field col s5">
+        <i class="material-icons prefix">search</i>
+        <input type="text" placeholder="Traži..." ng-model="$ctrl.searchText" ng-change="$ctrl.refresh()" ng-model-options="{ debounce: 200}">
+    </div>
+</div>
+
+<table class="striped">
+  <tr>
+    <th>Naziv</th>
+    <th>Nadlokacija</th>
+    <th>Tip</th>
+    <th></th>
+  </tr>
+  <tr ng-repeat="location in $ctrl.locations">
+    <td>{{ location.name }}</td>
+    <td>{{ location.parentId }}</td>
+    <td>{{ location.type }}</td>
+    <td>  
+      <a href="#" ng-click="$ctrl.edit(location.id)"><i class="material-icons">edit</i></a>
+      <a href="#" ng-click="$ctrl.delete(location.id)"><i class="material-icons">delete</i></a>
+    </td>
+  </tr>
+</table>
 
 <div class="right-align">
   <ul class="pagination">

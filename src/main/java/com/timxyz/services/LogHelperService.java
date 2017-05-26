@@ -21,7 +21,7 @@ public class LogHelperService {
     @Autowired
     private AccountRepository accountRepository;
 
-    private final String descriptionTemplate = "Korisnik/ca %s je %s objekat sa ID-em %d u tebeli %s";
+    private final String descriptionTemplate = "Korisnik/ca %s je %s objekat sa ID-em %d u tabeli %s.";
     // Username, action, object id, table name
 
     private String getTableName(BaseModel model) {

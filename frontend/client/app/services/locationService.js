@@ -13,8 +13,7 @@ export default class LocationService extends BaseService {
 		return super.delete('locations/' + id);
 	}
 
-	getPage(page)
-	{
+	getPage(page) {
 		return super.get('locations/page/'+page);
 	}
 }

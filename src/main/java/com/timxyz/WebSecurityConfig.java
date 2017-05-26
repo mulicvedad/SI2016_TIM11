@@ -30,7 +30,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-
                 // salje se GET prilikom izlistavanja inventura tako da se mora dozvoliti svima
                 // HTTP GET za /accounts
                 // ako se nadje neko drugo rjesenje za inventure onda sljedecu liniju treba izbrisati
@@ -48,6 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/status/**").hasRole(ROLE_ADMIN)
             .antMatchers("/items/**").hasAnyRole(ROLE_ADMIN, ROLE_AUDIT_TEAM)
             .antMatchers("/access-logs/**").hasAnyRole(ROLE_ADMIN, ROLE_FINANCE)
+            .antMatchers("/reports/**").hasAnyRole(ROLE_ADMIN, ROLE_FINANCE)
             .antMatchers(HttpMethod.POST, "/login").permitAll()
 
             .anyRequest().authenticated()

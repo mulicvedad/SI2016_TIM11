@@ -58,9 +58,9 @@ public class MyAccountController extends BaseController<Account, AccountService>
 
 			logForUpdate(token, account);
 		} catch (ServiceException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+			return error(e);
 		}
-		
+
 		return ResponseEntity.ok(account);
 	}
 }

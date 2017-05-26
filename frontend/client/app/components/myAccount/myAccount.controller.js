@@ -1,10 +1,11 @@
 class MyAccountController {
-    static $inject = ['myAccountService'];
+    static $inject = ['myAccountService', 'swalService'];
 
-    constructor(myAccountService) {
+    constructor(myAccountService, swalService) {
         this.name = 'myAccount';
 
         this.myAccountService = myAccountService;
+        this.swalService = swalService;
 
         this.loadMyAccount();
     }
@@ -28,11 +29,9 @@ class MyAccountController {
         };
 
         this.myAccountService.update(data).then(response => {
-            swal({
-                title: 'Bravo!',
-                text: 'Novi podaci koje ste unijeli su sačuvani.',
-                type: 'success'
-            });
+            this.swalService.success('Novi podaci koje ste unijeli su sačuvani.');
+        }, error => {
+            this.swalService.error(error.data.message.string);
         });
     }
 }

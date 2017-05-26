@@ -18,4 +18,12 @@ export default class SwalService {
             closeOnConfirm: true
         }, callback);
     }
+
+    error(text) {
+        swal({
+            title: ':(',
+            text: text,
+            type: 'error'
+        })
+    }
 }

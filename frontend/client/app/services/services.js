@@ -7,7 +7,6 @@ import categoryService from './categoryService';
 import statusService from './statusService';
 import locationService from './locationService';
 import itemService from './itemService';
-import itemCRDService from './itemCRDService';
 import sessionService from './sessionService';
 import jwtService from './jwtService';
 import myAccountService from './myAccountService';
@@ -28,7 +27,6 @@ export default angular
     locationTypeService,
     locationService,
     itemService,
-    itemCRDService,
     sessionService,
     jwtService,
     myAccountService,

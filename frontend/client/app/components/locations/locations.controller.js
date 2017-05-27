@@ -11,7 +11,7 @@ class LocationsController {
 
         this.setEmptyLocation();
 
-        this.locationTypeService.all().then(response => {
+       this.locationTypeService.all().then(response => {
             this.locationTypes = response.data;
 
             this.loadLocations();
@@ -32,9 +32,6 @@ class LocationsController {
     	if (!this.form.$valid) {
             return;
         }
-
-        /*this.location.parentId = this.location.parent.id;*/
-       /*7 this.location.typeId = this.location.type.id;*/
 
         if (this.location.id) {
             this.updateLocation();

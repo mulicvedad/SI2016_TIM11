@@ -2,6 +2,7 @@ package com.timxyz.models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -15,7 +16,6 @@ public class Category extends BaseModel {
     private Collection<Item> items;
 
     public Category() {
-
     }
 
     public Category(String name, Category parent) {
@@ -33,8 +33,6 @@ public class Category extends BaseModel {
         this.name = name;
     }
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
     @ManyToOne
     @JoinColumn(name = "parentId", referencedColumnName = "id")
     public Category getParent() {
@@ -45,9 +43,8 @@ public class Category extends BaseModel {
         this.parent = parent;
     }
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     public Collection<Category> getChildren() {
         return children;
     }
@@ -56,9 +53,8 @@ public class Category extends BaseModel {
         this.children = children;
     }
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @JsonIgnore
     public Collection<Item> getItems() {
         return items;
     }

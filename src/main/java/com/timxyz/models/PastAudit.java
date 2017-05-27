@@ -1,5 +1,7 @@
 package com.timxyz.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -9,6 +11,9 @@ public class PastAudit extends BaseModel {
     private Timestamp createdAt;
     private Audit audit;
     private Collection<PastAuditItem> pastAuditItems;
+
+    public PastAudit() {
+    }
 
     @Basic
     @Column(name = "createdAt")
@@ -22,6 +27,7 @@ public class PastAudit extends BaseModel {
 
     @ManyToOne
     @JoinColumn(name = "auditId", referencedColumnName = "id", nullable = false)
+    @JsonIgnore
     public Audit getAudit() {
         return audit;
     }
@@ -31,6 +37,7 @@ public class PastAudit extends BaseModel {
     }
 
     @OneToMany(mappedBy = "pastAudit")
+    @JsonIgnore
     public Collection<PastAuditItem> getPastAuditItems() {
         return pastAuditItems;
     }

@@ -22,6 +22,9 @@ public class Account extends BaseModel {
     private Role role;
     private Collection<Audit> audits;
 
+    public Account() {
+    }
+
     @Basic
     @Column(name = "fullName")
     @Size(min = 4, max = 255) @NotNull
@@ -68,8 +71,8 @@ public class Account extends BaseModel {
         this.password = password;
     }
 
-    @JsonIgnore
     @OneToMany(mappedBy = "account")
+    @JsonIgnore
     public Collection<AccessLog> getAccessLogs() {
         return accessLogs;
     }
@@ -80,7 +83,6 @@ public class Account extends BaseModel {
 
     @ManyToOne
     @JoinColumn(name = "roleId", referencedColumnName = "id")
-    @JsonManagedReference
     public Role getRole() {
         return role;
     }
@@ -89,8 +91,8 @@ public class Account extends BaseModel {
         this.role = role;
     }
 
-    @JsonIgnore
     @OneToMany(mappedBy = "account")
+    @JsonIgnore
     public Collection<Audit> getAudits() {
         return audits;
     }

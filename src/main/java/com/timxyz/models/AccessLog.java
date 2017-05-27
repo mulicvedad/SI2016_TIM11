@@ -1,5 +1,7 @@
 package com.timxyz.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -11,6 +13,9 @@ public class AccessLog extends BaseModel {
     private String tableName;
     private Long objectId;
     private Account account;
+
+    public AccessLog() {
+    }
 
     @Basic
     @Column(name = "date")

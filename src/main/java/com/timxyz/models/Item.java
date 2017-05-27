@@ -2,6 +2,7 @@ package com.timxyz.models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -23,11 +24,10 @@ public class Item extends BaseModel {
     private Location location;
     private Collection<PastAuditItem> pastAuditItems;
 
-    public Item(){
-
+    public Item() {
     }
 
-    public Item (String skuNumber, String name, String unitOfMeasurement, String purchasedBy, String personResponsible, Timestamp dateOfPurchase, BigDecimal value, Collection<AuditItem> auditItems,Category category, Location location, Collection<PastAuditItem> pastAuditItems) {
+    public Item (String skuNumber, String name, String unitOfMeasurement, String purchasedBy, String personResponsible, Timestamp dateOfPurchase, BigDecimal value, Collection<AuditItem> auditItems, Category category, Location location, Collection<PastAuditItem> pastAuditItems) {
         this.skuNumber = skuNumber;
         this.name = name;
         this.unitOfMeasurement = unitOfMeasurement;
@@ -112,6 +112,7 @@ public class Item extends BaseModel {
     }
 
     @OneToMany(mappedBy = "item")
+    @JsonIgnore
     public Collection<AuditItem> getAuditItems() {
         return auditItems;
     }
@@ -120,10 +121,9 @@ public class Item extends BaseModel {
         this.auditItems = auditItems;
     }
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
     @ManyToOne
     @JoinColumn(name = "categoryId", referencedColumnName = "id", nullable = false)
+    @JsonIgnore
     public Category getCategory() {
         return category;
     }
@@ -132,10 +132,9 @@ public class Item extends BaseModel {
         this.category = category;
     }
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
     @ManyToOne
     @JoinColumn(name = "locationId", referencedColumnName = "id", nullable = false)
+    @JsonIgnore
     public Location getLocation() {
         return location;
     }
@@ -145,6 +144,7 @@ public class Item extends BaseModel {
     }
 
     @OneToMany(mappedBy = "item")
+    @JsonIgnore
     public Collection<PastAuditItem> getPastAuditItems() {
         return pastAuditItems;
     }

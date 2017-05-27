@@ -2,6 +2,7 @@ package com.timxyz.models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -12,6 +13,9 @@ public class LocationType extends BaseModel {
     private String name;
     private String description;
     private Collection<Location> locations;
+
+    public LocationType() {
+    }
 
     @Basic
     @Column(name = "name")
@@ -33,9 +37,8 @@ public class LocationType extends BaseModel {
         this.description = description;
     }
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
     @OneToMany(mappedBy = "type")
+    @JsonIgnore
     public Collection<Location> getLocations() {
         return locations;
     }

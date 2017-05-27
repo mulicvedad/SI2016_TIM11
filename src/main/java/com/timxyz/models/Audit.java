@@ -2,6 +2,7 @@ package com.timxyz.models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -17,6 +18,9 @@ public class Audit extends BaseModel {
     private Location location;
     private Collection<AuditItem> auditItems;
     private Collection<PastAudit> pastAudits;
+
+    public Audit() {
+    }
 
     @Basic
     @Column(name = "name")
@@ -57,11 +61,10 @@ public class Audit extends BaseModel {
     public void setFinished(Byte finished) {
         this.finished = finished;
     }
-    
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
+
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "id", nullable = false)
+    @JsonIgnore
     public Account getAccount() {
         return account;
     }
@@ -69,11 +72,10 @@ public class Audit extends BaseModel {
     public void setAccount(Account account) {
         this.account = account;
     }
-    
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
+
     @ManyToOne
     @JoinColumn(name = "locationId", referencedColumnName = "id")
+    @JsonIgnore
     public Location getLocation() {
         return location;
     }
@@ -83,6 +85,7 @@ public class Audit extends BaseModel {
     }
 
     @OneToMany(mappedBy = "audit")
+    @JsonIgnore
     public Collection<AuditItem> getAuditItems() {
         return auditItems;
     }
@@ -92,6 +95,7 @@ public class Audit extends BaseModel {
     }
 
     @OneToMany(mappedBy = "audit")
+    @JsonIgnore
     public Collection<PastAudit> getPastAudits() {
         return pastAudits;
     }

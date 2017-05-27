@@ -1,5 +1,7 @@
 package com.timxyz.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,6 +12,9 @@ public class AuditItem extends BaseModel {
     private Item item;
     private Audit audit;
     private Status status;
+
+    public AuditItem() {
+    }
 
     @Basic
     @Column(name = "present")
@@ -43,6 +48,7 @@ public class AuditItem extends BaseModel {
 
     @ManyToOne
     @JoinColumn(name = "itemId", referencedColumnName = "id", nullable = false)
+    @JsonIgnore
     public Item getItem() {
         return item;
     }
@@ -53,6 +59,7 @@ public class AuditItem extends BaseModel {
 
     @ManyToOne
     @JoinColumn(name = "auditId", referencedColumnName = "id", nullable = false)
+    @JsonIgnore
     public Audit getAudit() {
         return audit;
     }
@@ -63,6 +70,7 @@ public class AuditItem extends BaseModel {
 
     @ManyToOne
     @JoinColumn(name = "statusId", referencedColumnName = "id", nullable = false)
+    @JsonIgnore
     public Status getStatus() {
         return status;
     }

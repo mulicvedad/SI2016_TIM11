@@ -1,6 +1,7 @@
 package com.timxyz.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -10,6 +11,9 @@ import java.util.Collection;
 public class Role extends BaseModel {
     private String name;
     private Collection<Account> accounts;
+
+    public Role() {
+    }
 
     @Basic
     @Column(name = "name")
@@ -22,7 +26,7 @@ public class Role extends BaseModel {
     }
 
     @OneToMany(mappedBy = "role")
-    @JsonBackReference
+    @JsonIgnore
     public Collection<Account> getAccounts() {
         return accounts;
     }

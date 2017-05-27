@@ -2,6 +2,7 @@ package com.timxyz.models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -17,7 +18,6 @@ public class Location extends BaseModel {
     private LocationType type;
 
     public Location() {
-
     }
 
     public Location(String name, Location parent, LocationType type) {
@@ -37,6 +37,7 @@ public class Location extends BaseModel {
     }
 
     @OneToMany(mappedBy = "location")
+    @JsonIgnore
     public Collection<Audit> getAudits() {
         return audits;
     }
@@ -45,9 +46,8 @@ public class Location extends BaseModel {
         this.audits = audits;
     }
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
     @OneToMany(mappedBy = "location")
+    @JsonIgnore
     public Collection<Item> getItems() {
         return items;
     }
@@ -56,10 +56,9 @@ public class Location extends BaseModel {
         this.items = items;
     }
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
     @ManyToOne
     @JoinColumn(name = "parentId", referencedColumnName = "id")
+    @JsonIgnore
     public Location getParent() {
         return parent;
     }
@@ -68,8 +67,6 @@ public class Location extends BaseModel {
         this.parent = parent;
     }
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
     public Collection<Location> getChildren() {
         return children;
@@ -79,10 +76,9 @@ public class Location extends BaseModel {
         this.children = children;
     }
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
     @ManyToOne
     @JoinColumn(name = "typeId", referencedColumnName = "id", nullable = false)
+    @JsonIgnore
     public LocationType getType() {
         return type;
     }

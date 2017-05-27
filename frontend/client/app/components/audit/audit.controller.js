@@ -7,32 +7,34 @@ class AuditController {
         this.accountService = accountService;
         this.reportService = reportService;
 
-        this.loadAllAudits();   
-        this.loadAllAccounts();
-        this.loadAllLocations();
+        this.load();
+    }
+
+    load() {
+        this.loadAllLocations().then(() => this.loadAllAudits());
+    }
+
+    loadAllLocations() {
+        return this.locationService.all().then(response => {
+            this.allLocations = response.data;
+        });
     }
     
-    loadAllAudits(){
+    loadAllAudits() {
         this.auditService.all().then(response => {
             this.allAudits = response.data;
         });
     }
 
-    loadAllAccounts(){
-        this.accountService.all().then(response => {
-            this.allAccounts = response.data;
-        });
-    }
-    
-    loadAllLocations(){
-        this.locationService.all().then(response => {
-            this.allLocations = response.data;
-        });
-    }
-
     generateReport(auditID) {
         this.reportService.generateAuditReport(auditID);
-    }  
+    }
+
+    getLocationName(locationID) {
+        let location = this.allLocations.find(location => location.id === locationID);
+
+        return location ? location.name : null;
+    }
 }
 
 export default AuditController;

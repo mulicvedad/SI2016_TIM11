@@ -11,7 +11,7 @@ import Login from './login/login';
 import Navbar from './navbar/navbar';
 import MyAccount from './myAccount/myAccount';
 import AccessLogs from './accessLogs/accessLogs';
-// import DoAudit from './doAudit/doAudit';
+import DoAudit from './doAudit/doAudit';
 
 let Components = angular.module('app.components', [
   Home,
@@ -25,8 +25,8 @@ let Components = angular.module('app.components', [
   Navbar,
   Login,
   MyAccount,
-  AccessLogs
-  // DoAudit
+  AccessLogs,
+  DoAudit
 ])
 .name;
 

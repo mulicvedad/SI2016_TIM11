@@ -55,6 +55,7 @@ class ItemsController {
             return;
         }
 
+
         if (this.item.id) {
             this.updateItem();
         } else {
@@ -72,7 +73,9 @@ class ItemsController {
             this.setEmptyItem();
 
             this.swalService.success('Nova inventurna stavka je uspješno kreirana.');
+            this.refresh();
             this.closeModal();
+
         }, error => {});
     }
 
@@ -150,7 +153,8 @@ class ItemsController {
 
     openModal() {
         $('#item-modal').modal({
-            complete: () => this.resetForm()
+            complete: () => this.resetForm(),
+            ready: (modal, trigger) => Materialize.updateTextFields()
         }).modal('open');
     }
 

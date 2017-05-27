@@ -60,7 +60,7 @@ class LocationTypesController {
             this.refresh();
             this.closeModal();
 
-            this.swalService.success('Novi tip sale je uspješno kreiran.');
+            this.swalService.success('Novi tip lokacije je uspješno kreiran.');
         }, error => {});
     }
 
@@ -92,11 +92,11 @@ class LocationTypesController {
     }
 
     delete(id) {
-        this.swalService.areYouSure('Obrisani tip sale se ne može vratiti.', () => {
+        this.swalService.areYouSure('Obrisani tip lokacije se ne može vratiti.', () => {
             this.locationTypeService.delete(id).then(response => {
                 this.refresh();
 
-                this.swalService.success('Tip sale je uspješno obrisan.');
+                this.swalService.success('Tip lokacije je uspješno obrisan.');
             });
         });
     }

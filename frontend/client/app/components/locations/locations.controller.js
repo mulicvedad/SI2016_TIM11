@@ -84,7 +84,7 @@ class LocationsController {
             this.refresh();
             this.closeModal();
 
-            this.swalService.success('Nova sala je uspješno kreirana.');
+            this.swalService.success('Nova lokacija je uspješno kreirana.');
         }, error => {});
     }
 
@@ -111,11 +111,11 @@ class LocationsController {
     }
 
     delete(id) {
-        this.swalService.areYouSure('Obrisana sala se ne može vratiti.', () => {
+        this.swalService.areYouSure('Obrisana lokacija se ne može vratiti.', () => {
             this.locationService.delete(id).then(response => {
                 this.refresh();
 
-                this.swalService.success('Sala je uspješno obrisana.');
+                this.swalService.success('Lokacija je uspješno obrisana.');
             });
         });
     }

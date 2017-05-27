@@ -145,6 +145,8 @@ class ItemsController {
             complete: () => this.resetForm(),
             ready: (modal, trigger) => Materialize.updateTextFields()
         }).modal('open');
+
+        $('#skuNumber').focus();
     }
 
     resetForm() {

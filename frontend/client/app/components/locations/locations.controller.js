@@ -125,6 +125,7 @@ class LocationsController {
             ready: (modal, trigger) => Materialize.updateTextFields()
         }).modal('open');
 
+        $('#name').focus();
     }
 
     goto(newPage) {

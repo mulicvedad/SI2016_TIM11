@@ -10,7 +10,7 @@
                 <p class="red-text text-darken-3" ng-show="$ctrl.error">{{ $ctrl.error }}</p>
                 <form ng-submit="$ctrl.login()">
                     <div class="input-field">
-                        <input type="text" id="username" placeholder="Korisničko ime" ng-model="$ctrl.user.username" required>
+                        <input type="text" id="username" placeholder="Korisničko ime" ng-model="$ctrl.user.username" required autofocus>
                         <label for="username">Korisničko ime</label>
                     </div>
                     <div class="input-field">

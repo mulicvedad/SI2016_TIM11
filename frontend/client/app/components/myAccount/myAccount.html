@@ -22,7 +22,7 @@
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <input type="password" id="new-password" name="newPassword" placeholder="Nova lozinka" ng-model="$ctrl.myAccount.newPassword" minlength="8">
+                <input type="password" id="new-password" name="newPassword" placeholder="Nova lozinka" ng-model="$ctrl.myAccount.newPassword" minlength="8" autofocus>
                 <label for="new-password">Nova lozinka</label>
                 <div class="user-errors" ng-show="$ctrl.form.$submitted">
                     <span class="error" ng-show="$ctrl.form.newPassword.$error.minlength">Lozinka ne smije biti kraća od 8 znakova.</span>

@@ -110,6 +110,8 @@ class LocationTypesController {
             complete: () => this.resetForm(),
             ready: (modal, trigger) => Materialize.updateTextFields()
         }).modal('open');
+
+        $('#name').focus();
     }
 
     filter() {

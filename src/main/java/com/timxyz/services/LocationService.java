@@ -12,20 +12,28 @@ import org.springframework.stereotype.Service;
 @Service
 public class LocationService extends BaseService<Location, LocationRepository> {
     public Location save(Location model) throws ServiceException {
-        if(model.getId() == null && getByName(model.getName()) != null)
+        Location sameName = getByName(model.getName());
+
+        if (sameName != null && model.getId() != sameName.getId()) {
             throw new ServiceException("A location with this name already exists!");
-        else if(model.getId() != null) {
-            // TO-DO: Finish proper partial update logic (shouldn't send the whole object during update)
-        }
-        else if(model.getType() == null) {
-            throw new ServiceException("Unknown type ID!");
+        } else if (model.getType() == null) {
+            throw new ServiceException("Unknown type!");
         }
 
-        try {
-            return super.save(model);
-        } catch (ServiceException e) {
-            throw new ServiceException("Couldn't save location!");
+        if (model.getId() != null) {
+            // Check against cyclic parent locations
+            Location parent = model.getParent();
+
+            while (parent != null) {
+                if (parent.getId() == model.getId()) {
+                    throw new ServiceException("Cyclic locations detected!");
+                }
+
+                parent = parent.getParent();
+            }
         }
+
+        return super.save(model);
     }
     public Collection<Location> filterByName(String name) {
         return repository.filterByName(name);

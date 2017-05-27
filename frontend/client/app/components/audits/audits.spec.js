@@ -1,16 +1,16 @@
-import AuditModule from './audit'
-import AuditController from './audit.controller';
-import AuditComponent from './audit.component';
-import AuditTemplate from './audit.html';
+import AuditsModule from './audits'
+import AuditsController from './audits.controller';
+import AuditsComponent from './audits.component';
+import AuditsTemplate from './audits.html';
 
-describe('Audit', () => {
+describe('Audits', () => {
   let $rootScope, makeController;
 
-  beforeEach(window.module(AuditModule));
+  beforeEach(window.module(AuditsModule));
   beforeEach(inject((_$rootScope_) => {
     $rootScope = _$rootScope_;
     makeController = () => {
-      return new AuditController();
+      return new AuditsController();
     };
   }));
 
@@ -30,20 +30,20 @@ describe('Audit', () => {
     // template specs
     // tip: use regex to ensure correct bindings are used e.g., {{  }}
     it('has name in template [REMOVE]', () => {
-      expect(AuditTemplate).to.match(/{{\s?\$ctrl\.name\s?}}/g);
+      expect(AuditsTemplate).to.match(/{{\s?\$ctrl\.name\s?}}/g);
     });
   });
 
   describe('Component', () => {
       // component/directive specs
-      let component = AuditComponent;
+      let component = AuditsComponent;
 
       it('includes the intended template',() => {
-        expect(component.template).to.equal(AuditTemplate);
+        expect(component.template).to.equal(AuditsTemplate);
       });
 
       it('invokes the right controller', () => {
-        expect(component.controller).to.equal(AuditController);
+        expect(component.controller).to.equal(AuditsController);
       });
   });
 });

@@ -1,7 +1,7 @@
 import angular from 'angular';
 import Home from './home/home';
 import Accounts from './accounts/accounts';
-import Audit from './audit/audit';
+import Audits from './audits/audits';
 import Locations from './locations/locations';
 import LocationTypes from './locationTypes/locationTypes';
 import Categories from './categories/categories';
@@ -16,7 +16,7 @@ import DoAudit from './doAudit/doAudit';
 let Components = angular.module('app.components', [
   Home,
   Accounts,
-  Audit,
+  Audits,
   Locations,
   Categories,
   Status,

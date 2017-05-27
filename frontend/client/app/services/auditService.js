@@ -12,4 +12,8 @@ export default class AuditService extends BaseService {
     finalize(id) {
         return super.post('audits/' + id + '/finalize');
     }
+
+    create(audit) {
+        return super.post('audits', audit);
+    }
 }

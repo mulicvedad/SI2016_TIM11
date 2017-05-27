@@ -20,7 +20,7 @@ class ItemsController {
         if (this.searchText) {
             this.filter();
         } else {
-            this.load();
+            this.loadItems(1);
         }
     }
 
@@ -82,7 +82,8 @@ class ItemsController {
             this.closeModal();
 
             this.swalService.success('Izmjene su uspješno sačuvane.');
-        }, error => {});
+        }, error => {
+        });
     }
 
     setEmptyItem() {
@@ -121,13 +122,16 @@ class ItemsController {
     }
 
     filter() {
-        this.itemService.getByFilter(this.searchText).then(response => {
-            this.item = response.data;
-        });
+        if (this.searchText) {
+             this.itemService.getByFilter(this.searchText).then(response => {
+                this.items = response.data;
+            });
+        }
+       
     }
     
     delete(id) {
-        this.swalService.confirm('Obrisana inventurna stavka se ne može vratiti.', () => {
+        this.swalService.areYouSure('Obrisana inventurna stavka se ne može vratiti.', () => {
 			this.itemService.delete(id).then(response => {
                 if (this.item.length > 1) {
 					this.loadItems(this.number);
@@ -139,12 +143,6 @@ class ItemsController {
 			});
 		});
     }   
-
-    filter() {
-        this.itemService.filterByName(this.searchText).then(response => {
-            this.item = response.data;
-        });
-    }
 
     closeModal() {
         $('#item-modal').modal('close');
@@ -161,9 +159,6 @@ class ItemsController {
         this.form.$setUntouched();
         this.setEmptyItem();
     }
-
-    
-
-
 }
+
 export default ItemsController;

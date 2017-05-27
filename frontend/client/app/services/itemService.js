@@ -15,7 +15,7 @@ export default class ItemService extends BaseService {
     
     getByFilter(searchedText)
     {
-        return super.get('/items/search-by/filter?name='+searchedText);
+        return super.get('items/search-by/name/'+searchedText);
     }
     
     delete(id) {

@@ -103,20 +103,12 @@ public class ItemController extends BaseController<Item, ItemService> {
             }
     }
 
-    @RequestMapping(value = "/items/search-by/name", method = RequestMethod.GET)
-    public List<Item> getAllByItemName(@RequestParam("name") String name){
+    public List<Item> getAllByItemName(@PathVariable("name") String name){
         return service.getAllByItemName(name);
     }
 
-    /*
-    @RequestMapping(value = "/items/search-by/name/{name}", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllByItemName(@PathVariable("name") String name){
-        List<Item> items = service.getAllByItemName(name);
-        return  new ResponseEntity<List<Item>>(items, HttpStatus.OK);
-    }
-    */
 
-     @ResponseBody
+    @ResponseBody
     public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid ItemUpdateForm updatedItem, @RequestHeader("Authorization") String token) {
         try {
             Item item = service.get(id);

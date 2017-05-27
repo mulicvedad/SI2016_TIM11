@@ -135,10 +135,13 @@
             <td>{{ item.value | currency : '' }} KM</td>
             <td>{{ item.dateOfPurchase | date : 'dd/MM/yyyy' }}</td>
             <td>{{ item.unitOfMeasurement }}</td>
-            <td ng-repeat="cat in (catFilt = $ctrl.categories | filter: { id: item.category })">{{ cat.name }}</td>
+            <td>{{ item.category.name }} </td>
+            <td>{{ item.location.name }} </td>
+
+            <!--td ng-repeat="cat in (catFilt = $ctrl.categories | filter: { id: item.category })">{{ cat.name }}</td>
             <td ng-show="catFilt.length === 0"></td>
             <td ng-repeat="loc in (locFilt = $ctrl.locations | filter: { id: item.location })">{{ loc.name }}</td>
-            <td ng-show="locFilt.length === 0"></td>
+            <td ng-show="locFilt.length === 0"></td-->
             <td>
                 <a href="#" ng-click="$ctrl.edit(item.id)"><i class="material-icons">edit</i></a>
                 <a href="#" ng-click="$ctrl.delete(item.id)"><i class="material-icons">delete</i></a>

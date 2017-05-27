@@ -58,7 +58,7 @@ public class Location extends BaseModel {
 
     @ManyToOne
     @JoinColumn(name = "parentId", referencedColumnName = "id")
-    @JsonIgnore
+   // @JsonIgnore
     public Location getParent() {
         return parent;
     }
@@ -68,6 +68,7 @@ public class Location extends BaseModel {
     }
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     public Collection<Location> getChildren() {
         return children;
     }
@@ -78,7 +79,7 @@ public class Location extends BaseModel {
 
     @ManyToOne
     @JoinColumn(name = "typeId", referencedColumnName = "id", nullable = false)
-    @JsonIgnore
+   // @JsonIgnore
     public LocationType getType() {
         return type;
     }

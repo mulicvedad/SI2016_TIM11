@@ -14,7 +14,6 @@ import javax.validation.Valid;
 @RestController
 public class AccessLogController extends ReadOnlyController<AccessLog, AccessLogService> {
 
-    //@RequestMapping(value = "/access-logs/search-by/filter/{val}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity filterByAccountUsernameOrFullName(@PathVariable("val") String filter) {
         return ResponseEntity.ok(service.getAllByFilter(filter));

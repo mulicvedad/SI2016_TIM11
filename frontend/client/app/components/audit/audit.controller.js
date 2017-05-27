@@ -1,10 +1,12 @@
 class AuditController {
-    static $inject = ['auditService', 'accountService', 'locationService' ];
+    static $inject = ['auditService', 'accountService', 'locationService', 'reportService' ];
     
-    constructor(auditService, accountService, locationService) {
+    constructor(auditService, accountService, locationService, reportService) {
         this.auditService = auditService;
         this.locationService = locationService;
         this.accountService = accountService;
+        this.reportService = reportService;
+
         this.loadAllAudits();   
         this.loadAllAccounts();
         this.loadAllLocations();
@@ -28,6 +30,9 @@ class AuditController {
         });
     }
 
-    
+    generateReport(auditID) {
+        this.reportService.generateAuditReport(auditID);
+    }  
 }
+
 export default AuditController;

@@ -100,9 +100,13 @@ class AccountsController {
 
     delete(id) {
     	this.swalService.areYouSure('Obrisani korisnički račun se ne može vratiti.', () => {
-    		this.refresh();
+    		this.accountService.delete(id).then(response => {
+				this.refresh();
+    			this.swalService.success('Korisnički račun je uspješno obrisan.');
+			}, error => {
+				this.swalService.error('Greska prilikom brisanja korisnika.');
+			})
 
-    		this.swalService.success('Korisnički račun je uspješno obrisan.');
     	});
     }
 

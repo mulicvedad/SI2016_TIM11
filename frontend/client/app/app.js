@@ -49,4 +49,9 @@ angular.module('app', [
         }
     });
 
+})
+.filter('intToBool', () => {
+    return (val) => {
+        return val == 1 ? "DA" : "NE";
+    }
 });

@@ -8,7 +8,7 @@ class StatusController {
         // Filters are disabled at first
         this.searchText = '';
 
-        this.load();
+        this.loadStatuses();
         this.setEmptyStatus();
 	}
 
@@ -16,27 +16,15 @@ class StatusController {
         if (this.searchText) {
             this.filter();
         } else {
-            this.load();
+            this.loadStatuses();
         }
     }
 
-    load(page = 1) {
-        this.loadAllStatuses().then(response => {
-            this.loadStatuses(page);
-        });
-    }
-
-    loadStatuses(page) {
+    loadStatuses(page = 1) {
         this.statusService.getPage(page).then((response) => {
             this.statuses = response.data.content;
             this.number = response.data.number+1;
             this.totalPages = response.data.totalPages;
-        });
-    }
-
-    loadAllStatuses() {
-        return this.statusService.all().then(response => {
-            this.allStatuses = response.data;
         });
     }
 
@@ -68,13 +56,12 @@ class StatusController {
  
     createStatus() {
         this.statusService.create(this.status).then(response => {
-        this.refresh();
-        this.closeModal();
+            this.refresh();
+            this.closeModal();
 
-        this.swalService.success('Novi status je uspješno kreiran.');
+            this.swalService.success('Novi status je uspješno kreiran.');
         }, error => {});
     }
-
 
     updateStatus() {
         this.statusService.update(this.status.id, this.status).then(response => {
@@ -91,6 +78,7 @@ class StatusController {
                 id: response.data.id,
                 name: response.data.name,
             };
+
             this.openModal();
         });
     }
@@ -99,6 +87,7 @@ class StatusController {
         this.swalService.areYouSure('Obrisani status se ne može vratiti.', () => {
             this.statusService.delete(id).then(response => {
                 this.refresh();
+
                 this.swalService.success('Status je uspješno obrisan.');
             });
         });
@@ -110,7 +99,8 @@ class StatusController {
 
     openModal() {
         $('#status-modal').modal({
-            complete: () => this.resetForm()
+            complete: () => this.resetForm(),
+            ready: (modal, trigger) => Materialize.updateTextFields()
         }).modal('open');
     }
 
@@ -125,24 +115,6 @@ class StatusController {
             this.statuses = response.data;
         });
     }
-
-  
-/*	registerStatus() {
-		 if (!this.form.$valid) {
-            return;
-        }
-
-		this.statusService.create(this.status).then((response) => {
-        	this.loadStatuses(1);
-        	this.loadAllStatuses();
-			this.resetForm();
-		}, (error) => {
-			console.log("Error while creating a status.");
-		});
-	}
-*/
- 
-
 }
 
 export default StatusController;

@@ -4,12 +4,12 @@
             <h4>{{ $ctrl.status.id ? 'Izmjene statusa' : 'Novi status' }}</h4>
             <div class="row">
                 <div class="input-field col s12">
-                     <input type="text" id="name" name="name" placeholder="Naziv" ng-model="$ctrl.status.name" ng-pattern="/^[a-z0-9\-\,\&\s]{2,255}$/i" required>
-                     <label for="name">Naziv</label>
-                     <div class="user-errors" ng-show="$ctrl.form.$submitted">
+                    <input type="text" id="name" name="name" placeholder="Naziv" ng-model="$ctrl.status.name" ng-pattern="/^[a-z0-9\-\,\&\s]{2,255}$/i" required>
+                    <label for="name">Naziv</label>
+                    <div class="user-errors" ng-show="$ctrl.form.$submitted">
                         <span class="error" ng-show="$ctrl.form.name.$error.required"> Naziv je obavezno polje.</span>
                         <span class="error" ng-show="$ctrl.form.name.$error.pattern">Naziv statusa mora sadržati između 2 i 255 znakova. Dozvoljena je upotreba slova, brojeva, povlake i razmaka.</span>
-                     </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -32,27 +32,28 @@
 </div>
 
 <table class="striped responsive-table">
-   <thead>
-      <tr>
-         <th>#</th>
-         <th>Naziv</th>
-      </tr>
-   </thead>
-   <tbody>
-      <tr ng-repeat="s in $ctrl.statuses">
-         <td>{{ s.id }}</td>
-         <td>{{ s.name }}</td>
-         <td>  
-            <a href="#" ng-click="$ctrl.edit(s.id)"><i class="material-icons">edit</i></a>
-            <a href="#" ng-click="$ctrl.delete(s.id)"><i class="material-icons">delete</i></a>
-         </td>
-      </tr>
-   </tbody>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Naziv</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="s in $ctrl.statuses">
+            <td>{{ s.id }}</td>
+            <td>{{ s.name }}</td>
+            <td>  
+                <a href="#" ng-click="$ctrl.edit(s.id)"><i class="material-icons">edit</i></a>
+                <a href="#" ng-click="$ctrl.delete(s.id)"><i class="material-icons">delete</i></a>
+            </td>
+        </tr>
+    </tbody>
 </table>
+
 <div class="right-align">
-   <ul class="pagination">
-      <li ng-class="{ 'disabled': $ctrl.number === 1}"><a href="#" ng-click="$ctrl.goto($ctrl.number - 1)"><i class="material-icons">chevron_left</i></a></li>
-      <li ng-class="{ 'disabled': $ctrl.number === $ctrl.totalPages }"><a href="#" ng-click="$ctrl.goto($ctrl.number + 1)"><i class="material-icons">chevron_right</i></a></li>
-   </ul>
+    <ul class="pagination">
+        <li ng-class="{ 'disabled': $ctrl.number === 1}"><a href="#" ng-click="$ctrl.goto($ctrl.number - 1)"><i class="material-icons">chevron_left</i></a></li>
+        <li ng-class="{ 'disabled': $ctrl.number === $ctrl.totalPages }"><a href="#" ng-click="$ctrl.goto($ctrl.number + 1)"><i class="material-icons">chevron_right</i></a></li>
+    </ul>
 </div>
 

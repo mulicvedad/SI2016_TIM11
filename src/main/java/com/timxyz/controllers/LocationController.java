@@ -63,7 +63,7 @@ public class LocationController extends BaseController<Location, LocationService
         }
     }
     
-     public Collection<Location> filterByName(@RequestParam("name") String name) {
+     public Collection<Location> filterByName(@PathVariable("name") String name) {
         return service.filterByName(name);
     }  
 }

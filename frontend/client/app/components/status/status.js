@@ -10,7 +10,7 @@ let statusModule = angular.module('status', [
   "ngInject";
   $stateProvider
     .state('status', {
-      url: '/status',
+      url: '/statusi',
       component: 'status'
     });
 })

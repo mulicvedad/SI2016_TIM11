@@ -10,33 +10,36 @@ class ItemsController {
         // Filters are disabled at first
         this.searchText = '';
 
-	    this.loadCategories();
-        this.loadLocations();
-        this.loadItems(1);
         this.setEmptyItem();
+        this.load();
     }
     
     refresh() {
         if (this.searchText) {
             this.filter();
         } else {
-            this.loadItems(1);
+            this.load();
         }
     }
 
+    load(page = 1) {
+        Promise.all([this.loadCategories(), this.loadLocations()]).then(([cat, loc]) => {
+            this.categories = cat.data;
+            this.locations = loc.data;
+
+            this.loadItems(page);
+        });
+    }
+
     loadLocations() {
-		this.locationService.all().then(response => {
-			this.locations = response.data;
-		});
+		return this.locationService.all();
     }
     
     loadCategories() {
-        this.categoryService.all().then(response => {
-			this.categories = response.data;
-		});
+        return this.categoryService.all();
     }
 
-    loadItems(page) {
+    loadItems(page = 1) {
         this.itemService.getPage(page).then(response => {
             this.items = response.data.content;  
             this.number = response.data.number + 1;
@@ -55,27 +58,22 @@ class ItemsController {
             return;
         }
 
+        this.item.categoryID = this.item.category.id;
+        this.item.locationID = this.item.location.id;
 
         if (this.item.id) {
             this.updateItem();
         } else {
-            this.registerItem();
+            this.createItem();
         }
     }
     
-    registerItem() {
-        if (!this.form.$valid) {
-            return;
-        }
-
+    createItem() {
         this.itemService.create(this.item).then(response => {
-            this.items.push(response.data); 
-            this.setEmptyItem();
-
-            this.swalService.success('Nova inventurna stavka je uspješno kreirana.');
             this.refresh();
             this.closeModal();
 
+            this.swalService.success('Nova inventurna stavka je uspješno kreirana.');
         }, error => {});
     }
 
@@ -98,14 +96,13 @@ class ItemsController {
             value: '',
             dateOfPurchase: '',
             unitOfMeasurement: '',
-            categoryID: null,
-            locationID: null
+            category: null,
+            location: null
         };
     }
 
     edit(id) {
         this.itemService.find(id).then(response => {
-           
             this.item = {
                 id: response.data.id,
                 skuNumber: response.data.skuNumber,
@@ -115,9 +112,8 @@ class ItemsController {
                 value: response.data.value,
                 dateOfPurchase: response.data.dateOfPurchase,
                 unitOfMeasurement: response.data.unitOfMeasurement,
-                categoryID: response.data.category,
-                locationID: response.data.location
-               
+                category: response.data.category,
+                location: response.data.location
             };
 
             this.openModal();
@@ -125,24 +121,17 @@ class ItemsController {
     }
 
     filter() {
-        if (this.searchText) {
-             this.itemService.getByFilter(this.searchText).then(response => {
-                this.items = response.data;
-            });
-        }
-       
+        this.itemService.getByFilter(this.searchText).then(response => {
+            this.items = response.data;
+        });
     }
     
     delete(id) {
         this.swalService.areYouSure('Obrisana inventurna stavka se ne može vratiti.', () => {
 			this.itemService.delete(id).then(response => {
-                if (this.item.length > 1) {
-					this.loadItems(this.number);
-				} else if (this.totalPages > 1) {
-                    this.goto(this.number - 1);
-                } else {
-                    this.item = [];
-                }
+                this.refresh();
+
+                this.swalService.success('Inventurna stavka je uspješno obrisana.');
 			});
 		});
     }   
@@ -161,6 +150,7 @@ class ItemsController {
     resetForm() {
         this.form.$setPristine();
         this.form.$setUntouched();
+        this.form.$submitted = false;
         this.setEmptyItem();
     }
 }

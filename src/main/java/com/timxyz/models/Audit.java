@@ -64,7 +64,6 @@ public class Audit extends BaseModel {
 
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "id", nullable = false)
-    //@JsonIgnore
     public Account getAccount() {
         return account;
     }
@@ -75,7 +74,6 @@ public class Audit extends BaseModel {
 
     @ManyToOne
     @JoinColumn(name = "locationId", referencedColumnName = "id")
-   // @JsonIgnore
     public Location getLocation() {
         return location;
     }

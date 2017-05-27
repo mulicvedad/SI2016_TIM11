@@ -58,7 +58,6 @@ public class Location extends BaseModel {
 
     @ManyToOne
     @JoinColumn(name = "parentId", referencedColumnName = "id")
-   // @JsonIgnore
     public Location getParent() {
         return parent;
     }
@@ -79,7 +78,6 @@ public class Location extends BaseModel {
 
     @ManyToOne
     @JoinColumn(name = "typeId", referencedColumnName = "id", nullable = false)
-   // @JsonIgnore
     public LocationType getType() {
         return type;
     }

@@ -123,7 +123,6 @@ public class Item extends BaseModel {
 
     @ManyToOne
     @JoinColumn(name = "categoryId", referencedColumnName = "id", nullable = false)
-    //@JsonIgnore
     public Category getCategory() {
         return category;
     }
@@ -134,7 +133,6 @@ public class Item extends BaseModel {
 
     @ManyToOne
     @JoinColumn(name = "locationId", referencedColumnName = "id", nullable = false)
-   // @JsonIgnore
     public Location getLocation() {
         return location;
     }

@@ -48,7 +48,6 @@ public class AuditItem extends BaseModel {
 
     @ManyToOne
     @JoinColumn(name = "itemId", referencedColumnName = "id", nullable = false)
-    @JsonIgnore
     public Item getItem() {
         return item;
     }
@@ -70,7 +69,6 @@ public class AuditItem extends BaseModel {
 
     @ManyToOne
     @JoinColumn(name = "statusId", referencedColumnName = "id")
-    @JsonIgnore
     public Status getStatus() {
         return status;
     }

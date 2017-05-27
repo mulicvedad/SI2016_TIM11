@@ -84,7 +84,6 @@ public class Audit extends BaseModel {
     }
 
     @OneToMany(mappedBy = "audit", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
     public Collection<AuditItem> getAuditItems() {
         return auditItems;
     }

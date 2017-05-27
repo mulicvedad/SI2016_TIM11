@@ -16,4 +16,16 @@ export default class LocationService extends BaseService {
 	getPage(page) {
 		return super.get('locations/page/'+page);
 	}
+
+    find(id) {
+        return super.get('locations/' + id);
+    }
+
+    update(id, category) {
+        return super.post('locations/' + id, location);
+    }
+
+    filterByName(name) {
+        return super.get('locations/filter-by/name?name=' + name);
+    }
 }

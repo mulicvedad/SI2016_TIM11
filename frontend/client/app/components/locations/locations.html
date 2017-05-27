@@ -14,17 +14,16 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                  <select class="browser-default" ng-model="$ctrl.location.parentId">
-                    <option value="null" selected>Bez parentId lokacije</option>
-                    <option ng-repeat="location in $ctrl.locations" value="{{ location.id }}" >{{ location.name }}</option>
+                  <select class="browser-default" ng-model="$ctrl.location.parentId" ng-options="location.name for location in $ctrl.locations track by location.id">
+                    <option value="">Bez parentId lokacije</option>
                   </select>
                 </div>
             </div>
             <div class="row">
               <div class="input-field col s12">
-                <select class="browser-default" ng-model="$ctrl.location.typeId">
+                <select class="browser-default" ng-model="$ctrl.location.typeId" ng-options="locationType.name for locationType in $ctrl.locationTypes track by locationType.id">
                   <option value="" disabled selected>Izaberite tip</option>
-                  <option ng-repeat="type in $ctrl.locationTypes" value="{{ type.id }}" >{{ type.name }}</option>
+                  
                 </select>
               </div>
             </div>
@@ -56,8 +55,8 @@
   </tr>
   <tr ng-repeat="location in $ctrl.locations">
     <td>{{ location.name }}</td>
-    <td>{{ location.parentId }}</td>
-    <td>{{ location.type }}</td>
+    <td>{{ location.parent.name }}</td>
+    <td>{{ location.type.name }}</td>
     <td>  
       <a href="#" ng-click="$ctrl.edit(location.id)"><i class="material-icons">edit</i></a>
       <a href="#" ng-click="$ctrl.delete(location.id)"><i class="material-icons">delete</i></a>

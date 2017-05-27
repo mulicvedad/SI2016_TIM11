@@ -51,6 +51,7 @@ public class LocationController extends BaseController<Location, LocationService
 
             location.setName(updatedCategory.getName());
             location.setParent(service.get(updatedCategory.getParentId()));
+            location.setType(locationTypeService.get(updatedCategory.getTypeId()));
 
             location = service.save(location);
 

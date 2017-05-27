@@ -33,6 +33,9 @@ class LocationsController {
             return;
         }
 
+        /*this.location.parentId = this.location.parent.id;*/
+       /*7 this.location.typeId = this.location.type.id;*/
+
         if (this.location.id) {
             this.updateLocation();
         } else {
@@ -97,7 +100,8 @@ class LocationsController {
             this.location = {
                 id: response.data.id,
                 name: response.data.name,
-                parentId: response.data.parent
+                parentId: response.data.parent,
+                typeId: response.data.type
             };
 
             this.openModal();
@@ -120,7 +124,8 @@ class LocationsController {
 
     openModal() {
         $('#location-modal').modal({
-            complete: () => this.resetForm()
+            complete: () => this.resetForm(),
+            ready: (modal, trigger) => Materialize.updateTextFields()
         }).modal('open');
 
     }

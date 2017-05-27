@@ -45,13 +45,13 @@ public class LocationController extends BaseController<Location, LocationService
     }
     
     @ResponseBody
-    public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid LocationUpdateForm updatedCategory, @RequestHeader("Authorization") String token) {
+    public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid LocationUpdateForm updatedLocation, @RequestHeader("Authorization") String token) {
         try {
             Location location = service.get(id);
 
-            location.setName(updatedCategory.getName());
-            location.setParent(service.get(updatedCategory.getParentId()));
-            location.setType(locationTypeService.get(updatedCategory.getTypeId()));
+            location.setName(updatedLocation.getName());
+            location.setParent(service.get(updatedLocation.getParentId()));
+            location.setType(locationTypeService.get(updatedLocation.getTypeId()));
 
             location = service.save(location);
 

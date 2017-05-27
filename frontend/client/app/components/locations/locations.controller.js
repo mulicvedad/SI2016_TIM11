@@ -10,28 +10,36 @@ class LocationsController {
         this.searchText = '';
 
         this.setEmptyLocation();
-
-       this.locationTypeService.all().then(response => {
-            this.locationTypes = response.data;
-
-            this.loadLocations();
-            this.loadAllLocations();
-            this.loadAllLocationTypes();
-        });
+        this.load();
 	}
+
+    load(page = 1) {
+        Promise.all([this.loadLocationTypes(), this.loadAllLocations()]).then(([locTypesRes, locRes]) => {
+            this.locationTypes = locTypesRes.data;
+            this.allLocations = locRes.data;
+
+            this.loadLocations(page);
+        });
+    }
 
 	refresh() {
         if (this.searchText) {
             this.filter();
         } else {
-            this.loadLocations();
+            this.load();
         }
     }
 
-    saveLocation(){
+    saveLocation() {
     	if (!this.form.$valid) {
             return;
         }
+
+        if (this.location.parent) {
+            this.location.parentId = this.location.parent.id;
+        }
+
+        this.location.typeId = this.location.type.id;
 
         if (this.location.id) {
             this.updateLocation();
@@ -41,23 +49,19 @@ class LocationsController {
     }
 	
 	loadLocations(page = 1) {
-		this.locationService.getPage(page).then((response) => {
+		this.locationService.getPage(page).then(response => {
 			this.locations = response.data.content;
-			this.number = response.data.number+1;
+			this.number = response.data.number + 1;
 			this.totalPages = response.data.totalPages;
 		});
 	}
 
 	loadAllLocations() {
-        this.locationService.all().then(response => {
-            this.allLocations = response.data;
-        });
+        return this.locationService.all();
     }
 	
 	loadLocationTypes() {
-		this.locationTypeService.all().then( (response) => {
-			this.locationTypes = response.data;
-		} );
+		return this.locationTypeService.all();
 	}
 
     resetForm() {
@@ -70,8 +74,9 @@ class LocationsController {
     setEmptyLocation() {
 		this.location = {
 			name: '', 
-			parentId: null, 
-			typeId: ''};
+			parent: null, 
+			type: null
+        };
 	}
 
 	createLocation() {
@@ -97,8 +102,8 @@ class LocationsController {
             this.location = {
                 id: response.data.id,
                 name: response.data.name,
-                parentId: response.data.parent,
-                typeId: response.data.type
+                parent: response.data.parent,
+                type: response.data.type
             };
 
             this.openModal();
@@ -130,7 +135,7 @@ class LocationsController {
 
     goto(newPage) {
         if (newPage > 0 && newPage <= this.totalPages) {
-            this.loadLocations(newPage);
+            this.load(newPage);
 		}
     }
 
@@ -138,20 +143,7 @@ class LocationsController {
         this.locationService.filterByName(this.searchText).then(response => {
             this.locations = response.data;
         });
-    }
-
-    getLocationName(locationID) {
-        let location = this.allLocations.find(location=> location.id === locationID);
-
-        return location ? location.name : null;
-    }
-
-	loadLocationTypes() {
-		this.locationTypeService.all().then( (response) => {
-			this.locationTypes = response.data;
-		} );
-	}
-	  
+    } 
 }
 
 export default LocationsController;

@@ -21,7 +21,7 @@ export default class LocationService extends BaseService {
         return super.get('locations/' + id);
     }
 
-    update(id, category) {
+    update(id, location) {
         return super.post('locations/' + id, location);
     }
 

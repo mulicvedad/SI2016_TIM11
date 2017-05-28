@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.json.Json;
@@ -56,15 +57,15 @@ public abstract class BaseController<M extends BaseModel, S extends BaseService<
     }
 
     @ResponseBody
+    @Transactional
     public ResponseEntity delete(@PathVariable("id") Long id, @RequestHeader("Authorization") String token) {
         try {
             logForDelete(token, service.get(id));
 
             service.delete(id);
 
-            return ResponseEntity.ok(true);
-        }
-        catch (ServiceException e) {
+            return ResponseEntity.ok().build();
+        } catch (ServiceException e) {
             return error(e);
         }
 

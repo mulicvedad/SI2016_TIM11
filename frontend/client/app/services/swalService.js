@@ -19,9 +19,9 @@ export default class SwalService {
         }, callback);
     }
 
-    error(text) {
+    error(title, text) {
         swal({
-            title: ':(',
+            title: title,
             text: text,
             type: 'error'
         })

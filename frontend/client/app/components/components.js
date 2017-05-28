@@ -26,8 +26,7 @@ let Components = angular.module('app.components', [
   Navbar,
   Login,
   MyAccount,
-  AccessLogs,
-  ErrorDisplay
+  AccessLogs
   // DoAudit
 ])
 .name;

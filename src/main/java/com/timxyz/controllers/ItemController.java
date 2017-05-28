@@ -63,7 +63,7 @@ public class ItemController extends BaseController<Item, ItemService> {
     }
 
     public Collection<Item> getAllByItemName(@RequestParam("name") String name){
-        return service.getAllByItemName(name);
+        return service.filterByName(name);
     }
 
     @Transactional

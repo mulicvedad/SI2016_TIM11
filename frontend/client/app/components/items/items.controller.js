@@ -121,7 +121,7 @@ class ItemsController {
     }
 
     filter() {
-        this.itemService.getByFilter(this.searchText).then(response => {
+        this.itemService.filterByName(this.searchText).then(response => {
             this.items = response.data;
         });
     }

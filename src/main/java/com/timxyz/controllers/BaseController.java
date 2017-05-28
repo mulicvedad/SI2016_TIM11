@@ -22,9 +22,6 @@ public abstract class BaseController<M extends BaseModel, S extends BaseService<
     protected S service;
 
     @Autowired
-    protected ModelMapper modelMapper;
-
-    @Autowired
     public void setService(S service) {
         this.service = service;
     }

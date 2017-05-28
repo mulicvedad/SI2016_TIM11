@@ -27,13 +27,13 @@ public class AccountController extends BaseController<Account, AccountService> {
     @ResponseBody
     public ResponseEntity create(@RequestBody @Valid AccountCreateForm newAccount, @RequestHeader("Authorization") String token) {
         try {
-            Account account = modelMapper.map(newAccount, Account.class);
-
-            account.setId(null); // modelMapper somehow seems to map the roleId field to Id... which shouldn't happen
-
-            account.setRole(roleService.get(newAccount.getRoleId()));
-
-            account = service.save(account);
+            Account account = service.save(new Account(
+                    newAccount.getFullName(),
+                    newAccount.getEmail(),
+                    newAccount.getUsername(),
+                    newAccount.getPassword(),
+                    roleService.get(newAccount.getRoleId())
+            ));
 
             logForCreate(token, account);
 

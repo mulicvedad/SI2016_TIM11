@@ -21,16 +21,20 @@ import java.util.List;
 @RestController
 public class LocationTypeController extends BaseController<LocationType, LocationTypeService> {
     @ResponseBody
-    public ResponseEntity create(@RequestBody @Valid LocationTypeCreateForm newLocType,
-                                 @RequestHeader("Authorization") String token) {
+    public ResponseEntity create(@RequestBody @Valid LocationTypeCreateForm newLocType, @RequestHeader("Authorization") String token) {
 	    try {
-	                LocationType model = service.save(modelMapper.map(newLocType, LocationType.class));
-	                logForCreate(token, model);
-	                return ResponseEntity.ok(model);
-	        } catch(ServiceException e) {
-	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-	        }
-	    }
+	        LocationType locationType = service.save(new LocationType(
+	                newLocType.getName(),
+                    newLocType.getDescription()
+            ));
+
+            logForCreate(token, locationType);
+
+            return ResponseEntity.ok(locationType);
+        } catch(ServiceException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
     
     @ResponseBody
     public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid LocationTypeUpdateForm updatedLocationType, @RequestHeader("Authorization") String token) {

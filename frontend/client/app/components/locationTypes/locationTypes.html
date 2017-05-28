@@ -4,7 +4,7 @@
             <h4>{{ $ctrl.locationType.id ? 'Izmjene tipa lokacije' : 'Novi tip lokacije' }}</h4>
             <div class="row">
                 <div class="input-field col s12">
-                    <input type="text" id="name" name="name" placeholder="Naziv" ng-model="$ctrl.locationType.name" ng-pattern="/^[a-z0-9\-,&\s]{4,255}$/ui" required>
+                    <input type="text" id="name" name="name" placeholder="Naziv" ng-model="$ctrl.locationType.name" ng-pattern="/^[\sa-z\u0107\u010d\u0111\u0161\u017e0-9\-,&]{4,255}$/i" required>
                     <label for="name">Naziv</label>
                     <div class="user-errors" ng-show="$ctrl.form.$submitted">
                         <span class="error" ng-show="$ctrl.form.name.$error.required">Naziv tipa lokacije je obavezan.</span>

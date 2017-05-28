@@ -26,7 +26,7 @@ public class MyAccountController extends BaseController<Account, AccountService>
 		Account account = TokenAuthenticationService.findAccountByToken(token);
 		
 		if (account == null) {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			return error(new ServiceException("Korisnički račun nije pronađen."));
 		}
 
 		return ResponseEntity.ok(account);
@@ -38,7 +38,7 @@ public class MyAccountController extends BaseController<Account, AccountService>
 		Account account = TokenAuthenticationService.findAccountByToken(token);
 		
 		if (account == null || !BCrypt.checkpw(updatedAccount.getCurrentPassword(), account.getPassword())) {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+		    return error(new ServiceException("Neispravna trenutna lozinka."));
 		}
 		
 		try {

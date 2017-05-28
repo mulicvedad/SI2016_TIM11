@@ -4,11 +4,11 @@
 			<h4>{{ $ctrl.account.id ? 'Izmjene korisničkog računa' : 'Novi korisnički račun' }}</h4>
 			<div class="row">
 				<div class="input-field col s12">
-					<input type="text" id="full-name" name="fullName" placeholder="Ime i prezime" ng-model="$ctrl.account.fullName" ng-pattern="/^[a-z0-9\-,&\s]{4,255}$/ui" required>
+					<input type="text" id="full-name" name="fullName" placeholder="Ime i prezime" ng-model="$ctrl.account.fullName" ng-pattern="/^[\sa-z\u0107\u010d\u0111\u0161\u017e]{4,255}$/i" required>
 					<label for="full-name">Ime i prezime</label>
 					<div class="user-errors" ng-show="$ctrl.form.$submitted">
 						<span class="error" ng-show="$ctrl.form.fullName.$error.required">Ime i prezime je obavezno.</span>
-						<span class="error" ng-show="$ctrl.form.fullName.$error.pattern">Naziv kategorije mora sadržati između 4 i 255 znakova uključivo. Dozvoljena je upotreba slova, brojeva, povlake i razmaka.</span>
+						<span class="error" ng-show="$ctrl.form.fullName.$error.pattern">Ime i prezime mora sadržati između 4 i 255 znakova. Dozvoljena je upotreba slova i razmaka.</span>
 					</div>
 				</div>
 			</div>
@@ -18,7 +18,7 @@
 					<label for="username">Korisničko ime</label>
 					<div class="user-errors" ng-show="$ctrl.form.$submitted">
 						<span class="error" ng-show="$ctrl.form.username.$error.required">Korisničko ime je obavezno.</span>
-						<span class="error" ng-show="$ctrl.form.username.$error.pattern">Korisničko ime mora biti između 4 i 16 znakova uključivo, od kojih je prvo slovo, a ostalo su slova ili brojevi.</span>
+						<span class="error" ng-show="$ctrl.form.username.$error.pattern">Korisničko ime mora biti između 4 i 16 znakova, od kojih je prvo slovo, a ostalo su slova ili brojevi.</span>
 					</div>
 				</div>
 			</div>

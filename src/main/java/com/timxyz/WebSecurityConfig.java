@@ -30,20 +30,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-                // salje se GET prilikom izlistavanja inventura tako da se mora dozvoliti svima
-                // HTTP GET za /accounts
-                // ako se nadje neko drugo rjesenje za inventure onda sljedecu liniju treba izbrisati
-            .antMatchers(HttpMethod.GET,"/accounts/**").authenticated()
 
+            //.antMatchers(HttpMethod.GET,"/accounts/**").authenticated()
+            .antMatchers(HttpMethod.GET,"/audits/**", "/items/**", "/locations/**", "/categories/all").authenticated()
             .antMatchers("/accounts/**").hasRole(ROLE_ADMIN)
-            .antMatchers(HttpMethod.GET,"/audits/**", "/items/**").authenticated()
             .antMatchers("/audits/**").hasAnyRole(ROLE_ADMIN,ROLE_AUDIT_TEAM)
                 // SRS FZ17-18
                 // Korisnik sa administratorskim privilegijama ili korisnik finansijske službe može
                 // kreirati/obrisati novu prostoriju #LOL
             .antMatchers("/locations/**").hasAnyRole(ROLE_ADMIN,ROLE_FINANCE)
-            .antMatchers("/locaitonTypes/**").hasRole(ROLE_ADMIN)
+            .antMatchers(HttpMethod.GET,"/locationTypes/**").hasAnyRole(ROLE_ADMIN, ROLE_FINANCE)
+            .antMatchers("/locationTypes/**").hasRole(ROLE_ADMIN)
             .antMatchers("/categories/**").hasRole(ROLE_ADMIN)
+            .antMatchers(HttpMethod.GET,"/status/**").hasAnyRole(ROLE_ADMIN, ROLE_AUDIT_TEAM)
             .antMatchers("/status/**").hasRole(ROLE_ADMIN)
             .antMatchers("/items/**").hasAnyRole(ROLE_ADMIN, ROLE_AUDIT_TEAM)
             .antMatchers("/access-logs/**").hasAnyRole(ROLE_ADMIN, ROLE_FINANCE)

@@ -9,6 +9,7 @@ import com.timxyz.services.exceptions.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,6 +25,7 @@ public class AccountController extends BaseController<Account, AccountService> {
         this.roleService = roleService;
     }
 
+    @Transactional
     @ResponseBody
     public ResponseEntity create(@RequestBody @Valid AccountCreateForm newAccount, @RequestHeader("Authorization") String token) {
         try {
@@ -43,6 +45,7 @@ public class AccountController extends BaseController<Account, AccountService> {
         }
     }
 
+    @Transactional
     @ResponseBody
     public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid AccountUpdateForm updatedAccount, @RequestHeader("Authorization") String token) {
         try {

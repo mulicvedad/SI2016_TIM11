@@ -81,6 +81,7 @@ public class AuditController extends BaseController<Audit, AuditService> {
         }
     }
 
+    @Transactional
     @ResponseBody
     public ResponseEntity delete(@PathVariable("id") Long id, @RequestHeader("Authorization") String token) {
         try {

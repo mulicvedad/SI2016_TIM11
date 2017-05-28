@@ -69,7 +69,7 @@ public class Location extends BaseModel {
         this.parent = parent;
     }
 
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "parent")
     @JsonIgnore
     public Collection<Location> getChildren() {
         return children;

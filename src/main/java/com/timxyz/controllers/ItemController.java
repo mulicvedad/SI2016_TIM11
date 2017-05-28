@@ -10,6 +10,7 @@ import com.timxyz.services.exceptions.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -37,6 +38,7 @@ public class ItemController extends BaseController<Item, ItemService> {
         this.locationService = locationService;
     }
 
+    @Transactional
     @ResponseBody
     public ResponseEntity create(@RequestBody @Valid ItemCreateForm newItem, @RequestHeader("Authorization") String token) {
         try {
@@ -64,7 +66,7 @@ public class ItemController extends BaseController<Item, ItemService> {
         return service.getAllByItemName(name);
     }
 
-
+    @Transactional
     @ResponseBody
     public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid ItemUpdateForm updatedItem, @RequestHeader("Authorization") String token) {
         try {

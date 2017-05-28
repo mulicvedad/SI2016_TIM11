@@ -33,6 +33,16 @@ public class CategoryService extends BaseService<Category, CategoryRepository> {
         return super.save(model);
     }
 
+    public void delete(Long id) throws ServiceException {
+        Category category = get(id);
+
+        if (category.getItems().size() > 0) {
+            throw new ServiceException("There are items which belong to this category and it cannot be deleted!");
+        }
+
+        super.delete(id);
+    }
+
     public Collection<Category> filterByName(String name) {
         return repository.filterByName(name);
     }

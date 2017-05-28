@@ -1,4 +1,4 @@
-function authInterceptor(jwtService, ENV, $state, $q, swalService) {
+function authInterceptor(jwtService, ENV, $state, $q, swalService, $injector) {
     'ngInject';
 
     return {
@@ -18,6 +18,9 @@ function authInterceptor(jwtService, ENV, $state, $q, swalService) {
             }
             else if ( rejection.status === 403 || rejection.status ===-1) {
                 $state.go('home');
+                $injector.get('myAccountService').current().then(response => {
+                    $injector.get('sessionService').refreshRole(response.data.role.name);
+                });
             }
             
             swalService.error(rejection.data.error, rejection.data.message);

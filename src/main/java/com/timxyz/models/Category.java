@@ -47,7 +47,7 @@ public class Category extends BaseModel {
         this.parent = parent;
     }
 
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "parent")
     @JsonIgnore
     public Collection<Category> getChildren() {
         return children;
@@ -57,7 +57,7 @@ public class Category extends BaseModel {
         this.children = children;
     }
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category")
     @JsonIgnore
     public Collection<Item> getItems() {
         return items;

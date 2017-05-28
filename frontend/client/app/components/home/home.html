@@ -34,7 +34,7 @@
     <div class="col s6">
         <h4>Inventure</h4>
     </div>
-    <div class="col s6 create-audit-btn right-align">
+    <div class="col s6 create-audit-btn right-align"  show-for-role="ROLE_ADMIN, ROLE_AUDITTEAM">
         <button class="btn" type="button" ng-click="$ctrl.openModal()">Kreiraj inventuru</button>
     </div>
 </div>
@@ -60,13 +60,13 @@
             <td>{{ audit.createdAt | date: 'dd.MM.yyyy.' }}</td>
             <td>{{ audit.finished | intToBool }}</td>
             <td>
-                <a ui-sref="doAudit({auditID: audit.id})" ng-show="!audit.finished">
+                <a ui-sref="doAudit({auditID: audit.id})" ng-show="!audit.finished" show-for-role="ROLE_ADMIN, ROLE_AUDITTEAM">
                    <span class="material-icons">toc</span>
                 </a>
-                <a href="#" ng-show="!audit.finished" ng-click="$ctrl.delete(audit.id)">
+                <a href="#" ng-show="!audit.finished" ng-click="$ctrl.delete(audit.id)" show-for-role="ROLE_ADMIN, ROLE_AUDITTEAM">
                     <span class="material-icons">delete</span>
                 </a>
-                <a href="#" ng-click="$ctrl.generateReport(audit.id)">
+                <a href="#" ng-click="$ctrl.generateReport(audit.id)" show-for-role="ROLE_ADMIN, ROLE_FINANCE">
                     <span class="material-icons">file_download</span> 
                 </a>
             </td>

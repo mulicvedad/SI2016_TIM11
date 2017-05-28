@@ -27,7 +27,7 @@ let Components = angular.module('app.components', [
   Login,
   MyAccount,
   AccessLogs,
-  ErrorDisplay,
+  ErrorDisplay
   // DoAudit
 ])
 .name;

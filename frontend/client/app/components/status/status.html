@@ -25,10 +25,6 @@
     <div class="col s7 create-btn">
         <a class="btn" ng-click="$ctrl.openModal()">Dodaj novi status</a>
     </div>
-    <div class="input-field col s5">
-        <i class="material-icons prefix">search</i>
-        <input type="text" placeholder="Traži..." ng-model="$ctrl.searchText" ng-change="$ctrl.refresh()" ng-model-options="{ debounce: 200}">
-    </div>
 </div>
 
 <table class="striped responsive-table">
@@ -53,6 +49,7 @@
 <div class="right-align">
     <ul class="pagination">
         <li ng-class="{ 'disabled': $ctrl.number === 1}"><a href="#" ng-click="$ctrl.goto($ctrl.number - 1)"><i class="material-icons">chevron_left</i></a></li>
+        <li> {{ $ctrl.number }} / {{ $ctrl.totalPages }} </li>
         <li ng-class="{ 'disabled': $ctrl.number === $ctrl.totalPages }"><a href="#" ng-click="$ctrl.goto($ctrl.number + 1)"><i class="material-icons">chevron_right</i></a></li>
     </ul>
 </div>

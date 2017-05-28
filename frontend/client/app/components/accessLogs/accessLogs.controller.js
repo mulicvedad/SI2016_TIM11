@@ -3,11 +3,11 @@ class AccessLogsController {
 
     constructor(accessLogService) {
         this.accessLogService = accessLogService;
-        this.loadAccessLogs(1);
+        this.loadAccessLogs();
         this.searchedText = "";
     }
 
-    loadAccessLogs(page) {
+    loadAccessLogs(page = 1) {
         this.accessLogService.getPage(page).then((response) => {
             this.accessLogs = response.data.content;
             this.number = response.data.number+1;
@@ -29,6 +29,9 @@ class AccessLogsController {
             this.accessLogService.getByFilter(this.searchedText).then((response) => {
                 this.accessLogs = response.data;
             });
+        }
+        else {
+            this.loadAccessLogs();
         }
 
     }

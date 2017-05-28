@@ -6,18 +6,13 @@ class StatusController {
         this.swalService = swalService;
 
         // Filters are disabled at first
-        this.searchText = '';
 
         this.loadStatuses();
         this.setEmptyStatus();
 	}
 
     refresh() {
-        if (this.searchText) {
-            this.filter();
-        } else {
-            this.loadStatuses();
-        }
+        this.loadStatuses();
     }
 
     loadStatuses(page = 1) {
@@ -111,12 +106,6 @@ class StatusController {
             this.loadStatuses(newPage);
         }
     } 
-
-    filter() {
-        this.statusService.filterByName(this.searchText).then(response => {
-            this.statuses = response.data;
-        });
-    }
 }
 
 export default StatusController;

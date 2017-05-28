@@ -95,9 +95,10 @@
 	</tbody>
 </table>
 
-<div class="right-align" ng-show="!this.searchText">
+<div class="right-align" ng-show="!$ctrl.searchText">
 	<ul class="pagination">
 		<li ng-class="{ 'disabled': $ctrl.number === 1}"><a href="#" ng-click="$ctrl.goto($ctrl.number - 1)"><i class="material-icons">chevron_left</i></a></li>
+		<li> {{ $ctrl.number }} / {{ $ctrl.totalPages }} </li>
 		<li ng-class="{ 'disabled': $ctrl.number === $ctrl.totalPages }"><a href="#" ng-click="$ctrl.goto($ctrl.number + 1)"><i class="material-icons">chevron_right</i></a></li>
 	</ul>
 </div>

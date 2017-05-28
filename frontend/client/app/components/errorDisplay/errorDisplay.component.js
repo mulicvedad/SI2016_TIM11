@@ -6,6 +6,6 @@ let errorDisplayComponent = {
         content: '<'
     },
     template
-}
+};
 
 export default errorDisplayComponent;

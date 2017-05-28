@@ -35,6 +35,7 @@ public abstract class BaseController<M extends BaseModel, S extends BaseService<
         return service.all();
     }
 
+    @Transactional
     @ResponseBody
     public ResponseEntity create(@RequestBody @Valid M newModel, @RequestHeader("Authorization") String token) {
         try {
@@ -56,8 +57,8 @@ public abstract class BaseController<M extends BaseModel, S extends BaseService<
             return error(e);        }
     }
 
-    @ResponseBody
     @Transactional
+    @ResponseBody
     public ResponseEntity delete(@PathVariable("id") Long id, @RequestHeader("Authorization") String token) {
         try {
             logForDelete(token, service.get(id));

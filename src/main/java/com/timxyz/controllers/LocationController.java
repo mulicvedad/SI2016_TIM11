@@ -12,6 +12,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,6 +31,7 @@ public class LocationController extends BaseController<Location, LocationService
         this.locationTypeService = locationTypeService;
     }
 
+    @Transactional
     @ResponseBody
     public ResponseEntity create(@RequestBody @Valid LocationCreateForm newLocation, @RequestHeader("Authorization") String token) {
         try {
@@ -46,7 +48,8 @@ public class LocationController extends BaseController<Location, LocationService
             return error(e);
         }
     }
-    
+
+    @Transactional
     @ResponseBody
     public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid LocationUpdateForm updatedLocation, @RequestHeader("Authorization") String token) {
         try {

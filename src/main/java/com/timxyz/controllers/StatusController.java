@@ -8,6 +8,7 @@ import com.timxyz.services.exceptions.ServiceException;
 import java.util.Collection;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RestController
 public class StatusController extends BaseController<Status, StatusService> {
 
+    @Transactional
     @ResponseBody
     public ResponseEntity create(@RequestBody @Valid StatusCreateForm newStatus,
                                  @RequestHeader("Authorization") String token) {
@@ -33,8 +35,9 @@ public class StatusController extends BaseController<Status, StatusService> {
             return error(e);
         }
     }
-    
-      @ResponseBody
+
+    @Transactional
+    @ResponseBody
     public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid StatusUpdateForm updatedStatus, @RequestHeader("Authorization") String token) {
         try {
             Status status = service.get(id);

@@ -7,6 +7,7 @@ import com.timxyz.services.CategoryService;
 import com.timxyz.services.exceptions.ServiceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -15,6 +16,7 @@ import java.util.Collection;
 @RestController
 public class CategoryController extends BaseController<Category, CategoryService> {
 
+    @Transactional
     @ResponseBody
     public ResponseEntity create(@RequestBody @Valid CategoryCreateForm newCategory, @RequestHeader("Authorization") String token) {
         try {
@@ -31,6 +33,7 @@ public class CategoryController extends BaseController<Category, CategoryService
         }
     }
 
+    @Transactional
     @ResponseBody
     public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid CategoryUpdateForm updatedCategory, @RequestHeader("Authorization") String token) {
         try {

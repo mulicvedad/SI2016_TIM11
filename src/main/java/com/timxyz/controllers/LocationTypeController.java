@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import com.timxyz.services.exceptions.ServiceException;
 import java.util.Collection;
@@ -20,6 +21,8 @@ import java.util.List;
 
 @RestController
 public class LocationTypeController extends BaseController<LocationType, LocationTypeService> {
+
+    @Transactional
     @ResponseBody
     public ResponseEntity create(@RequestBody @Valid LocationTypeCreateForm newLocType, @RequestHeader("Authorization") String token) {
 	    try {
@@ -35,7 +38,8 @@ public class LocationTypeController extends BaseController<LocationType, Locatio
 	        return error(e);
         }
     }
-    
+
+    @Transactional
     @ResponseBody
     public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid LocationTypeUpdateForm updatedLocationType, @RequestHeader("Authorization") String token) {
         try {

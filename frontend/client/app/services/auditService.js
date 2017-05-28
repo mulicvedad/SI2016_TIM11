@@ -16,4 +16,8 @@ export default class AuditService extends BaseService {
     create(audit) {
         return super.post('audits', audit);
     }
+
+    delete(id) {
+        return super.delete('audits/' + id);
+    }
 }

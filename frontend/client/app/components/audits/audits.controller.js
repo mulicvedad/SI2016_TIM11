@@ -62,9 +62,22 @@ class AuditsController {
         this.audit.locationId = this.audit.location.id;
 
         this.auditService.create(this.audit).then(response => {
+            this.closeModal();
+            this.load();
+
             this.swalService.success('Nova inventura je uspješno kreirana.');
         }, error => {
             this.swalService.error(error.data.message.string);
+        });
+    }
+
+    delete(id) {
+        this.swalService.areYouSure('Sve informacije prikupljene tokom inventure će biti obrisane.', () => {
+            this.auditService.delete(id).then(response => {
+                this.load();
+
+                this.swalService.success('Inventura je uspješno obrisana.');
+            });
         });
     }
 }

@@ -39,6 +39,16 @@ public class TokenAuthenticationService {
     static final String FIELD_NAME_ROLE = "role";
     static final String FIELD_NAME_USERNAME = "username";
     static final String HEADER_STRING = "Authorization";
+
+    public static Account findAccountByToken(String token) {
+        String username = parseJwt(token);
+
+        if (username == null) {
+            return null;
+        }
+
+        return accountRepository.findByUsername(username);
+    }
     
     public static String parseJwt(String token) {
     	if (token != null) {

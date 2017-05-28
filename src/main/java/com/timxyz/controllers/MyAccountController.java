@@ -20,19 +20,9 @@ import com.timxyz.services.exceptions.ServiceException;
 @RestController
 public class MyAccountController extends BaseController<Account, AccountService> {
 
-	private Account findAccountByToken(String token) {
-		String username = TokenAuthenticationService.parseJwt(token);
-		
-		if (username == null) {
-			return null;
-		}
-
-		return service.getByUsername(username);
-	}
-	
 	@ResponseBody
 	public ResponseEntity get(@RequestHeader("Authorization") String token) {
-		Account account = findAccountByToken(token);
+		Account account = TokenAuthenticationService.findAccountByToken(token);
 		
 		if (account == null) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -43,7 +33,7 @@ public class MyAccountController extends BaseController<Account, AccountService>
 	
 	@ResponseBody
 	public ResponseEntity update(@RequestHeader("Authorization") String token, @RequestBody @Valid MyAccountUpdateForm updatedAccount) {
-		Account account = findAccountByToken(token);
+		Account account = TokenAuthenticationService.findAccountByToken(token);
 		
 		if (account == null || !BCrypt.checkpw(updatedAccount.getCurrentPassword(), account.getPassword())) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();

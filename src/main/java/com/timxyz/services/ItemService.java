@@ -76,6 +76,9 @@ public class ItemService extends BaseService<Item, ItemRepository> {
         return repository.filterByName(name);
     }
 
+    public Collection<Item> getByLocation(Long id) {
+        return repository.getByLocation(id);
+    }
 }
 
 

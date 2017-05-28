@@ -13,6 +13,11 @@ public class AuditItem extends BaseModel {
     private Audit audit;
     private Status status;
 
+    public AuditItem(Item item, Audit audit) {
+        this.item = item;
+        this.audit = audit;
+    }
+
     public AuditItem() {
     }
 

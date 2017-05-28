@@ -20,6 +20,12 @@ public class Audit extends BaseModel {
     private Collection<AuditItem> auditItems;
     private Collection<PastAudit> pastAudits;
 
+    public Audit(String name, Account account, Location location) {
+        this.name = name;
+        this.account = account;
+        this.location = location;
+    }
+
     public Audit() {
     }
 

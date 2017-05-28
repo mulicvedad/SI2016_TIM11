@@ -37,4 +37,7 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Long> {
 
     @Query("select c from Item c where c.name like %:name%")
     Collection<Item> filterByName(@Param("name") String name);
+
+    @Query("select i from Item i where i.location.id = :id")
+    Collection<Item> getByLocation(@Param("id") Long id);
 }

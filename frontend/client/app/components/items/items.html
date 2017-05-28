@@ -47,13 +47,12 @@
                     <label for="value">Vrijednost</label>
                     <div class="user-errors" ng-show="$ctrl.form.$submitted">
                         <span class="error" ng-show="$ctrl.form.value.$error.required">Obavezno polje.</span>
-                        <!--<span class="error" ng-show="$ctrl.form.value.$error.">Vrijednost mora biti pozitivan broj sa najviše 16 cifara i 2 decimale.</span>-->
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                  <input type="date" class="datepicker" id="date-of-purchase" format="yyyy-mm-dd" ng-model="$ctrl.item.dateOfPurchase" name="dateOfPurchase" required>
+                    <input type="date" class="datepicker" id="date-of-purchase" format="yyyy-mm-dd" ng-model="$ctrl.item.dateOfPurchase" name="dateOfPurchase" required>
                     <label for="date-of-purchase">Datum unosa</label>
                     <div class="user-errors" ng-show="$ctrl.form.$submitted">
                         <span class="error" ng-show="$ctrl.form.dateOfPurchase.$error.required">Datum unosa je obavezan.</span>
@@ -170,9 +169,7 @@
         clear: 'Počisti',
         close: false,
         firstDay: 1,
-        format: 'yyyy-mm-dd', // nije mi radilo pa sam vratila staro...
-        /* format: 'dd. mmmm yyyy.',*/
-        /* formatSubmit: 'yyyy-mm-dd',*/
+        format: 'yyyy-mm-dd',
         container: 'body'
     });
 </script>

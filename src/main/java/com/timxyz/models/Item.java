@@ -1,9 +1,6 @@
 package com.timxyz.models;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -92,6 +89,7 @@ public class Item extends BaseModel {
 
     @Basic
     @Column(name = "dateOfPurchase", nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     public Date getDateOfPurchase() {
         return dateOfPurchase;
     }

@@ -13,7 +13,6 @@ import myAccountService from './myAccountService';
 import accessLogService from './accessLogService';
 import swalService from './swalService';
 import roleService from './roleService';
-import transitionService from './transitionService';
 import reportService from './reportService';
 import auditItemService from './auditItemService';
 
@@ -34,7 +33,6 @@ export default angular
     accessLogService,
     swalService,
     roleService,
-    transitionService, 
     reportService,
     auditItemService
 }).name;

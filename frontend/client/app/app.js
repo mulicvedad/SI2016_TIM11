@@ -25,7 +25,7 @@ angular.module('app', [
 .component('app', AppComponent)
 .directive('showAuthenticated', ShowAuthenticated)
 .directive('showForRole', ShowForRole)
-.run((sessionService, $state, $transitions, transitionService) => {
+.run((sessionService, $state, $transitions) => {
     'ngInject';
     
     $transitions.onStart({ to: 'login' }, (trans) => {

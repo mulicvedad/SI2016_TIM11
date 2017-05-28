@@ -22,7 +22,7 @@ function authInterceptor(jwtService, ENV, $state, $q, swalService, $injector) {
                 });
             }
             else {
-                swalService.error(rejection.data.error, rejection.data.message);
+                swalService.error(':(', rejection.data.message);
             }
             
             return $q.reject(rejection);

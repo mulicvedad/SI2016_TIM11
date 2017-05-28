@@ -5,6 +5,7 @@ import com.timxyz.models.Category;
 import com.timxyz.models.Location;
 import com.timxyz.models.PastAuditItem;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -38,7 +39,8 @@ public class ItemCreateForm {
     @NotNull
     private Date dateOfPurchase;
 
-    @Min(0) @NotNull
+    @Min(0) 
+    @Max((long) 9999999999999.99) @NotNull
     private BigDecimal value;
 
     @NotNull

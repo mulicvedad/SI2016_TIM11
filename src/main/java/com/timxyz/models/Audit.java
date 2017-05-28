@@ -8,6 +8,9 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Audit extends BaseModel {
@@ -31,6 +34,7 @@ public class Audit extends BaseModel {
 
     @Basic
     @Column(name = "name", nullable = false)
+    @Size(min = 4, max = 255)  @NotNull
     public String getName() {
         return name;
     }

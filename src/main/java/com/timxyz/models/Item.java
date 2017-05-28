@@ -7,6 +7,11 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 
 @Entity
 public class Item extends BaseModel {
@@ -39,6 +44,7 @@ public class Item extends BaseModel {
 
     @Basic
     @Column(name = "skuNumber", nullable = false)
+    @Size(min = 4, max = 45) @NotNull
     public String getSkuNumber() {
         return skuNumber;
     }
@@ -49,6 +55,7 @@ public class Item extends BaseModel {
 
     @Basic
     @Column(name = "name", nullable = false)
+    @Size(min = 4, max = 255) @NotNull
     public String getName() {
         return name;
     }
@@ -59,6 +66,7 @@ public class Item extends BaseModel {
 
     @Basic
     @Column(name = "unitOfMeasurement", nullable = false)
+    @Size(min = 1, max = 20) @NotNull
     public String getUnitOfMeasurement() {
         return unitOfMeasurement;
     }
@@ -69,6 +77,7 @@ public class Item extends BaseModel {
 
     @Basic
     @Column(name = "purchasedBy", nullable = false)
+    @Size(min = 4, max = 255) @NotNull
     public String getPurchasedBy() {
         return purchasedBy;
     }
@@ -79,6 +88,7 @@ public class Item extends BaseModel {
 
     @Basic
     @Column(name = "personResponsible", nullable = false)
+    @Size(min = 4, max = 255) @NotNull
     public String getPersonResponsible() {
         return personResponsible;
     }
@@ -100,6 +110,8 @@ public class Item extends BaseModel {
 
     @Basic
     @Column(name = "value", nullable = false)
+    @Min(0) 
+    @Max((long) 9999999999999.99) @NotNull
     public BigDecimal getValue() {
         return value;
     }

@@ -22,7 +22,7 @@ class StatusController {
 
     loadStatus(page = 1) {
         this.statusService.getPage(page).then((response) => {
-            this.status = response.data.content;
+            this.allStatus = response.data.content;
             this.number = response.data.number+1;
             this.totalPages = response.data.totalPages;
         });
@@ -114,7 +114,7 @@ class StatusController {
 
     filter() {
         this.statusService.filterByName(this.searchText).then(response => {
-            this.status = response.data;
+            this.allStatus = response.data;
         });
     }
 }

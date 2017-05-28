@@ -35,6 +35,17 @@ public class LocationService extends BaseService<Location, LocationRepository> {
 
         return super.save(model);
     }
+
+    public void delete(Long id) throws ServiceException {
+        Location location = get(id);
+
+        if (location.getItems().size() > 0) {
+            throw new ServiceException("There are items at this location and it cannot be deleted!");
+        }
+
+        super.delete(id);
+    }
+
     public Collection<Location> filterByName(String name) {
         return repository.filterByName(name);
     }

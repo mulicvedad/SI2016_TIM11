@@ -4,7 +4,7 @@
             <h4>{{ $ctrl.item.id ? 'Izmjeni inv. stavku' : 'Nova inv. stavka' }}</h4>
             <div class="row">
                 <div class="input-field col s12">
-                        <input type="text" id="skuNumber" name="skuNumber" placeholder="Inventurni broj" ng-model="$ctrl.item.skuNumber" ng-pattern="/^[a-z0-9]{4,45}$/i" required>
+                        <input type="text" id="skuNumber" name="skuNumber" placeholder="Inventurni broj" ng-model="$ctrl.item.skuNumber" ng-pattern="/^[a-z0-9]{4,45}$/ui" required>
                         <label for="skuNumber">Inventurni broj</label>
                         <div class="user-errors" ng-show="$ctrl.form.$submitted">
                             <span class="error" ng-show="$ctrl.form.skuNumber.$error.required">Inventurni broj je obavezan.</span>
@@ -13,7 +13,7 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input type="text" id="name" name="name" placeholder="Naziv" ng-model="$ctrl.item.name" ng-pattern="/^[a-z][a-z0-9]{1,254}$/i" required>
+                    <input type="text" id="name" name="name" placeholder="Naziv" ng-model="$ctrl.item.name" ng-pattern="/^[a-z][a-z0-9]{1,254}$/ui" required>
                     <label for="name">Naziv</label>
                     <div class="user-errors" ng-show="$ctrl.form.$submitted">
                         <span class="error" ng-show="$ctrl.form.name.$error.required">Naziv je obavezan.</span>
@@ -23,21 +23,21 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input type="text" id="purchased-by" name="purchasedBy" placeholder="Unio" ng-model="$ctrl.item.purchasedBy" ng-pattern="/^[^0-9].*$/i" required>
+                    <input type="text" id="purchased-by" name="purchasedBy" placeholder="Unio" ng-model="$ctrl.item.purchasedBy" ng-pattern="/^[a-z].*$/ui" required>
                     <label for="purchased-by">Unio</label>
                     <div class="user-errors" ng-show="$ctrl.form.$submitted">
                         <span class="error" ng-show="$ctrl.form.purchasedBy.$error.required">Obavezno polje.</span>
-                        <span class="error" ng-show="$ctrl.form.purchasedBy.$error.pattern">Polje ne smije počinjati brojem.</span>
+                        <span class="error" ng-show="$ctrl.form.purchasedBy.$error.pattern">Polje mora počinjati slovom.</span>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input type="text" id="person-responsible" name="personResponsible" placeholder="Odgovorna osoba" ng-model="$ctrl.item.personResponsible" ng-pattern="/^[^0-9].*$/i" required>
+                    <input type="text" id="person-responsible" name="personResponsible" placeholder="Odgovorna osoba" ng-model="$ctrl.item.personResponsible" ng-pattern="/^[a-z].*$/ui" required>
                     <label for="person-responsible">Odgovorna osoba</label>
                     <div class="user-errors" ng-show="$ctrl.form.$submitted">
                         <span class="error" ng-show="$ctrl.form.personResponsible.$error.required">Obavezno polje.</span>
-                        <span class="error" ng-show="$ctrl.form.personResponsible.$error.pattern">Naziv odgovorne osobe ne smije počinjati brojem.</span>
+                        <span class="error" ng-show="$ctrl.form.personResponsible.$error.pattern">Naziv odgovorne osobe mora počinjati slovom.</span>
                     </div>
                 </div>
             </div>

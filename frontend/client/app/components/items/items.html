@@ -47,6 +47,9 @@
                     <label for="value">Vrijednost</label>
                     <div class="user-errors" ng-show="$ctrl.form.$submitted">
                         <span class="error" ng-show="$ctrl.form.value.$error.required">Obavezno polje.</span>
+                        <span class="error" ng-show="$ctrl.form.value.$error.max">Maksimalni dozvoljeni broj je 9999999999999.99.</span>
+                        <span class="error" ng-show="$ctrl.form.value.$error.min">Dozvoljen unos samo pozitivnih brojeva.</span>
+                        <span class="error" ng-show="$ctrl.form.value.$error.step">Broj smije imati najviše dvije decimale.</span>
                     </div>
                 </div>
             </div>

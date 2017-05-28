@@ -105,7 +105,7 @@
 
 <h4>Inventurne stavke</h4>
 
-<div class="row">
+<div class="row" show-for-role="ROLE_ADMIN">
     <div class="col s7 create-btn">
         <a class="btn" ng-click="$ctrl.openModal()">Dodaj novu inventurnu stavku</a>
     </div>
@@ -141,7 +141,7 @@
             <td>{{ item.unitOfMeasurement }}</td>
             <td>{{ item.category.name }} </td>
             <td>{{ item.location.name }} </td>
-            <td>
+            <td  show-for-role="ROLE_ADMIN">
                 <a href="#" ng-click="$ctrl.edit(item.id)"><i class="material-icons">edit</i></a>
                 <a href="#" ng-click="$ctrl.delete(item.id)"><i class="material-icons">delete</i></a>
             </td>

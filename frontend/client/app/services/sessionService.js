@@ -27,4 +27,9 @@ export default class SessionService {
     currentRole() {
         return this.currentUser == null ? "" : this.currentUser.role;
     }
+
+    refreshRole(newRole) {
+        this.currentUser.role = newRole;
+        this.$window.localStorage.setItem('user', JSON.stringify(this.currentUser));
+    }
 }

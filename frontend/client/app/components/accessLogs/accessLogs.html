@@ -1,11 +1,11 @@
-<h4>Pristupni logovi </h4>
-
 <div class="row">
-	<div class="input-field col s5 offset-s7">
-		<i class="material-icons prefix">search</i>
-		<input type="text" placeholder="Traži..." ng-model="$ctrl.searchedText" 
-               ng-change="$ctrl.filter()" ng-model-options="{ debounce: 200}">
-	</div>
+    <div class="col s6">
+        <h4>Pristupni logovi</h4>
+    </div>
+    <div class="input-field col s5 offset-s1">
+        <i class="material-icons prefix">search</i>
+        <input type="text" placeholder="Traži..." ng-model="$ctrl.searchedText" ng-change="$ctrl.filter()" ng-model-options="{ debounce: 200 }">
+    </div>
 </div>
 
 <table class="striped responsive-table">
@@ -23,7 +23,7 @@
     </tbody>
 </table>
 
-<div class="right-align" ng-show="!$ctrl.searchedText">
+<div class="right-align" ng-show="!$ctrl.searchedText && $ctrl.totalPages > 1">
     <ul class="pagination">
         <li ng-class="{ 'disabled': $ctrl.number === 1}">
             <a href="#" ng-click="$ctrl.goto($ctrl.number - 1)">
@@ -33,7 +33,7 @@
         <li> {{ $ctrl.number }} / {{ $ctrl.totalPages }} </li>
         <li ng-class="{ 'disabled': $ctrl.number === $ctrl.totalPages }">
             <a href="#" ng-click="$ctrl.goto($ctrl.number + 1)">
-                    <i class="material-icons">chevron_right</i>
+                <i class="material-icons">chevron_right</i>
             </a>
         </li>
     </ul>

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Service
 public class LogHelperService {
@@ -35,13 +36,13 @@ public class LogHelperService {
         String username = account.getUsername();
         Long objectId = model.getId();
         String tableName = getTableName(model);
-        Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
+        Date date = new Date();
         String description =
                 String.format(descriptionTemplate, username, action, objectId, tableName);
 
         AccessLog accessLog = new AccessLog();
         accessLog.setAccount(account);
-        accessLog.setDate(timestamp);
+        accessLog.setDate(date);
         accessLog.setDescription(description);
         accessLog.setObjectId(objectId);
         accessLog.setType(action.toUpperCase());
@@ -53,10 +54,7 @@ public class LogHelperService {
     // svjesno narusavanje DRY principa zbog citljivosti
 
     public void logCreate(String accessToken, BaseModel model) {
-        //Account account = accountRepository.findByUsername(TokenAuthenticationService.parseJwt(accessToken));
-        // hardkodirano za sad jer korisnik admin kojeg mi koristimo za pristup
-        // ne postoji u bazi
-        Account account = accountRepository.findOne((long)1);
+        Account account = accountRepository.findByUsername(TokenAuthenticationService.parseJwt(accessToken));
 
         if (account != null && model != null) {
             log(account, model, "kreirao/la");
@@ -64,9 +62,7 @@ public class LogHelperService {
     }
 
     public void logUpdate(String accessToken, BaseModel model) {
-        // Account account = accountRepository.findByUsername(TokenAuthenticationService.parseJwt(accessToken));
-        // hardkodirano za sad
-        Account account = accountRepository.findOne((long)1);
+        Account account = accountRepository.findByUsername(TokenAuthenticationService.parseJwt(accessToken));
 
         if (account != null && model != null) {
             log(account, model, "promijenio/la");
@@ -74,9 +70,7 @@ public class LogHelperService {
     }
 
     public void logDelete(String accessToken, BaseModel model) {
-        // Account account = accountRepository.findByUsername(TokenAuthenticationService.parseJwt(accessToken));
-        // hardkodirano za sad
-        Account account = accountRepository.findOne((long)1);
+        Account account = accountRepository.findByUsername(TokenAuthenticationService.parseJwt(accessToken));
 
         if (account != null && model != null) {
             log(account, model, "obrisao/la");

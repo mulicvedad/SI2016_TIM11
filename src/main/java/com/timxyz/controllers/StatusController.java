@@ -24,14 +24,13 @@ public class StatusController extends BaseController<Status, StatusService> {
     public ResponseEntity create(@RequestBody @Valid StatusCreateForm newStatus,
                                  @RequestHeader("Authorization") String token) {
         try {
-            Status model = service.save(new Status(
-                    newStatus.getName()));
+            Status model = service.save(new Status(newStatus.getName()));
             
             logForCreate(token, model);
             
             return ResponseEntity.ok(model);
         } catch (ServiceException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return error(e);
         }
     }
     
@@ -48,10 +47,11 @@ public class StatusController extends BaseController<Status, StatusService> {
 
             return ResponseEntity.ok(status);
         } catch (ServiceException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return error(e);
         }
     }
-      public Collection<Status> filterByName(@RequestParam("name") String name) {
+
+    public Collection<Status> filterByName(@RequestParam("name") String name) {
         return service.filterByName(name);
     }
 }

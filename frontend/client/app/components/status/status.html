@@ -25,6 +25,10 @@
     <div class="col s7 create-btn">
         <a class="btn" ng-click="$ctrl.openModal()">Dodaj novi status</a>
     </div>
+    <div class="input-field col s5">
+        <i class="material-icons prefix">search</i>
+        <input type="text" placeholder="Traži..." ng-model="$ctrl.searchText" ng-change="$ctrl.refresh()" ng-model-options="{ debounce: 200 }">
+    </div>
 </div>
 
 <table class="striped responsive-table">
@@ -35,7 +39,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="s in $ctrl.statuses">
+        <tr ng-repeat="s in $ctrl.status">
             <td>{{ s.id }}</td>
             <td>{{ s.name }}</td>
             <td>  
@@ -46,7 +50,7 @@
     </tbody>
 </table>
 
-<div class="right-align">
+<div class="right-align" ng-show="!$ctrl.searchText && $ctrl.totalPages > 1">
     <ul class="pagination">
         <li ng-class="{ 'disabled': $ctrl.number === 1}"><a href="#" ng-click="$ctrl.goto($ctrl.number - 1)"><i class="material-icons">chevron_left</i></a></li>
         <li> {{ $ctrl.number }} / {{ $ctrl.totalPages }} </li>

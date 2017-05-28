@@ -6,18 +6,23 @@ class StatusController {
         this.swalService = swalService;
 
         // Filters are disabled at first
+        this.searchText = '';
 
-        this.loadStatuses();
+        this.loadStatus();
         this.setEmptyStatus();
 	}
 
     refresh() {
-        this.loadStatuses();
+        if (this.searchText) {
+            this.filter();
+        } else {
+            this.loadStatus();
+        }
     }
 
-    loadStatuses(page = 1) {
+    loadStatus(page = 1) {
         this.statusService.getPage(page).then((response) => {
-            this.statuses = response.data.content;
+            this.status = response.data.content;
             this.number = response.data.number+1;
             this.totalPages = response.data.totalPages;
         });
@@ -103,9 +108,15 @@ class StatusController {
 
     goto(newPage) {
         if (newPage > 0 && newPage <= this.totalPages) {
-            this.loadStatuses(newPage);
+            this.loadStatus(newPage);
         }
-    } 
+    }
+
+    filter() {
+        this.statusService.filterByName(this.searchText).then(response => {
+            this.status = response.data;
+        });
+    }
 }
 
 export default StatusController;

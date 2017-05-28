@@ -31,16 +31,19 @@ public class LocationController extends BaseController<Location, LocationService
     }
 
     @ResponseBody
-    public ResponseEntity create(@RequestBody @Valid LocationCreateForm newLocation,
-                                 @RequestHeader("Authorization") String token) {
+    public ResponseEntity create(@RequestBody @Valid LocationCreateForm newLocation, @RequestHeader("Authorization") String token) {
         try {
-            Location parent = service.get(newLocation.getParentId());
-            LocationType type = locationTypeService.get(newLocation.getTypeId());
-            Location model = service.save(new Location(newLocation.getName(), parent, type));
-            logForCreate(token, model);
-            return ResponseEntity.ok(model);
+            Location location = service.save(new Location(
+                    newLocation.getName(),
+                    service.get(newLocation.getParentId()),
+                    locationTypeService.get(newLocation.getTypeId())
+            ));
+
+            logForCreate(token, location);
+
+            return ResponseEntity.ok(location);
         } catch(ServiceException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return error(e);
         }
     }
     
@@ -59,7 +62,7 @@ public class LocationController extends BaseController<Location, LocationService
 
             return ResponseEntity.ok(location);
         } catch (ServiceException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return error(e);
         }
     }
     

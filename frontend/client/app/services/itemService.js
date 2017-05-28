@@ -13,11 +13,6 @@ export default class ItemService extends BaseService {
 		return super.post('items', item);
 	}
     
-    getByFilter(searchedText)
-    {
-        return super.get('items/search-by/name/'+searchedText);
-    }
-    
     delete(id) {
 		return super.delete('items/' + id);
     }

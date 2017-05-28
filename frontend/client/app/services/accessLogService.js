@@ -12,5 +12,4 @@ export default class AccessLogService extends BaseService {
     getByFilter(searchedText) {
         return super.get('access-logs/search-by/filter/' + searchedText);
     }
-
 }

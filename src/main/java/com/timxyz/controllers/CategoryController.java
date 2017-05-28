@@ -27,7 +27,7 @@ public class CategoryController extends BaseController<Category, CategoryService
 
             return ResponseEntity.ok(category);
         } catch (ServiceException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return error(e);
         }
     }
 
@@ -45,7 +45,7 @@ public class CategoryController extends BaseController<Category, CategoryService
 
             return ResponseEntity.ok(category);
         } catch (ServiceException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return error(e);
         }
     }
 

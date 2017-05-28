@@ -32,7 +32,7 @@ public class LocationTypeController extends BaseController<LocationType, Locatio
 
             return ResponseEntity.ok(locationType);
         } catch(ServiceException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+	        return error(e);
         }
     }
     
@@ -50,7 +50,7 @@ public class LocationTypeController extends BaseController<LocationType, Locatio
 
             return ResponseEntity.ok(locationType);
         } catch (ServiceException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return error(e);
         }
     }
         

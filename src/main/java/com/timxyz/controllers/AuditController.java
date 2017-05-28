@@ -7,9 +7,4 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AuditController extends BaseController<Audit, AuditService> {
-
-    @ResponseBody
-    public ResponseEntity filterByName(@PathVariable("name") String name) {
-        return ResponseEntity.ok(service.getByName(name));
-    }
 }

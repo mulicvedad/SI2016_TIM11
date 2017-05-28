@@ -25,10 +25,7 @@ public class Item extends BaseModel {
     private Location location;
     private Collection<PastAuditItem> pastAuditItems;
 
-    public Item() {
-    }
-
-    public Item (String skuNumber, String name, String unitOfMeasurement, String purchasedBy, String personResponsible, Date dateOfPurchase, BigDecimal value, Collection<AuditItem> auditItems, Category category, Location location, Collection<PastAuditItem> pastAuditItems) {
+    public Item(String skuNumber, String name, String unitOfMeasurement, String purchasedBy, String personResponsible, Date dateOfPurchase, BigDecimal value, Category category, Location location) {
         this.skuNumber = skuNumber;
         this.name = name;
         this.unitOfMeasurement = unitOfMeasurement;
@@ -36,10 +33,11 @@ public class Item extends BaseModel {
         this.personResponsible = personResponsible;
         this.dateOfPurchase = dateOfPurchase;
         this.value = value;
-        this.auditItems = auditItems;
         this.category = category;
         this.location = location;
-        this.pastAuditItems = pastAuditItems;
+    }
+
+    public Item() {
     }
 
     @Basic

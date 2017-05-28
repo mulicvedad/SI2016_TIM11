@@ -21,7 +21,8 @@ public class AccessLogController extends ReadOnlyController<AccessLog, AccessLog
 
     @ResponseBody
     public ResponseEntity getPage(@PathVariable("pageNumber") int pageNumber) {
-        Pageable page =new PageRequest(pageNumber-1, 20, Sort.Direction.DESC, "date");
+        Pageable page = new PageRequest(pageNumber-1, 20, Sort.Direction.DESC, "date");
+
         return ResponseEntity.ok(service.listAllByPage(page));
     }
 }

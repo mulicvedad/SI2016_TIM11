@@ -15,6 +15,7 @@ import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Date;
 
 
 public class ItemUpdateForm {
@@ -37,7 +38,7 @@ public class ItemUpdateForm {
     private String personResponsible;
 
     @NotNull
-    private Timestamp dateOfPurchase;
+    private Date dateOfPurchase;
 
     @Min(0) @NotNull
     private BigDecimal value;
@@ -52,15 +53,15 @@ public class ItemUpdateForm {
         return Id;
     }
 
-    public void setId( Long parentId ) {
-        this.Id = parentId;
+    public void setId(Long id) {
+        Id = id;
     }
 
     public String getSkuNumber() {
         return skuNumber;
     }
 
-    public void setSkuNumber( String skuNumber ) {
+    public void setSkuNumber(String skuNumber) {
         this.skuNumber = skuNumber;
     }
 
@@ -68,7 +69,7 @@ public class ItemUpdateForm {
         return name;
     }
 
-    public void setName( String name ) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -76,7 +77,7 @@ public class ItemUpdateForm {
         return unitOfMeasurement;
     }
 
-    public void setUnitOfMeasurement( String unitOfMeasurement ) {
+    public void setUnitOfMeasurement(String unitOfMeasurement) {
         this.unitOfMeasurement = unitOfMeasurement;
     }
 
@@ -84,7 +85,7 @@ public class ItemUpdateForm {
         return purchasedBy;
     }
 
-    public void setPurchasedBy( String purchasedBy ) {
+    public void setPurchasedBy(String purchasedBy) {
         this.purchasedBy = purchasedBy;
     }
 
@@ -92,15 +93,15 @@ public class ItemUpdateForm {
         return personResponsible;
     }
 
-    public void setPersonResponsible( String personResponsible ) {
+    public void setPersonResponsible(String personResponsible) {
         this.personResponsible = personResponsible;
     }
 
-    public Timestamp getDateOfPurchase() {
+    public Date getDateOfPurchase() {
         return dateOfPurchase;
     }
 
-    public void setDateOfPurchase( Timestamp dateOfPurchase ) {
+    public void setDateOfPurchase(Date dateOfPurchase) {
         this.dateOfPurchase = dateOfPurchase;
     }
 
@@ -108,7 +109,7 @@ public class ItemUpdateForm {
         return value;
     }
 
-    public void setValue( BigDecimal value ) {
+    public void setValue(BigDecimal value) {
         this.value = value;
     }
 
@@ -116,7 +117,7 @@ public class ItemUpdateForm {
         return categoryID;
     }
 
-    public void setCategoryID( Long categoryID ) {
+    public void setCategoryID(Long categoryID) {
         this.categoryID = categoryID;
     }
 
@@ -124,7 +125,7 @@ public class ItemUpdateForm {
         return locationID;
     }
 
-    public void setLocationID( Long locationID ) {
+    public void setLocationID(Long locationID) {
         this.locationID = locationID;
     }
 }

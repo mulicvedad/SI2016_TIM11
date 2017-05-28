@@ -38,7 +38,7 @@
     </form>
 </div>
 
-<h3>Lokacije</h3>
+<h4>Lokacije</h4>
 
 <div class="row">
     <div class="col s7 create-btn">
@@ -68,7 +68,7 @@
     </tr>
 </table>
 
-<div class="right-align" ng-show="!$ctrl.searchText">
+<div class="right-align" ng-show="!$ctrl.searchText && $ctrl.totalPages > 1">
     <ul class="pagination">
         <li ng-class="{ 'disabled': $ctrl.number === 1}"><a href="#" ng-click="$ctrl.goto($ctrl.number - 1)"><i class="material-icons">chevron_left</i></a></li>
         <li> {{ $ctrl.number }} / {{ $ctrl.totalPages }} </li>

@@ -11,9 +11,8 @@ function authInterceptor(jwtService, ENV, $state, $q, swalService, $injector) {
         },
 
         responseError: (rejection) => {
-            if (rejection.status === 401) {
-                // token vise nije validan 
-                jwtService.destroyToken();     
+            if (rejection.status === 401) { 
+                $injector.get('sessionService').destroySession();  
                 $state.go('home');
             }
             else if ( rejection.status === 403 || rejection.status ===-1) {
@@ -22,9 +21,10 @@ function authInterceptor(jwtService, ENV, $state, $q, swalService, $injector) {
                     $injector.get('sessionService').refreshRole(response.data.role.name);
                 });
             }
+            else {
+                swalService.error(rejection.data.error, rejection.data.message);
+            }
             
-            swalService.error(rejection.data.error, rejection.data.message);
-
             return $q.reject(rejection);
         }
     }

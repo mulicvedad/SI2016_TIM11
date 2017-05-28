@@ -102,9 +102,10 @@ public class TokenAuthenticationService {
 
         if (account != null) {
             grantedAuthorities.add(new SimpleGrantedAuthority(account.getRole().getName()));
-        }     
-
-        logger.info(grantedAuthorities.toArray()[0].toString());
+        }
+        else {
+            userReq = null;
+        }
 
         return userReq != null ? new UsernamePasswordAuthenticationToken(userReq, null, grantedAuthorities) : null;
     }

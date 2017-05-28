@@ -9,6 +9,7 @@ import com.timxyz.services.AuditItemService;
 import com.timxyz.services.StatusService;
 import com.timxyz.services.exceptions.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,6 +37,10 @@ public class AuditItemController extends BaseController<AuditItem, AuditItemServ
         try {
             AuditItem item = service.get(id);
 
+            if (item.getAudit().getFinished()) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+
             item.setPresent(form.getPresent());
 
             return ResponseEntity.ok(service.save(item));
@@ -49,6 +54,10 @@ public class AuditItemController extends BaseController<AuditItem, AuditItemServ
         try {
             AuditItem item = service.get(id);
 
+            if (item.getAudit().getFinished()) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+
             item.setSkuCorrect(form.getSkuCorrect());
 
             return ResponseEntity.ok(service.save(item));
@@ -61,6 +70,10 @@ public class AuditItemController extends BaseController<AuditItem, AuditItemServ
     public ResponseEntity setStatus(@PathVariable("id") Long id, @RequestBody @Valid AuditItemSetStatusForm form) {
         try {
             AuditItem item = service.get(id);
+
+            if (item.getAudit().getFinished()) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
 
             item.setStatus(statusService.get(form.getStatusId()));
 

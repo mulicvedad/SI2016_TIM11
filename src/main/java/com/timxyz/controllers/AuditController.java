@@ -8,6 +8,7 @@ import com.timxyz.models.Location;
 import com.timxyz.services.*;
 import com.timxyz.services.exceptions.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -75,6 +76,26 @@ public class AuditController extends BaseController<Audit, AuditService> {
             }
 
             return ResponseEntity.ok(service.save(audit));
+        } catch (ServiceException e) {
+            return error(e);
+        }
+    }
+
+    @ResponseBody
+    public ResponseEntity delete(@PathVariable("id") Long id, @RequestHeader("Authorization") String token) {
+        try {
+            Audit audit = service.get(id);
+
+            if (audit.getFinished()) {
+                // Finished audits cannot be deleted
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+
+            logForDelete(token, audit);
+
+            service.delete(id);
+
+            return ResponseEntity.ok().build();
         } catch (ServiceException e) {
             return error(e);
         }

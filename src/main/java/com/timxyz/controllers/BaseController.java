@@ -44,7 +44,7 @@ public abstract class BaseController<M extends BaseModel, S extends BaseService<
             logForCreate(token, model);
             return ResponseEntity.ok(model);
         } catch(ServiceException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return error(e);
         }
     }
 
@@ -53,16 +53,20 @@ public abstract class BaseController<M extends BaseModel, S extends BaseService<
         try {
             return ResponseEntity.ok(service.get(id));
         } catch(ServiceException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+            return error(e);        }
     }
 
     @ResponseBody
-    public ResponseEntity delete(@PathVariable("id") Long id, @RequestHeader("Authorization") String token)
-            throws ServiceException {
-    	logForDelete(token, service.get(id));
-        service.delete(id);
-        return ResponseEntity.ok(true);
+    public ResponseEntity delete(@PathVariable("id") Long id, @RequestHeader("Authorization") String token) {
+        try {
+            logForDelete(token, service.get(id));
+            service.delete(id);
+            return ResponseEntity.ok(true);
+        }
+        catch (ServiceException e) {
+            return error(e);
+        }
+
     }
 
     @ResponseBody
@@ -86,8 +90,9 @@ public abstract class BaseController<M extends BaseModel, S extends BaseService<
     @ResponseBody
     protected ResponseEntity error(Exception e) {
     	JsonObjectBuilder objectBuilder = Json.createObjectBuilder()
+                .add("error", "Bad request")
                 .add("message", e.getMessage());
         JsonObject responseObj = objectBuilder.build();
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseObj);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseObj.toString());
     }
 }

@@ -30,8 +30,6 @@ class MyAccountController {
 
         this.myAccountService.update(data).then(response => {
             this.swalService.success('Novi podaci koje ste unijeli su sačuvani.');
-        }, error => {
-            this.swalService.error(error.data.message.string);
         });
     }
 }

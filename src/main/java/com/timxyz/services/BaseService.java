@@ -28,11 +28,18 @@ public class BaseService<M extends BaseModel, R extends PagingAndSortingReposito
         return model;
     }
 
-    public M save(M model) throws ServiceException {
+    public M save(M model) throws ServiceException{
         return repository.save(model);
     }
 
-    public void delete(Long id) { repository.delete(id); }
+    public void delete(Long id) throws ServiceException {
+        try {
+            repository.delete(id);
+        }
+        catch (Exception e) {
+            throw new ServiceException("Cannot delete entity because it is referenced in other table(s).");
+        }
+    }
 
     public Boolean exists(Long id) { return repository.exists(id); }
 

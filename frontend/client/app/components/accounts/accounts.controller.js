@@ -71,7 +71,7 @@ class AccountsController {
     		this.closeModal();
 
     		this.swalService.success('Novi korisnik je uspješno kreirana.');
-    	}, error => {});
+    	});
     }
 
     updateAccount() {
@@ -80,7 +80,7 @@ class AccountsController {
     		this.closeModal();
 
     		this.swalService.success('Izmjene su uspješno sačuvane.');
-    	}, error => {});
+    	});
     }
 
     edit(id) {
@@ -103,9 +103,7 @@ class AccountsController {
     		this.accountService.delete(id).then(response => {
 				this.refresh();
     			this.swalService.success('Korisnički račun je uspješno obrisan.');
-			}, error => {
-				this.swalService.error('Greska prilikom brisanja korisnika.');
-			})
+			});
 
     	});
     }

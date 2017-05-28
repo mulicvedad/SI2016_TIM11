@@ -12,9 +12,6 @@ class AccessLogsController {
             this.accessLogs = response.data.content;
             this.number = response.data.number+1;
 			this.totalPages = response.data.totalPages;
-        },
-        (error) => {
-            //ispisati gresku umjesto tabele
         });
     }
 

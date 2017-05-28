@@ -1,4 +1,4 @@
-function authInterceptor(jwtService, ENV, $state, $q) {
+function authInterceptor(jwtService, ENV, $state, $q, swalService) {
     'ngInject';
 
     return {
@@ -10,16 +10,18 @@ function authInterceptor(jwtService, ENV, $state, $q) {
             return config;
         },
 
-        responseError: function(rejection) {
+        responseError: (rejection) => {
             if (rejection.status === 401) {
                 // token vise nije validan 
-                // ovdje ce mozda ici provjera da li postoji refresh token kako bi se obnovio JWT
                 jwtService.destroyToken();     
                 $state.go('home');
             }
             else if ( rejection.status === 403 || rejection.status ===-1) {
                 $state.go('home');
             }
+            
+            swalService.error(rejection.data.error, rejection.data.message);
+
             return $q.reject(rejection);
         }
     }

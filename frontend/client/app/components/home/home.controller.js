@@ -1,19 +1,12 @@
 class HomeController {
-  static $inject = ['reportService', "$http"];
-  constructor(reportService, $http) {
-    this.error = {
-      error: "Primjer greske na serveru",
-      message: "Ovdje ide opis greske. Pogledajte /account.html i /account.controller.js "
-          + "da vidite kako da koristite ovu jednostavnu komponentu."
-    };
-    this.reportService = reportService;
-    this.$http = $http;
+  static $inject = ["swalService"];
+  constructor(swalService) {
+    this.swalService = swalService;
   }
 
-  testPdf() {
-    this.reportService.generateAuditReport(1);
+  clickMeh() {
+    this.swalService.error("FATAL ERROR", "YOU SHOULDN'T HAVE CLICKED THE BUTTON. IT WAS CURSED!");
   }
-
 }
 
 export default HomeController;

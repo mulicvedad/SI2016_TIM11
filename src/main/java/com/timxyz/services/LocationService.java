@@ -15,9 +15,7 @@ public class LocationService extends BaseService<Location, LocationRepository> {
         Location sameName = getByName(model.getName());
 
         if (sameName != null && model.getId() != sameName.getId()) {
-            throw new ServiceException("A location with this name already exists!");
-        } else if (model.getType() == null) {
-            throw new ServiceException("Unknown type!");
+            throw new ServiceException("Lokacija s navedenim imenom već postoji.");
         }
 
         if (model.getId() != null) {
@@ -26,7 +24,7 @@ public class LocationService extends BaseService<Location, LocationRepository> {
 
             while (parent != null) {
                 if (parent.getId() == model.getId()) {
-                    throw new ServiceException("Cyclic locations detected!");
+                    throw new ServiceException("Uočena je ciklična veza između nadlokacija.");
                 }
 
                 parent = parent.getParent();
@@ -40,7 +38,7 @@ public class LocationService extends BaseService<Location, LocationRepository> {
         Location location = get(id);
 
         if (location.getItems().size() > 0) {
-            throw new ServiceException("There are items at this location and it cannot be deleted!");
+            throw new ServiceException("Lokacija se ne može obrisati jer postoje inventurne stavke koje se na njoj nalaze.");
         }
 
         super.delete(id);

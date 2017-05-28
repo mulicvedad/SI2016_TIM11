@@ -23,7 +23,7 @@ public class ReadOnlyService<M extends BaseModel, R extends PagingAndSortingRepo
         if(id == null) return null;
         M model = repository.findOne(id);
         if(model == null)
-            throw new ServiceException("Could not find a model with the given ID!");
+            throw new ServiceException("Nije pronađen zapis sa tim ID brojem.");
 
         return model;
     }

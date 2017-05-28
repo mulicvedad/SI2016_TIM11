@@ -20,10 +20,15 @@ public class BaseService<M extends BaseModel, R extends PagingAndSortingReposito
     }
 
     public M get(Long id) throws ServiceException {
-        if(id == null) return null;
+        if (id == null) {
+            return null;
+        }
+
         M model = repository.findOne(id);
-        if(model == null)
-            throw new ServiceException("Could not find a model with the given ID!");
+
+        if(model == null) {
+            throw new ServiceException("Nije pronađen zapis sa tim ID brojem.");
+        }
 
         return model;
     }
@@ -37,7 +42,7 @@ public class BaseService<M extends BaseModel, R extends PagingAndSortingReposito
             repository.delete(id);
         }
         catch (Exception e) {
-            throw new ServiceException("Cannot delete entity because it is referenced in other table(s).");
+            throw new ServiceException("Zapis se ne može obrisati jer je povezan sa drugim zapisima.");
         }
     }
 

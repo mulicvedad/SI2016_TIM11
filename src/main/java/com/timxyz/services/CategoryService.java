@@ -14,7 +14,7 @@ public class CategoryService extends BaseService<Category, CategoryRepository> {
         Category sameName = getByName(model.getName());
 
         if (sameName != null && model.getId() != sameName.getId()) {
-            throw new ServiceException("A category with this name already exists!");
+            throw new ServiceException("Kategorija s navedenim imenom već postoji.");
         }
 
         if (model.getId() != null) {
@@ -23,7 +23,7 @@ public class CategoryService extends BaseService<Category, CategoryRepository> {
 
             while (parent != null) {
                 if (parent.getId() == model.getId()) {
-                    throw new ServiceException("Cyclic categories detected!");
+                    throw new ServiceException("Uočena je ciklična veza između nadkategorija.");
                 }
 
                 parent = parent.getParent();
@@ -37,7 +37,7 @@ public class CategoryService extends BaseService<Category, CategoryRepository> {
         Category category = get(id);
 
         if (category.getItems().size() > 0) {
-            throw new ServiceException("There are items which belong to this category and it cannot be deleted!");
+            throw new ServiceException("Kategorija se ne može obrisati jer postoje inventurne stavke koje joj pripadaju.");
         }
 
         super.delete(id);

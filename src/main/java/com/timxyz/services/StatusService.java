@@ -16,7 +16,7 @@ public class StatusService extends BaseService<Status, StatusRepositoy> {
         Status sameName = getByName(model.getName());
         
         if (sameName != null && model.getId() != sameName.getId()) {
-            throw new ServiceException("A status with this name already exists!");
+            throw new ServiceException("Status s navedenim imenom već postoji.");
         }
         return super.save(model);
     }

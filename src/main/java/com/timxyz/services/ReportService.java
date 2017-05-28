@@ -66,7 +66,7 @@ public class ReportService {
             return auditReportFilename;
         }
         catch (Exception e) {
-            throw new ServiceException("Couldn't create pdf file.");
+            throw new ServiceException("Došlo je do greške prilikom kreiranja PDF dokumenta.");
         }
     }
 

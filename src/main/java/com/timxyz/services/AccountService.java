@@ -21,17 +21,12 @@ public class AccountService extends BaseService<Account, AccountRepository> {
         Account sameUsername = getByUsername(model.getUsername());
 
         if (sameEmail != null && model.getId() != sameEmail.getId()) {
-            throw new ServiceException("An account with this e-mail address already exists!");
+            throw new ServiceException("Korisnik s navedenom e-mail adresom već postoji.");
         } else if (sameUsername != null && model.getId() != sameUsername.getId()) {
-            throw new ServiceException("An account with this username already exists!");
+            throw new ServiceException("Korisnik s navedenim korisničkim imenom već postoji.");
         }
 
-        try {
-            model.setRole(roleService.get(model.getRole().getId()));
-            return super.save(model);
-        } catch (ServiceException e) {
-            throw new ServiceException("Unknown role ID!");
-        }
+        return super.save(model);
     }
 
     public Account getByEmail(String email) {

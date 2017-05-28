@@ -15,7 +15,7 @@ public class LocationTypeService extends BaseService<LocationType, LocationTypeR
         LocationType sameName = getByName(model.getName());
 
         if (sameName != null && model.getId() != sameName.getId()) {
-            throw new ServiceException("A location type with this name already exists!");
+            throw new ServiceException("Tip lokacije s navedenim imenom već postoji.");
         }
 
         return super.save(model);

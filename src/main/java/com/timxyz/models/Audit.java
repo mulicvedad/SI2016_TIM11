@@ -105,7 +105,7 @@ public class Audit extends BaseModel {
 
     @PrePersist
     protected void onCreate() {
-        createdAt = new Date();
+        createdAt = updatedAt = new Date();
     }
 
     @PreUpdate

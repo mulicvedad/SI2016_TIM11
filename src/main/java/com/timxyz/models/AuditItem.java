@@ -3,6 +3,9 @@ package com.timxyz.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class AuditItem extends BaseModel {
@@ -23,6 +26,7 @@ public class AuditItem extends BaseModel {
 
     @Basic
     @Column(name = "present", nullable = false)
+    @Size(max = 500) @NotNull
     public Boolean getPresent() {
         return present;
     }
@@ -43,6 +47,7 @@ public class AuditItem extends BaseModel {
 
     @Basic
     @Column(name = "note")
+    @Size(max = 500)
     public String getNote() {
         return note;
     }

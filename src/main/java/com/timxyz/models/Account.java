@@ -69,7 +69,7 @@ public class Account extends BaseModel {
 
     @Basic
     @Column(name = "password", nullable = false)
-    @Size(min = 8) @NotNull
+    @Size(min = 8, max = 255) @NotNull
     @JsonIgnore
     public String getPassword() {
         return password;

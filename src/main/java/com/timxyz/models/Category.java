@@ -7,6 +7,9 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.Collection;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Category extends BaseModel {
@@ -25,6 +28,7 @@ public class Category extends BaseModel {
 
     @Basic
     @Column(name = "name", nullable = false)
+    @Size(min = 4, max = 500) @NotNull
     public String getName() {
         return name;
     }

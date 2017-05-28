@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.Collection;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class LocationType extends BaseModel {
@@ -24,6 +26,7 @@ public class LocationType extends BaseModel {
 
     @Basic
     @Column(name = "name", nullable = false)
+    @Size(min = 4, max = 255) @NotNull
     public String getName() {
         return name;
     }
@@ -34,6 +37,7 @@ public class LocationType extends BaseModel {
 
     @Basic
     @Column(name = "description")
+    @Size(max = 255) 
     public String getDescription() {
         return description;
     }

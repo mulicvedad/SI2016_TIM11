@@ -3,6 +3,8 @@ package com.timxyz.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class PastAuditItem extends BaseModel {
@@ -35,8 +37,10 @@ public class PastAuditItem extends BaseModel {
     public void setSkuCorrect(Boolean skuCorrect) {
         this.skuCorrect = skuCorrect;
     }
+    
     @Basic
     @Column(name = "note")
+    @Size(max = 500) @NotNull
     public String getNote() {
         return note;
     }

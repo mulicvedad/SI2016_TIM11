@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class AccessLog extends BaseModel {
@@ -30,6 +33,7 @@ public class AccessLog extends BaseModel {
 
     @Basic
     @Column(name = "type", nullable = false)
+    @Size(max = 45) @NotNull
     public String getType() {
         return type;
     }
@@ -40,6 +44,7 @@ public class AccessLog extends BaseModel {
 
     @Basic
     @Column(name = "description", nullable = false)
+    @Size (max = 500) @NotNull
     public String getDescription() {
         return description;
     }
@@ -50,6 +55,7 @@ public class AccessLog extends BaseModel {
 
     @Basic
     @Column(name = "tableName", nullable = false)
+    @Size(max = 45) @NotNull
     public String getTableName() {
         return tableName;
     }

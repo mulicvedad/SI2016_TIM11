@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Collection;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "roles") // "role" is a reserved word in postgres
@@ -17,6 +19,7 @@ public class Role extends BaseModel {
 
     @Basic
     @Column(name = "name", nullable = false)
+    @Size(max = 45) @NotNull
     public String getName() {
         return name;
     }

@@ -7,13 +7,14 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Date;
 
 @Entity
 public class Audit extends BaseModel {
     private String name;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
-    private Byte finished;
+    private Date createdAt;
+    private Date updatedAt;
+    private boolean finished;
     private Account account;
     private Location location;
     private Collection<AuditItem> auditItems;
@@ -23,7 +24,7 @@ public class Audit extends BaseModel {
     }
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     public String getName() {
         return name;
     }
@@ -33,32 +34,32 @@ public class Audit extends BaseModel {
     }
 
     @Basic
-    @Column(name = "createdAt")
-    public Timestamp getCreatedAt() {
+    @Column(name = "createdAt", nullable = false)
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
     @Basic
-    @Column(name = "updatedAt")
-    public Timestamp getUpdatedAt() {
+    @Column(name = "updatedAt", nullable = false)
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Timestamp updatedAt) {
+    public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 
     @Basic
-    @Column(name = "finished")
-    public Byte getFinished() {
+    @Column(name = "finished", nullable = false)
+    public boolean getFinished() {
         return finished;
     }
 
-    public void setFinished(Byte finished) {
+    public void setFinished(boolean finished) {
         this.finished = finished;
     }
 
@@ -73,7 +74,7 @@ public class Audit extends BaseModel {
     }
 
     @ManyToOne
-    @JoinColumn(name = "locationId", referencedColumnName = "id")
+    @JoinColumn(name = "locationId", referencedColumnName = "id", nullable = false)
     public Location getLocation() {
         return location;
     }
@@ -82,7 +83,7 @@ public class Audit extends BaseModel {
         this.location = location;
     }
 
-    @OneToMany(mappedBy = "audit")
+    @OneToMany(mappedBy = "audit", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     public Collection<AuditItem> getAuditItems() {
         return auditItems;
@@ -100,5 +101,15 @@ public class Audit extends BaseModel {
 
     public void setPastAudits(Collection<PastAudit> pastAudits) {
         this.pastAudits = pastAudits;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = new Date();
     }
 }

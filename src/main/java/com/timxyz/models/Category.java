@@ -24,7 +24,7 @@ public class Category extends BaseModel {
     }
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     public String getName() {
         return name;
     }

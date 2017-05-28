@@ -21,7 +21,7 @@ public class Status extends BaseModel {
     }
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     public String getName() {
         return name;
     }
@@ -40,7 +40,7 @@ public class Status extends BaseModel {
         this.auditItems = auditItems;
     }
 
-    @OneToMany(mappedBy = "status", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "status")
     @JsonIgnore
     public Collection<PastAuditItem> getPastAuditItems() {
         return pastAuditItems;

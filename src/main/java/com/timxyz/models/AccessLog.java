@@ -4,10 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 public class AccessLog extends BaseModel {
-    private Timestamp date;
+    private Date date;
     private String type;
     private String description;
     private String tableName;
@@ -18,17 +19,17 @@ public class AccessLog extends BaseModel {
     }
 
     @Basic
-    @Column(name = "date")
-    public Timestamp getDate() {
+    @Column(name = "date", nullable = false)
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(Timestamp date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
     @Basic
-    @Column(name = "type")
+    @Column(name = "type", nullable = false)
     public String getType() {
         return type;
     }
@@ -38,7 +39,7 @@ public class AccessLog extends BaseModel {
     }
 
     @Basic
-    @Column(name = "description")
+    @Column(name = "description", nullable = false)
     public String getDescription() {
         return description;
     }
@@ -48,7 +49,7 @@ public class AccessLog extends BaseModel {
     }
 
     @Basic
-    @Column(name = "tableName")
+    @Column(name = "tableName", nullable = false)
     public String getTableName() {
         return tableName;
     }
@@ -58,7 +59,7 @@ public class AccessLog extends BaseModel {
     }
 
     @Basic
-    @Column(name = "objectId")
+    @Column(name = "objectId", nullable = false)
     public Long getObjectId() {
         return objectId;
     }
@@ -68,12 +69,17 @@ public class AccessLog extends BaseModel {
     }
 
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "id")
+    @JoinColumn(name = "userId", referencedColumnName = "id", nullable = false)
     public Account getAccount() {
         return account;
     }
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        date = new Date();
     }
 }

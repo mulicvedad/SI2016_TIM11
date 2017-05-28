@@ -6,8 +6,8 @@ import javax.persistence.*;
 
 @Entity
 public class AuditItem extends BaseModel {
-    private Boolean present;
-    private Boolean skuCorrect;
+    private boolean present;
+    private boolean skuCorrect;
     private String note;
     private Item item;
     private Audit audit;
@@ -17,7 +17,7 @@ public class AuditItem extends BaseModel {
     }
 
     @Basic
-    @Column(name = "present")
+    @Column(name = "present", nullable = false)
     public Boolean getPresent() {
         return present;
     }
@@ -27,7 +27,7 @@ public class AuditItem extends BaseModel {
     }
 
     @Basic
-    @Column(name = "skuCorrect")
+    @Column(name = "skuCorrect", nullable = false)
     public Boolean getSkuCorrect() {
         return skuCorrect;
     }
@@ -69,7 +69,7 @@ public class AuditItem extends BaseModel {
     }
 
     @ManyToOne
-    @JoinColumn(name = "statusId", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "statusId", referencedColumnName = "id")
     @JsonIgnore
     public Status getStatus() {
         return status;

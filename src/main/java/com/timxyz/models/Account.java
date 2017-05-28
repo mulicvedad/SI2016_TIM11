@@ -22,11 +22,20 @@ public class Account extends BaseModel {
     private Role role;
     private Collection<Audit> audits;
 
+    public Account(String fullName, String email, String username, String password, Role role) {
+        this.fullName = fullName;
+        this.email = email;
+        this.username = username;
+        this.role = role;
+
+        this.setRawPassword(password);
+    }
+
     public Account() {
     }
 
     @Basic
-    @Column(name = "fullName")
+    @Column(name = "fullName", nullable = false)
     @Size(min = 4, max = 255) @NotNull
     public String getFullName() {
         return fullName;
@@ -37,9 +46,8 @@ public class Account extends BaseModel {
     }
 
     @Basic
-    @Column(name = "email", unique=true)
-    @Email
-    @Size(max = 255) @NotNull
+    @Column(name = "email", unique = true, nullable = false)
+    @Email @Size(max = 255) @NotNull
     public String getEmail() {
         return email;
     }
@@ -49,7 +57,7 @@ public class Account extends BaseModel {
     }
 
     @Basic
-    @Column(name = "username", unique=true)
+    @Column(name = "username", unique = true, nullable = false)
     @Size(min = 4, max = 16) @NotNull
     public String getUsername() {
         return username;
@@ -60,8 +68,8 @@ public class Account extends BaseModel {
     }
 
     @Basic
-    @Column(name = "password")
-    @Size(min = 8, max = 255) @NotNull
+    @Column(name = "password", nullable = false)
+    @Size(min = 8) @NotNull
     @JsonIgnore
     public String getPassword() {
         return password;
@@ -82,7 +90,7 @@ public class Account extends BaseModel {
     }
 
     @ManyToOne
-    @JoinColumn(name = "roleId", referencedColumnName = "id")
+    @JoinColumn(name = "roleId", referencedColumnName = "id", nullable = false)
     public Role getRole() {
         return role;
     }

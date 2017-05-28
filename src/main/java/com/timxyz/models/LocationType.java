@@ -14,11 +14,16 @@ public class LocationType extends BaseModel {
     private String description;
     private Collection<Location> locations;
 
+    public LocationType(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
     public LocationType() {
     }
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     public String getName() {
         return name;
     }
@@ -37,7 +42,7 @@ public class LocationType extends BaseModel {
         this.description = description;
     }
 
-    @OneToMany(mappedBy = "type")
+    @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
     @JsonIgnore
     public Collection<Location> getLocations() {
         return locations;

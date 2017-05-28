@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Date;
 
 @Entity
 public class Item extends BaseModel {
@@ -17,7 +18,7 @@ public class Item extends BaseModel {
     private String unitOfMeasurement;
     private String purchasedBy;
     private String personResponsible;
-    private Timestamp dateOfPurchase;
+    private Date dateOfPurchase;
     private BigDecimal value;
     private Collection<AuditItem> auditItems;
     private Category category;
@@ -27,7 +28,7 @@ public class Item extends BaseModel {
     public Item() {
     }
 
-    public Item (String skuNumber, String name, String unitOfMeasurement, String purchasedBy, String personResponsible, Timestamp dateOfPurchase, BigDecimal value, Collection<AuditItem> auditItems, Category category, Location location, Collection<PastAuditItem> pastAuditItems) {
+    public Item (String skuNumber, String name, String unitOfMeasurement, String purchasedBy, String personResponsible, Date dateOfPurchase, BigDecimal value, Collection<AuditItem> auditItems, Category category, Location location, Collection<PastAuditItem> pastAuditItems) {
         this.skuNumber = skuNumber;
         this.name = name;
         this.unitOfMeasurement = unitOfMeasurement;
@@ -42,7 +43,7 @@ public class Item extends BaseModel {
     }
 
     @Basic
-    @Column(name = "skuNumber")
+    @Column(name = "skuNumber", nullable = false)
     public String getSkuNumber() {
         return skuNumber;
     }
@@ -52,7 +53,7 @@ public class Item extends BaseModel {
     }
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     public String getName() {
         return name;
     }
@@ -62,7 +63,7 @@ public class Item extends BaseModel {
     }
 
     @Basic
-    @Column(name = "unitOfMeasurement")
+    @Column(name = "unitOfMeasurement", nullable = false)
     public String getUnitOfMeasurement() {
         return unitOfMeasurement;
     }
@@ -72,7 +73,7 @@ public class Item extends BaseModel {
     }
 
     @Basic
-    @Column(name = "purchasedBy")
+    @Column(name = "purchasedBy", nullable = false)
     public String getPurchasedBy() {
         return purchasedBy;
     }
@@ -82,7 +83,7 @@ public class Item extends BaseModel {
     }
 
     @Basic
-    @Column(name = "personResponsible")
+    @Column(name = "personResponsible", nullable = false)
     public String getPersonResponsible() {
         return personResponsible;
     }
@@ -92,17 +93,17 @@ public class Item extends BaseModel {
     }
 
     @Basic
-    @Column(name = "dateOfPurchase")
-    public Timestamp getDateOfPurchase() {
+    @Column(name = "dateOfPurchase", nullable = false)
+    public Date getDateOfPurchase() {
         return dateOfPurchase;
     }
 
-    public void setDateOfPurchase(Timestamp dateOfPurchase) {
+    public void setDateOfPurchase(Date dateOfPurchase) {
         this.dateOfPurchase = dateOfPurchase;
     }
 
     @Basic
-    @Column(name = "value")
+    @Column(name = "value", nullable = false)
     public BigDecimal getValue() {
         return value;
     }

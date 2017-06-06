@@ -93,8 +93,8 @@ class AccountsController {
     			password: null,
                 role: response.data.role
     		};
-
-    		this.openModal();
+            
+    		this.openModalupdate();
     	})
     }
 
@@ -112,14 +112,31 @@ class AccountsController {
     	$('#user-modal').modal('close');
     }
 
-    openModal() {
+    openModalupdate() {
     	$('#user-modal').modal({
     		complete: () => this.resetForm(),
             ready: (modal, trigger) => Materialize.updateTextFields()
+
     	}).modal('open');
+
+        $("input").prop('disabled', true);
 
         $('#full-name').focus();
     }
+
+    openModalcreate() {
+        $('#user-modal').modal({
+            complete: () => this.resetForm(),
+            ready: (modal, trigger) => Materialize.updateTextFields()
+
+        }).modal('open');
+
+        $("input").prop('disabled', false);
+
+        $('#full-name').focus();
+    }
+
+    
 
     goto(newPage) {
     	if (newPage > 0 && newPage <= this.totalPages) {

@@ -14,7 +14,7 @@
 			</div>
 			<div class="row">
 				<div class="input-field col s12">
-					<input type="text" id="username" name="username" placeholder="Korisničko ime" ng-model="$ctrl.account.username" ng-pattern="/^[a-z][a-z0-9]{4,16}$/i" required>
+					<input type="text" id="username" name="username" placeholder="Korisničko ime" ng-model="$ctrl.account.username" ng-pattern="/^[a-z][a-z0-9]{3,16}$/i" required>
 					<label for="username">Korisničko ime</label>
 					<div class="user-errors" ng-show="$ctrl.form.$submitted">
 						<span class="error" ng-show="$ctrl.form.username.$error.required">Korisničko ime je obavezno.</span>

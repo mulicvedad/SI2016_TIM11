@@ -12,7 +12,7 @@ public class AccountCreateForm {
     @Size(min = 4, max = 255) @NotNull
     private String fullName;
 
-    @Size(min = 3, max = 16) @NotNull
+    @Size(min = 4, max = 16) @NotNull
     private String username;
 
     @Email @Size(max = 255) @NotNull

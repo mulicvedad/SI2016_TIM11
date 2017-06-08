@@ -58,7 +58,7 @@ public class Account extends BaseModel {
 
     @Basic
     @Column(name = "username", unique = true, nullable = false)
-    @Size(min = 3, max = 16) @NotNull
+    @Size(min = 4, max = 16) @NotNull
     public String getUsername() {
         return username;
     }

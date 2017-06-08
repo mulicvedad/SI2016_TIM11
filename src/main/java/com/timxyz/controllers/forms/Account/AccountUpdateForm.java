@@ -15,7 +15,7 @@ public class AccountUpdateForm {
     @Size(min = 4, max = 255) @NotNull
     private String fullName;
 
-    @Size(min = 3, max = 16) @NotNull
+    @Size(min = 4, max = 16) @NotNull
     private String username;
 
     @Email

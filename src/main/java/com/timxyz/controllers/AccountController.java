@@ -51,14 +51,7 @@ public class AccountController extends BaseController<Account, AccountService> {
         try {
             Account account = service.get(id);
 
-            account.setFullName(updatedAccount.getFullName());
-            account.setUsername(updatedAccount.getUsername());
-            account.setEmail(updatedAccount.getEmail());
             account.setRole(roleService.get(updatedAccount.getRoleId()));
-
-            if (updatedAccount.isPasswordUpdated()) {
-                account.setRawPassword(updatedAccount.getPassword());
-            }
 
             account = service.save(account);
 

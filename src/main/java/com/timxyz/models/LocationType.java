@@ -46,7 +46,7 @@ public class LocationType extends BaseModel {
         this.description = description;
     }
 
-    @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "type")
     @JsonIgnore
     public Collection<Location> getLocations() {
         return locations;

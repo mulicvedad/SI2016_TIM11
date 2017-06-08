@@ -21,6 +21,16 @@ public class LocationTypeService extends BaseService<LocationType, LocationTypeR
         return super.save(model);
     }
 
+    public void delete(Long id) throws ServiceException {
+        LocationType lt = get(id);
+
+        if (lt.getLocations().size() > 0) {
+            throw new ServiceException("Tip lokacije se ne može obrisati jer je vezan za neke od postojećih lokacija.");
+        }
+
+        super.delete(id);
+    }
+
     public Collection<LocationType> filterByName(String name) {
         return repository.filterByName(name);
     }

@@ -33,40 +33,32 @@ public class LocationController extends BaseController<Location, LocationService
 
     @Transactional
     @ResponseBody
-    public ResponseEntity create(@RequestBody @Valid LocationCreateForm newLocation, @RequestHeader("Authorization") String token) {
-        try {
-            Location location = service.save(new Location(
-                    newLocation.getName(),
-                    service.get(newLocation.getParentId()),
-                    locationTypeService.get(newLocation.getTypeId())
-            ));
+    public ResponseEntity create(@RequestBody @Valid LocationCreateForm newLocation, @RequestHeader("Authorization") String token) throws ServiceException {
+        Location location = service.save(new Location(
+                newLocation.getName(),
+                service.get(newLocation.getParentId()),
+                locationTypeService.get(newLocation.getTypeId())
+        ));
 
-            logForCreate(token, location);
+        logForCreate(token, location);
 
-            return ResponseEntity.ok(location);
-        } catch(ServiceException e) {
-            return error(e);
-        }
+        return ResponseEntity.ok(location);
     }
 
     @Transactional
     @ResponseBody
-    public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid LocationUpdateForm updatedLocation, @RequestHeader("Authorization") String token) {
-        try {
-            Location location = service.get(id);
+    public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid LocationUpdateForm updatedLocation, @RequestHeader("Authorization") String token) throws ServiceException {
+        Location location = service.get(id);
 
-            location.setName(updatedLocation.getName());
-            location.setParent(service.get(updatedLocation.getParentId()));
-            location.setType(locationTypeService.get(updatedLocation.getTypeId()));
+        location.setName(updatedLocation.getName());
+        location.setParent(service.get(updatedLocation.getParentId()));
+        location.setType(locationTypeService.get(updatedLocation.getTypeId()));
 
-            location = service.save(location);
+        location = service.save(location);
 
-            logForUpdate(token, location);
+        logForUpdate(token, location);
 
-            return ResponseEntity.ok(location);
-        } catch (ServiceException e) {
-            return error(e);
-        }
+        return ResponseEntity.ok(location);
     }
     
      public Collection<Location> filterByName(@PathVariable("name") String name) {

@@ -27,40 +27,32 @@ public class AccountController extends BaseController<Account, AccountService> {
 
     @Transactional
     @ResponseBody
-    public ResponseEntity create(@RequestBody @Valid AccountCreateForm newAccount, @RequestHeader("Authorization") String token) {
-        try {
-            Account account = service.save(new Account(
-                    newAccount.getFullName(),
-                    newAccount.getEmail(),
-                    newAccount.getUsername(),
-                    newAccount.getPassword(),
-                    roleService.get(newAccount.getRoleId())
-            ));
+    public ResponseEntity create(@RequestBody @Valid AccountCreateForm newAccount, @RequestHeader("Authorization") String token) throws ServiceException {
+        Account account = service.save(new Account(
+                newAccount.getFullName(),
+                newAccount.getEmail(),
+                newAccount.getUsername(),
+                newAccount.getPassword(),
+                roleService.get(newAccount.getRoleId())
+        ));
 
-            logForCreate(token, account);
+        logForCreate(token, account);
 
-            return ResponseEntity.ok(account);
-        } catch(ServiceException e) {
-            return error(e);
-        }
+        return ResponseEntity.ok(account);
     }
 
     @Transactional
     @ResponseBody
-    public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid AccountUpdateForm updatedAccount, @RequestHeader("Authorization") String token) {
-        try {
-            Account account = service.get(id);
+    public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid AccountUpdateForm updatedAccount, @RequestHeader("Authorization") String token) throws ServiceException {
+        Account account = service.get(id);
 
-            account.setRole(roleService.get(updatedAccount.getRoleId()));
+        account.setRole(roleService.get(updatedAccount.getRoleId()));
 
-            account = service.save(account);
+        account = service.save(account);
 
-            logForUpdate(token, account);
+        logForUpdate(token, account);
 
-            return ResponseEntity.ok(account);
-        } catch (ServiceException e) {
-            return error(e);
-        }
+        return ResponseEntity.ok(account);
     }
 
     public Collection<Account> filterByEmail(@RequestParam("email") String email) {

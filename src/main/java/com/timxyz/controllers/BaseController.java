@@ -37,38 +37,27 @@ public abstract class BaseController<M extends BaseModel, S extends BaseService<
 
     @Transactional
     @ResponseBody
-    public ResponseEntity create(@RequestBody @Valid M newModel, @RequestHeader("Authorization") String token) {
-        try {
-            M model = service.save(newModel);
+    public ResponseEntity create(@RequestBody @Valid M newModel, @RequestHeader("Authorization") String token) throws ServiceException {
+        M model = service.save(newModel);
 
-            logForCreate(token, model);
+        logForCreate(token, model);
 
-            return ResponseEntity.ok(model);
-        } catch(ServiceException e) {
-            return error(e);
-        }
+        return ResponseEntity.ok(model);
     }
 
     @ResponseBody
-    public ResponseEntity get(@PathVariable("id") Long id) {
-        try {
-            return ResponseEntity.ok(service.get(id));
-        } catch(ServiceException e) {
-            return error(e);        }
+    public ResponseEntity get(@PathVariable("id") Long id) throws ServiceException {
+        return ResponseEntity.ok(service.get(id));
     }
 
     @Transactional
     @ResponseBody
-    public ResponseEntity delete(@PathVariable("id") Long id, @RequestHeader("Authorization") String token) {
-        try {
-            logForDelete(token, service.get(id));
+    public ResponseEntity delete(@PathVariable("id") Long id, @RequestHeader("Authorization") String token) throws ServiceException {
+        logForDelete(token, service.get(id));
 
-            service.delete(id);
+        service.delete(id);
 
-            return ResponseEntity.ok().build();
-        } catch (ServiceException e) {
-            return error(e);
-        }
+        return ResponseEntity.ok().build();
 
     }
 
@@ -90,10 +79,10 @@ public abstract class BaseController<M extends BaseModel, S extends BaseService<
     protected void logForDelete(String token, BaseModel model) {
         logHelperService.logDelete(token, model);
     }
-    
-    @ResponseBody
-    protected ResponseEntity error(Exception e) {
-    	JsonObjectBuilder objectBuilder = Json.createObjectBuilder()
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity serviceExHandler(Exception e) {
+        JsonObjectBuilder objectBuilder = Json.createObjectBuilder()
                 .add("error", "Bad request")
                 .add("message", e.getMessage());
 

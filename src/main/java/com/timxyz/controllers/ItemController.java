@@ -40,26 +40,22 @@ public class ItemController extends BaseController<Item, ItemService> {
 
     @Transactional
     @ResponseBody
-    public ResponseEntity create(@RequestBody @Valid ItemCreateForm newItem, @RequestHeader("Authorization") String token) {
-        try {
-            Item item = service.save(new Item(
-                    newItem.getSkuNumber(),
-                    newItem.getName(),
-                    newItem.getUnitOfMeasurement(),
-                    newItem.getPurchasedBy(),
-                    newItem.getPersonResponsible(),
-                    newItem.getDateOfPurchase(),
-                    newItem.getValue(),
-                    categoryService.get(newItem.getCategoryID()),
-                    locationService.get(newItem.getLocationID())
-            ));
-            
-            logForCreate(token, item);
+    public ResponseEntity create(@RequestBody @Valid ItemCreateForm newItem, @RequestHeader("Authorization") String token) throws ServiceException {
+        Item item = service.save(new Item(
+                newItem.getSkuNumber(),
+                newItem.getName(),
+                newItem.getUnitOfMeasurement(),
+                newItem.getPurchasedBy(),
+                newItem.getPersonResponsible(),
+                newItem.getDateOfPurchase(),
+                newItem.getValue(),
+                categoryService.get(newItem.getCategoryID()),
+                locationService.get(newItem.getLocationID())
+        ));
 
-            return ResponseEntity.ok(item);
-        } catch(ServiceException e) {
-            return error(e);
-        }
+        logForCreate(token, item);
+
+        return ResponseEntity.ok(item);
     }
 
     public Collection<Item> getAllByItemName(@RequestParam("name") String name){
@@ -68,29 +64,25 @@ public class ItemController extends BaseController<Item, ItemService> {
 
     @Transactional
     @ResponseBody
-    public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid ItemUpdateForm updatedItem, @RequestHeader("Authorization") String token) {
-        try {
-            Item item = service.get(id);
+    public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid ItemUpdateForm updatedItem, @RequestHeader("Authorization") String token) throws ServiceException {
+        Item item = service.get(id);
 
-            item.setName(updatedItem.getName());
-            item.setUnitOfMeasurement(updatedItem.getUnitOfMeasurement());
-            item.setValue(updatedItem.getValue()); 
-            item.setPersonResponsible(updatedItem.getPersonResponsible());
-            item.setDateOfPurchase(updatedItem.getDateOfPurchase());
-            item.setSkuNumber(updatedItem.getSkuNumber());
-            item.setPurchasedBy(updatedItem.getPurchasedBy());
+        item.setName(updatedItem.getName());
+        item.setUnitOfMeasurement(updatedItem.getUnitOfMeasurement());
+        item.setValue(updatedItem.getValue());
+        item.setPersonResponsible(updatedItem.getPersonResponsible());
+        item.setDateOfPurchase(updatedItem.getDateOfPurchase());
+        item.setSkuNumber(updatedItem.getSkuNumber());
+        item.setPurchasedBy(updatedItem.getPurchasedBy());
 
-            item.setCategory(categoryService.get(updatedItem.getCategoryID()));
-            item.setLocation(locationService.get(updatedItem.getLocationID()));
+        item.setCategory(categoryService.get(updatedItem.getCategoryID()));
+        item.setLocation(locationService.get(updatedItem.getLocationID()));
 
-            item = service.save(item);
+        item = service.save(item);
 
-            logForUpdate(token, item);
+        logForUpdate(token, item);
 
-            return ResponseEntity.ok(item);
-        } catch (ServiceException e) {
-            return error(e);
-        }
+        return ResponseEntity.ok(item);
     }
 
     public Collection<Item> filterByName(@RequestParam("name") String name) {

@@ -23,35 +23,26 @@ public class StatusController extends BaseController<Status, StatusService> {
 
     @Transactional
     @ResponseBody
-    public ResponseEntity create(@RequestBody @Valid StatusCreateForm newStatus,
-                                 @RequestHeader("Authorization") String token) {
-        try {
-            Status model = service.save(new Status(newStatus.getName()));
-            
-            logForCreate(token, model);
-            
-            return ResponseEntity.ok(model);
-        } catch (ServiceException e) {
-            return error(e);
-        }
+    public ResponseEntity create(@RequestBody @Valid StatusCreateForm newStatus, @RequestHeader("Authorization") String token) throws ServiceException {
+        Status model = service.save(new Status(newStatus.getName()));
+
+        logForCreate(token, model);
+
+        return ResponseEntity.ok(model);
     }
 
     @Transactional
     @ResponseBody
-    public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid StatusUpdateForm updatedStatus, @RequestHeader("Authorization") String token) {
-        try {
-            Status status = service.get(id);
+    public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid StatusUpdateForm updatedStatus, @RequestHeader("Authorization") String token) throws ServiceException {
+        Status status = service.get(id);
 
-            status.setName(updatedStatus.getName());
-         
-            status = service.save(status);
+        status.setName(updatedStatus.getName());
 
-            logForUpdate(token, status);
+        status = service.save(status);
 
-            return ResponseEntity.ok(status);
-        } catch (ServiceException e) {
-            return error(e);
-        }
+        logForUpdate(token, status);
+
+        return ResponseEntity.ok(status);
     }
 
     public Collection<Status> filterByName(@RequestParam("name") String name) {

@@ -47,58 +47,51 @@ public class AuditController extends BaseController<Audit, AuditService> {
     }
 
     @ResponseBody
-    public ResponseEntity finalize(@PathVariable("id") Long id) {
-        try {
-            Audit audit = service.get(id);
+    @Transactional
+    public ResponseEntity finalize(@PathVariable("id") Long id, @RequestHeader("Authorization") String token) throws ServiceException {
+        Audit audit = service.get(id);
 
-            audit.setFinished(true);
+        audit.setFinished(true);
 
-            return ResponseEntity.ok(service.save(audit));
-        } catch (ServiceException e) {
-            return error(e);
-        }
+        service.save(audit);
+
+        logForUpdate(token, audit);
+
+        return ResponseEntity.ok(service.save(audit));
     }
 
     @Transactional
     @ResponseBody
-    public ResponseEntity create(@RequestBody @Valid AuditCreateForm newAudit, @RequestHeader("Authorization") String token) {
-        try {
-            Audit audit = service.save(new Audit(
-                    newAudit.getName(),
-                    TokenAuthenticationService.findAccountByToken(token),
-                    locationService.get(newAudit.getLocationId())
-            ));
+    public ResponseEntity create(@RequestBody @Valid AuditCreateForm newAudit, @RequestHeader("Authorization") String token) throws ServiceException {
+        Audit audit = service.save(new Audit(
+                newAudit.getName(),
+                TokenAuthenticationService.findAccountByToken(token),
+                locationService.get(newAudit.getLocationId())
+        ));
 
-            Collection<Item> items = itemService.getByLocation(newAudit.getLocationId());
+        Collection<Item> items = itemService.getByLocation(newAudit.getLocationId());
 
-            for (Item i : items) {
-                AuditItem auditItem = auditItemService.save(new AuditItem(i, audit));
-            }
-
-            return ResponseEntity.ok(service.save(audit));
-        } catch (ServiceException e) {
-            return error(e);
+        for (Item i : items) {
+            AuditItem auditItem = auditItemService.save(new AuditItem(i, audit));
         }
+
+        return ResponseEntity.ok(service.save(audit));
     }
 
     @Transactional
     @ResponseBody
-    public ResponseEntity delete(@PathVariable("id") Long id, @RequestHeader("Authorization") String token) {
-        try {
-            Audit audit = service.get(id);
+    public ResponseEntity delete(@PathVariable("id") Long id, @RequestHeader("Authorization") String token) throws ServiceException {
+        Audit audit = service.get(id);
 
-            if (audit.getFinished()) {
-                // Finished audits cannot be deleted
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-            }
-
-            logForDelete(token, audit);
-
-            service.delete(id);
-
-            return ResponseEntity.ok().build();
-        } catch (ServiceException e) {
-            return error(e);
+        if (audit.getFinished()) {
+            // Finished audits cannot be deleted
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
+
+        logForDelete(token, audit);
+
+        service.delete(id);
+
+        return ResponseEntity.ok().build();
     }
 }

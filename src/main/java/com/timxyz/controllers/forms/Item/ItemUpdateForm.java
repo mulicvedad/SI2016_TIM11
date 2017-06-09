@@ -23,7 +23,7 @@ public class ItemUpdateForm {
 
     private Long Id;
 
-    @Size(min = 4, max = 45) @NotNull
+    @NotNull
     private String skuNumber;
 
     @Size(min = 4, max = 255) @NotNull

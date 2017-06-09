@@ -44,7 +44,7 @@ public class Item extends BaseModel {
 
     @Basic
     @Column(name = "skuNumber", nullable = false)
-    @Size(min = 4, max = 45) @NotNull
+    @Size(min = 1, max = 1000) @NotNull
     public String getSkuNumber() {
         return skuNumber;
     }

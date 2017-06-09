@@ -1,17 +1,12 @@
 package com.timxyz.controllers.forms.Item;
 
-import com.timxyz.models.AuditItem;
-import com.timxyz.models.Category;
-import com.timxyz.models.Location;
-import com.timxyz.models.PastAuditItem;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.util.Collection;
+
 import java.util.Date;
 
 /**
@@ -21,7 +16,7 @@ public class ItemCreateForm {
 
     private Long Id;
 
-    @Size(min = 4, max = 45) @NotNull
+    @NotNull
     private String skuNumber;
 
     @Size(min = 4, max = 255) @NotNull

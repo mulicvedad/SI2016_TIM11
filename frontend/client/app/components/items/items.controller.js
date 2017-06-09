@@ -130,7 +130,6 @@ class ItemsController {
         this.swalService.areYouSure('Obrisana inventurna stavka se ne može vratiti.', () => {
 			this.itemService.delete(id).then(response => {
                 this.refresh();
-
                 this.swalService.success('Inventurna stavka je uspješno obrisana.');
 			});
 		});
@@ -146,7 +145,7 @@ class ItemsController {
             ready: (modal, trigger) => Materialize.updateTextFields()
         }).modal('open');
 
-        $('#skuNumber').focus();
+        $('#name').focus();
     }
 
     resetForm() {

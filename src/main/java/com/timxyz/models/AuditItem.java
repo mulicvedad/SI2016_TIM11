@@ -26,7 +26,7 @@ public class AuditItem extends BaseModel {
 
     @Basic
     @Column(name = "present", nullable = false)
-    @Size(max = 500) @NotNull
+    @NotNull
     public Boolean getPresent() {
         return present;
     }
@@ -37,6 +37,7 @@ public class AuditItem extends BaseModel {
 
     @Basic
     @Column(name = "skuCorrect", nullable = false)
+    @NotNull
     public Boolean getSkuCorrect() {
         return skuCorrect;
     }

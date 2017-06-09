@@ -14,12 +14,17 @@ function authInterceptor(jwtService, ENV, $state, $q, swalService, $injector) {
             if (rejection.status === 401) { 
                 $injector.get('sessionService').destroySession();  
                 $state.go('home');
+                swalService.error('Neuspješna prijava', 'Neispravno korisničko ime i/ili lozinka.');
             }
-            else if ( rejection.status === 403 || rejection.status ===-1) {
+            else if (rejection.status === 403) {
                 $state.go('home');
                 $injector.get('myAccountService').current().then(response => {
                     $injector.get('sessionService').refreshRole(response.data.role.name);
                 });
+            }
+            else if (rejection.status === -1) {
+                swalService.error('Greška', "Provjerite konekciju na internet. Ukoliko ustanovite da postoji konekcija obavijestite "
+                        + "administratora o grešci (admin@etf.unsa.ba). ");
             }
             else {
                 swalService.error(':(', rejection.data.message);

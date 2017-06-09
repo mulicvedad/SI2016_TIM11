@@ -63,7 +63,7 @@
                 <a ui-sref="doAudit({auditID: audit.id})" ng-show="!audit.finished" show-for-role="ROLE_ADMIN, ROLE_AUDITTEAM">
                    <span class="material-icons">toc</span>
                 </a>
-                <a href="#" ng-show="!audit.finished" ng-click="$ctrl.delete(audit.id)" show-for-role="ROLE_ADMIN, ROLE_AUDITTEAM">
+                <a href="#" ng-show="!audit.finished" ng-click="$ctrl.delete(audit.id)" show-for-role="ROLE_ADMIN">
                     <span class="material-icons">delete</span>
                 </a>
                 <a href="#" ng-click="$ctrl.generateReport(audit.id)" show-for-role="ROLE_ADMIN, ROLE_FINANCE">

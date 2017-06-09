@@ -34,6 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             //.antMatchers(HttpMethod.GET,"/accounts/**").authenticated()
             .antMatchers(HttpMethod.GET,"/audits/**", "/items/**", "/locations/**", "/categories/all").authenticated()
             .antMatchers("/accounts/**").hasRole(ROLE_ADMIN)
+            .antMatchers(HttpMethod.DELETE, "/audits/**").hasRole(ROLE_ADMIN)
             .antMatchers("/audits/**").hasAnyRole(ROLE_ADMIN,ROLE_AUDIT_TEAM)
                 // SRS FZ17-18
                 // Korisnik sa administratorskim privilegijama ili korisnik finansijske službe može

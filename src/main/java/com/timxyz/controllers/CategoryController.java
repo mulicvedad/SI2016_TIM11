@@ -18,38 +18,30 @@ public class CategoryController extends BaseController<Category, CategoryService
 
     @Transactional
     @ResponseBody
-    public ResponseEntity create(@RequestBody @Valid CategoryCreateForm newCategory, @RequestHeader("Authorization") String token) {
-        try {
-            Category category = service.save(new Category(
-                    newCategory.getName(),
-                    service.get(newCategory.getParentId())
-            ));
+    public ResponseEntity create(@RequestBody @Valid CategoryCreateForm newCategory, @RequestHeader("Authorization") String token) throws ServiceException {
+        Category category = service.save(new Category(
+                newCategory.getName(),
+                service.get(newCategory.getParentId())
+        ));
 
-            logForCreate(token, category);
+        logForCreate(token, category);
 
-            return ResponseEntity.ok(category);
-        } catch (ServiceException e) {
-            return error(e);
-        }
+        return ResponseEntity.ok(category);
     }
 
     @Transactional
     @ResponseBody
-    public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid CategoryUpdateForm updatedCategory, @RequestHeader("Authorization") String token) {
-        try {
-            Category category = service.get(id);
+    public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid CategoryUpdateForm updatedCategory, @RequestHeader("Authorization") String token) throws ServiceException {
+        Category category = service.get(id);
 
-            category.setName(updatedCategory.getName());
-            category.setParent(service.get(updatedCategory.getParentId()));
+        category.setName(updatedCategory.getName());
+        category.setParent(service.get(updatedCategory.getParentId()));
 
-            category = service.save(category);
+        category = service.save(category);
 
-            logForUpdate(token, category);
+        logForUpdate(token, category);
 
-            return ResponseEntity.ok(category);
-        } catch (ServiceException e) {
-            return error(e);
-        }
+        return ResponseEntity.ok(category);
     }
 
     public Collection<Category> filterByName(@RequestParam("name") String name) {

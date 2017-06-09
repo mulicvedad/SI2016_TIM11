@@ -24,38 +24,30 @@ public class LocationTypeController extends BaseController<LocationType, Locatio
 
     @Transactional
     @ResponseBody
-    public ResponseEntity create(@RequestBody @Valid LocationTypeCreateForm newLocType, @RequestHeader("Authorization") String token) {
-	    try {
-	        LocationType locationType = service.save(new LocationType(
-	                newLocType.getName(),
-                    newLocType.getDescription()
-            ));
+    public ResponseEntity create(@RequestBody @Valid LocationTypeCreateForm newLocType, @RequestHeader("Authorization") String token) throws ServiceException {
+        LocationType locationType = service.save(new LocationType(
+                newLocType.getName(),
+                newLocType.getDescription()
+        ));
 
-            logForCreate(token, locationType);
+        logForCreate(token, locationType);
 
-            return ResponseEntity.ok(locationType);
-        } catch(ServiceException e) {
-	        return error(e);
-        }
+        return ResponseEntity.ok(locationType);
     }
 
     @Transactional
     @ResponseBody
-    public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid LocationTypeUpdateForm updatedLocationType, @RequestHeader("Authorization") String token) {
-        try {
-            LocationType locationType = service.get(id);
+    public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid LocationTypeUpdateForm updatedLocationType, @RequestHeader("Authorization") String token) throws ServiceException {
+        LocationType locationType = service.get(id);
 
-            locationType.setName(updatedLocationType.getName());
-            locationType.setDescription(updatedLocationType.getDescription());
+        locationType.setName(updatedLocationType.getName());
+        locationType.setDescription(updatedLocationType.getDescription());
 
-            locationType = service.save(locationType);
+        locationType = service.save(locationType);
 
-            logForUpdate(token, locationType);
+        logForUpdate(token, locationType);
 
-            return ResponseEntity.ok(locationType);
-        } catch (ServiceException e) {
-            return error(e);
-        }
+        return ResponseEntity.ok(locationType);
     }
         
     public Collection<LocationType> filterByName(@RequestParam("name") String name) {

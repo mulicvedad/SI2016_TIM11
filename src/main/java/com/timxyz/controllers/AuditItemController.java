@@ -33,53 +33,41 @@ public class AuditItemController extends BaseController<AuditItem, AuditItemServ
     }
 
     @ResponseBody
-    public ResponseEntity setPresent(@PathVariable("id") Long id, @RequestBody @Valid AuditItemSetPresentForm form) {
-        try {
-            AuditItem item = service.get(id);
+    public ResponseEntity setPresent(@PathVariable("id") Long id, @RequestBody @Valid AuditItemSetPresentForm form) throws ServiceException {
+        AuditItem item = service.get(id);
 
-            if (item.getAudit().getFinished()) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-            }
-
-            item.setPresent(form.getPresent());
-
-            return ResponseEntity.ok(service.save(item));
-        } catch (ServiceException e) {
-            return error(e);
+        if (item.getAudit().getFinished()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
+
+        item.setPresent(form.getPresent());
+
+        return ResponseEntity.ok(service.save(item));
     }
 
     @ResponseBody
-    public ResponseEntity setSkuCorrect(@PathVariable("id") Long id, @RequestBody @Valid AuditItemSetSkuCorrectForm form) {
-        try {
-            AuditItem item = service.get(id);
+    public ResponseEntity setSkuCorrect(@PathVariable("id") Long id, @RequestBody @Valid AuditItemSetSkuCorrectForm form) throws ServiceException {
+        AuditItem item = service.get(id);
 
-            if (item.getAudit().getFinished()) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-            }
-
-            item.setSkuCorrect(form.getSkuCorrect());
-
-            return ResponseEntity.ok(service.save(item));
-        } catch (ServiceException e) {
-            return error(e);
+        if (item.getAudit().getFinished()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
+
+        item.setSkuCorrect(form.getSkuCorrect());
+
+        return ResponseEntity.ok(service.save(item));
     }
 
     @ResponseBody
-    public ResponseEntity setStatus(@PathVariable("id") Long id, @RequestBody @Valid AuditItemSetStatusForm form) {
-        try {
-            AuditItem item = service.get(id);
+    public ResponseEntity setStatus(@PathVariable("id") Long id, @RequestBody @Valid AuditItemSetStatusForm form) throws ServiceException {
+        AuditItem item = service.get(id);
 
-            if (item.getAudit().getFinished()) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-            }
-
-            item.setStatus(statusService.get(form.getStatusId()));
-
-            return ResponseEntity.ok(service.save(item));
-        } catch (ServiceException e) {
-            return error(e);
+        if (item.getAudit().getFinished()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
+
+        item.setStatus(statusService.get(form.getStatusId()));
+
+        return ResponseEntity.ok(service.save(item));
     }
 }

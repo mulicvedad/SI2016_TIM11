@@ -22,11 +22,11 @@ import com.timxyz.services.exceptions.ServiceException;
 public class MyAccountController extends BaseController<Account, AccountService> {
 
 	@ResponseBody
-	public ResponseEntity get(@RequestHeader("Authorization") String token) {
+	public ResponseEntity get(@RequestHeader("Authorization") String token) throws ServiceException {
 		Account account = TokenAuthenticationService.findAccountByToken(token);
 		
 		if (account == null) {
-			return error(new ServiceException("Korisnički račun nije pronađen."));
+			throw new ServiceException("Korisnički račun nije pronađen.");
 		}
 
 		return ResponseEntity.ok(account);
@@ -34,24 +34,20 @@ public class MyAccountController extends BaseController<Account, AccountService>
 
 	@Transactional
 	@ResponseBody
-	public ResponseEntity update(@RequestHeader("Authorization") String token, @RequestBody @Valid MyAccountUpdateForm updatedAccount) {
+	public ResponseEntity update(@RequestHeader("Authorization") String token, @RequestBody @Valid MyAccountUpdateForm updatedAccount) throws ServiceException {
 		Account account = TokenAuthenticationService.findAccountByToken(token);
 		
 		if (account == null || !BCrypt.checkpw(updatedAccount.getCurrentPassword(), account.getPassword())) {
-		    return error(new ServiceException("Neispravna trenutna lozinka."));
+		     throw new ServiceException("Neispravna trenutna lozinka.");
 		}
-		
-		try {
-			if (updatedAccount.isPasswordUpdated()) {
-			    account.setRawPassword(updatedAccount.getNewPassword());
-            }
 
-			account = service.save(account);
-
-			logForUpdate(token, account);
-		} catch (ServiceException e) {
-			return error(e);
+		if (updatedAccount.isPasswordUpdated()) {
+			account.setRawPassword(updatedAccount.getNewPassword());
 		}
+
+		account = service.save(account);
+
+		logForUpdate(token, account);
 
 		return ResponseEntity.ok(account);
 	}
